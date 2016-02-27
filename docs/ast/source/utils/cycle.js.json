@@ -1,0 +1,947 @@
+{
+  "type": "Program",
+  "body": [
+    {
+      "type": "ImportDeclaration",
+      "specifiers": [
+        {
+          "type": "ImportDefaultSpecifier",
+          "local": {
+            "type": "Identifier",
+            "name": "flyd",
+            "range": [
+              7,
+              11
+            ],
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 7
+              },
+              "end": {
+                "line": 1,
+                "column": 11
+              }
+            }
+          },
+          "range": [
+            7,
+            11
+          ],
+          "loc": {
+            "start": {
+              "line": 1,
+              "column": 7
+            },
+            "end": {
+              "line": 1,
+              "column": 11
+            }
+          }
+        }
+      ],
+      "source": {
+        "type": "Literal",
+        "value": "flyd",
+        "raw": "'flyd'",
+        "range": [
+          17,
+          23
+        ],
+        "loc": {
+          "start": {
+            "line": 1,
+            "column": 17
+          },
+          "end": {
+            "line": 1,
+            "column": 23
+          }
+        }
+      },
+      "range": [
+        0,
+        24
+      ],
+      "loc": {
+        "start": {
+          "line": 1,
+          "column": 0
+        },
+        "end": {
+          "line": 1,
+          "column": 24
+        }
+      },
+      "trailingComments": [
+        {
+          "type": "Block",
+          "value": "*\n * pipes a to b and b to a -> cycle a and b\n * @param  {Stream} a - flyd stream\n * @param  {Stream} b - flyd stream\n * @return {Stream} empty stream, use to end\n ",
+          "range": [
+            26,
+            194
+          ],
+          "loc": {
+            "start": {
+              "line": 3,
+              "column": 0
+            },
+            "end": {
+              "line": 8,
+              "column": 3
+            }
+          }
+        }
+      ]
+    },
+    {
+      "type": "ExportDefaultDeclaration",
+      "declaration": {
+        "type": "FunctionDeclaration",
+        "id": {
+          "type": "Identifier",
+          "name": "cycle",
+          "range": [
+            220,
+            225
+          ],
+          "loc": {
+            "start": {
+              "line": 10,
+              "column": 24
+            },
+            "end": {
+              "line": 10,
+              "column": 29
+            }
+          }
+        },
+        "params": [
+          {
+            "type": "Identifier",
+            "name": "a",
+            "range": [
+              226,
+              227
+            ],
+            "loc": {
+              "start": {
+                "line": 10,
+                "column": 30
+              },
+              "end": {
+                "line": 10,
+                "column": 31
+              }
+            }
+          },
+          {
+            "type": "Identifier",
+            "name": "b",
+            "range": [
+              229,
+              230
+            ],
+            "loc": {
+              "start": {
+                "line": 10,
+                "column": 33
+              },
+              "end": {
+                "line": 10,
+                "column": 34
+              }
+            }
+          }
+        ],
+        "body": {
+          "type": "BlockStatement",
+          "body": [
+            {
+              "type": "VariableDeclaration",
+              "declarations": [
+                {
+                  "type": "VariableDeclarator",
+                  "id": {
+                    "type": "Identifier",
+                    "name": "start",
+                    "range": [
+                      242,
+                      247
+                    ],
+                    "loc": {
+                      "start": {
+                        "line": 11,
+                        "column": 8
+                      },
+                      "end": {
+                        "line": 11,
+                        "column": 13
+                      }
+                    }
+                  },
+                  "init": {
+                    "type": "CallExpression",
+                    "callee": {
+                      "type": "MemberExpression",
+                      "computed": false,
+                      "object": {
+                        "type": "Identifier",
+                        "name": "flyd",
+                        "range": [
+                          250,
+                          254
+                        ],
+                        "loc": {
+                          "start": {
+                            "line": 11,
+                            "column": 16
+                          },
+                          "end": {
+                            "line": 11,
+                            "column": 20
+                          }
+                        }
+                      },
+                      "property": {
+                        "type": "Identifier",
+                        "name": "stream",
+                        "range": [
+                          255,
+                          261
+                        ],
+                        "loc": {
+                          "start": {
+                            "line": 11,
+                            "column": 21
+                          },
+                          "end": {
+                            "line": 11,
+                            "column": 27
+                          }
+                        }
+                      },
+                      "range": [
+                        250,
+                        261
+                      ],
+                      "loc": {
+                        "start": {
+                          "line": 11,
+                          "column": 16
+                        },
+                        "end": {
+                          "line": 11,
+                          "column": 27
+                        }
+                      }
+                    },
+                    "arguments": [],
+                    "range": [
+                      250,
+                      263
+                    ],
+                    "loc": {
+                      "start": {
+                        "line": 11,
+                        "column": 16
+                      },
+                      "end": {
+                        "line": 11,
+                        "column": 29
+                      }
+                    }
+                  },
+                  "range": [
+                    242,
+                    263
+                  ],
+                  "loc": {
+                    "start": {
+                      "line": 11,
+                      "column": 8
+                    },
+                    "end": {
+                      "line": 11,
+                      "column": 29
+                    }
+                  }
+                }
+              ],
+              "kind": "const",
+              "range": [
+                236,
+                264
+              ],
+              "loc": {
+                "start": {
+                  "line": 11,
+                  "column": 2
+                },
+                "end": {
+                  "line": 11,
+                  "column": 30
+                }
+              }
+            },
+            {
+              "type": "VariableDeclaration",
+              "declarations": [
+                {
+                  "type": "VariableDeclarator",
+                  "id": {
+                    "type": "Identifier",
+                    "name": "streamA",
+                    "range": [
+                      273,
+                      280
+                    ],
+                    "loc": {
+                      "start": {
+                        "line": 12,
+                        "column": 8
+                      },
+                      "end": {
+                        "line": 12,
+                        "column": 15
+                      }
+                    }
+                  },
+                  "init": {
+                    "type": "CallExpression",
+                    "callee": {
+                      "type": "Identifier",
+                      "name": "a",
+                      "range": [
+                        283,
+                        284
+                      ],
+                      "loc": {
+                        "start": {
+                          "line": 12,
+                          "column": 18
+                        },
+                        "end": {
+                          "line": 12,
+                          "column": 19
+                        }
+                      }
+                    },
+                    "arguments": [
+                      {
+                        "type": "Identifier",
+                        "name": "start",
+                        "range": [
+                          285,
+                          290
+                        ],
+                        "loc": {
+                          "start": {
+                            "line": 12,
+                            "column": 20
+                          },
+                          "end": {
+                            "line": 12,
+                            "column": 25
+                          }
+                        }
+                      }
+                    ],
+                    "range": [
+                      283,
+                      291
+                    ],
+                    "loc": {
+                      "start": {
+                        "line": 12,
+                        "column": 18
+                      },
+                      "end": {
+                        "line": 12,
+                        "column": 26
+                      }
+                    }
+                  },
+                  "range": [
+                    273,
+                    291
+                  ],
+                  "loc": {
+                    "start": {
+                      "line": 12,
+                      "column": 8
+                    },
+                    "end": {
+                      "line": 12,
+                      "column": 26
+                    }
+                  }
+                }
+              ],
+              "kind": "const",
+              "range": [
+                267,
+                292
+              ],
+              "loc": {
+                "start": {
+                  "line": 12,
+                  "column": 2
+                },
+                "end": {
+                  "line": 12,
+                  "column": 27
+                }
+              }
+            },
+            {
+              "type": "VariableDeclaration",
+              "declarations": [
+                {
+                  "type": "VariableDeclarator",
+                  "id": {
+                    "type": "Identifier",
+                    "name": "streamB",
+                    "range": [
+                      301,
+                      308
+                    ],
+                    "loc": {
+                      "start": {
+                        "line": 13,
+                        "column": 8
+                      },
+                      "end": {
+                        "line": 13,
+                        "column": 15
+                      }
+                    }
+                  },
+                  "init": {
+                    "type": "CallExpression",
+                    "callee": {
+                      "type": "Identifier",
+                      "name": "b",
+                      "range": [
+                        311,
+                        312
+                      ],
+                      "loc": {
+                        "start": {
+                          "line": 13,
+                          "column": 18
+                        },
+                        "end": {
+                          "line": 13,
+                          "column": 19
+                        }
+                      }
+                    },
+                    "arguments": [
+                      {
+                        "type": "Identifier",
+                        "name": "streamA",
+                        "range": [
+                          313,
+                          320
+                        ],
+                        "loc": {
+                          "start": {
+                            "line": 13,
+                            "column": 20
+                          },
+                          "end": {
+                            "line": 13,
+                            "column": 27
+                          }
+                        }
+                      }
+                    ],
+                    "range": [
+                      311,
+                      321
+                    ],
+                    "loc": {
+                      "start": {
+                        "line": 13,
+                        "column": 18
+                      },
+                      "end": {
+                        "line": 13,
+                        "column": 28
+                      }
+                    }
+                  },
+                  "range": [
+                    301,
+                    321
+                  ],
+                  "loc": {
+                    "start": {
+                      "line": 13,
+                      "column": 8
+                    },
+                    "end": {
+                      "line": 13,
+                      "column": 28
+                    }
+                  }
+                }
+              ],
+              "kind": "const",
+              "range": [
+                295,
+                322
+              ],
+              "loc": {
+                "start": {
+                  "line": 13,
+                  "column": 2
+                },
+                "end": {
+                  "line": 13,
+                  "column": 29
+                }
+              },
+              "trailingComments": [
+                {
+                  "type": "Line",
+                  "value": " flyd.on(val => console.log('a emitted:', val), streamA);",
+                  "range": [
+                    326,
+                    385
+                  ],
+                  "loc": {
+                    "start": {
+                      "line": 15,
+                      "column": 2
+                    },
+                    "end": {
+                      "line": 15,
+                      "column": 61
+                    }
+                  }
+                },
+                {
+                  "type": "Line",
+                  "value": " flyd.on(val => console.log('b emitted:', val.get(true)), streamB);",
+                  "range": [
+                    388,
+                    457
+                  ],
+                  "loc": {
+                    "start": {
+                      "line": 16,
+                      "column": 2
+                    },
+                    "end": {
+                      "line": 16,
+                      "column": 71
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "type": "ReturnStatement",
+              "argument": {
+                "type": "CallExpression",
+                "callee": {
+                  "type": "MemberExpression",
+                  "computed": false,
+                  "object": {
+                    "type": "Identifier",
+                    "name": "flyd",
+                    "range": [
+                      468,
+                      472
+                    ],
+                    "loc": {
+                      "start": {
+                        "line": 18,
+                        "column": 9
+                      },
+                      "end": {
+                        "line": 18,
+                        "column": 13
+                      }
+                    }
+                  },
+                  "property": {
+                    "type": "Identifier",
+                    "name": "on",
+                    "range": [
+                      473,
+                      475
+                    ],
+                    "loc": {
+                      "start": {
+                        "line": 18,
+                        "column": 14
+                      },
+                      "end": {
+                        "line": 18,
+                        "column": 16
+                      }
+                    }
+                  },
+                  "range": [
+                    468,
+                    475
+                  ],
+                  "loc": {
+                    "start": {
+                      "line": 18,
+                      "column": 9
+                    },
+                    "end": {
+                      "line": 18,
+                      "column": 16
+                    }
+                  }
+                },
+                "arguments": [
+                  {
+                    "type": "ArrowFunctionExpression",
+                    "id": null,
+                    "params": [
+                      {
+                        "type": "Identifier",
+                        "name": "x",
+                        "range": [
+                          476,
+                          477
+                        ],
+                        "loc": {
+                          "start": {
+                            "line": 18,
+                            "column": 17
+                          },
+                          "end": {
+                            "line": 18,
+                            "column": 18
+                          }
+                        }
+                      }
+                    ],
+                    "body": {
+                      "type": "CallExpression",
+                      "callee": {
+                        "type": "Identifier",
+                        "name": "start",
+                        "range": [
+                          481,
+                          486
+                        ],
+                        "loc": {
+                          "start": {
+                            "line": 18,
+                            "column": 22
+                          },
+                          "end": {
+                            "line": 18,
+                            "column": 27
+                          }
+                        }
+                      },
+                      "arguments": [
+                        {
+                          "type": "Identifier",
+                          "name": "x",
+                          "range": [
+                            487,
+                            488
+                          ],
+                          "loc": {
+                            "start": {
+                              "line": 18,
+                              "column": 28
+                            },
+                            "end": {
+                              "line": 18,
+                              "column": 29
+                            }
+                          }
+                        }
+                      ],
+                      "range": [
+                        481,
+                        489
+                      ],
+                      "loc": {
+                        "start": {
+                          "line": 18,
+                          "column": 22
+                        },
+                        "end": {
+                          "line": 18,
+                          "column": 30
+                        }
+                      }
+                    },
+                    "generator": false,
+                    "expression": true,
+                    "range": [
+                      476,
+                      489
+                    ],
+                    "loc": {
+                      "start": {
+                        "line": 18,
+                        "column": 17
+                      },
+                      "end": {
+                        "line": 18,
+                        "column": 30
+                      }
+                    }
+                  },
+                  {
+                    "type": "Identifier",
+                    "name": "streamB",
+                    "range": [
+                      491,
+                      498
+                    ],
+                    "loc": {
+                      "start": {
+                        "line": 18,
+                        "column": 32
+                      },
+                      "end": {
+                        "line": 18,
+                        "column": 39
+                      }
+                    }
+                  }
+                ],
+                "range": [
+                  468,
+                  499
+                ],
+                "loc": {
+                  "start": {
+                    "line": 18,
+                    "column": 9
+                  },
+                  "end": {
+                    "line": 18,
+                    "column": 40
+                  }
+                }
+              },
+              "range": [
+                461,
+                500
+              ],
+              "loc": {
+                "start": {
+                  "line": 18,
+                  "column": 2
+                },
+                "end": {
+                  "line": 18,
+                  "column": 41
+                }
+              },
+              "leadingComments": [
+                {
+                  "type": "Line",
+                  "value": " flyd.on(val => console.log('a emitted:', val), streamA);",
+                  "range": [
+                    326,
+                    385
+                  ],
+                  "loc": {
+                    "start": {
+                      "line": 15,
+                      "column": 2
+                    },
+                    "end": {
+                      "line": 15,
+                      "column": 61
+                    }
+                  }
+                },
+                {
+                  "type": "Line",
+                  "value": " flyd.on(val => console.log('b emitted:', val.get(true)), streamB);",
+                  "range": [
+                    388,
+                    457
+                  ],
+                  "loc": {
+                    "start": {
+                      "line": 16,
+                      "column": 2
+                    },
+                    "end": {
+                      "line": 16,
+                      "column": 71
+                    }
+                  }
+                }
+              ]
+            }
+          ],
+          "range": [
+            232,
+            502
+          ],
+          "loc": {
+            "start": {
+              "line": 10,
+              "column": 36
+            },
+            "end": {
+              "line": 19,
+              "column": 1
+            }
+          }
+        },
+        "generator": false,
+        "expression": false,
+        "range": [
+          211,
+          502
+        ],
+        "loc": {
+          "start": {
+            "line": 10,
+            "column": 15
+          },
+          "end": {
+            "line": 19,
+            "column": 1
+          }
+        },
+        "leadingComments": [
+          {
+            "type": "Block",
+            "value": "*\n * pipes a to b and b to a -> cycle a and b\n * @param  {Stream} a - flyd stream\n * @param  {Stream} b - flyd stream\n * @return {Stream} empty stream, use to end\n ",
+            "range": [
+              26,
+              194
+            ],
+            "loc": {
+              "start": {
+                "line": 3,
+                "column": 0
+              },
+              "end": {
+                "line": 8,
+                "column": 3
+              }
+            }
+          }
+        ],
+        "trailingComments": []
+      },
+      "range": [
+        196,
+        502
+      ],
+      "loc": {
+        "start": {
+          "line": 10,
+          "column": 0
+        },
+        "end": {
+          "line": 19,
+          "column": 1
+        }
+      },
+      "leadingComments": [
+        {
+          "type": "Block",
+          "value": "*\n * pipes a to b and b to a -> cycle a and b\n * @param  {Stream} a - flyd stream\n * @param  {Stream} b - flyd stream\n * @return {Stream} empty stream, use to end\n ",
+          "range": [
+            26,
+            194
+          ],
+          "loc": {
+            "start": {
+              "line": 3,
+              "column": 0
+            },
+            "end": {
+              "line": 8,
+              "column": 3
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "sourceType": "module",
+  "range": [
+    0,
+    502
+  ],
+  "loc": {
+    "start": {
+      "line": 1,
+      "column": 0
+    },
+    "end": {
+      "line": 19,
+      "column": 1
+    }
+  },
+  "comments": [
+    {
+      "type": "Block",
+      "value": "*\n * pipes a to b and b to a -> cycle a and b\n * @param  {Stream} a - flyd stream\n * @param  {Stream} b - flyd stream\n * @return {Stream} empty stream, use to end\n ",
+      "range": [
+        26,
+        194
+      ],
+      "loc": {
+        "start": {
+          "line": 3,
+          "column": 0
+        },
+        "end": {
+          "line": 8,
+          "column": 3
+        }
+      }
+    },
+    {
+      "type": "Line",
+      "value": " flyd.on(val => console.log('a emitted:', val), streamA);",
+      "range": [
+        326,
+        385
+      ],
+      "loc": {
+        "start": {
+          "line": 15,
+          "column": 2
+        },
+        "end": {
+          "line": 15,
+          "column": 61
+        }
+      }
+    },
+    {
+      "type": "Line",
+      "value": " flyd.on(val => console.log('b emitted:', val.get(true)), streamB);",
+      "range": [
+        388,
+        457
+      ],
+      "loc": {
+        "start": {
+          "line": 16,
+          "column": 2
+        },
+        "end": {
+          "line": 16,
+          "column": 71
+        }
+      }
+    }
+  ]
+}
