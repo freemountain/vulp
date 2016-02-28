@@ -1,0 +1,102 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xl="http://www.w3.org/1999/xlink" viewBox="81 69 663 541">
+  <defs>
+    <filter id="Shadow" filterUnits="userSpaceOnUse">
+      <feGaussianBlur in="SourceAlpha" result="blur" stdDeviation="1.308"/>
+      <feOffset in="blur" result="offset" dy="2"/>
+      <feFlood flood-color="#000" flood-opacity=".5" result="flood"/>
+      <feComposite in="flood" in2="offset" operator="in" result="color"/>
+      <feMerge>
+        <feMergeNode in="color"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <marker orient="auto" overflow="visible" id="FilledArrow_Marker" viewBox="-1 -3 7 6" markerWidth="7" markerHeight="6" color="#1d5aab">
+      <path d="M4.48 0L0-1.68v3.36z" fill="currentColor" stroke="currentColor"/>
+    </marker>
+  </defs>
+  <g fill="none">
+    <title>
+      Canvas 1
+    </title>
+    <title>
+      Layer 1
+    </title>
+    <g filter="url(#Shadow)">
+      <path d="M263.118 82.205H462.55c4.42 0 8 3.58 8 8v148.41c0 4.417-3.58 8-8 8H263.12c-4.418 0-8-3.583-8-8V90.204c0-4.42 3.582-8 8-8z" fill="#fff"/>
+      <path d="M263.118 82.205H462.55c4.42 0 8 3.58 8 8v148.41c0 4.417-3.58 8-8 8H263.12c-4.418 0-8-3.583-8-8V90.204c0-4.42 3.582-8 8-8z" stroke="#000" stroke-linecap="round" stroke-linejoin="round"/>
+      <text transform="translate(260.118 87.205)" fill="#000">
+        <tspan font-family="Helvetica Neue" font-size="16" font-weight="500" x="74.420533" y="15" textLength="56.592">Context</tspan>
+      </text>
+    </g>
+    <g filter="url(#Shadow)">
+      <rect x="334.70301" y="118.16929" width="116.03823" height="61.56846" id="path"/>
+      <clipPath id="clip_path">
+        <use xl:href="#path"/>
+      </clipPath>
+      <g clip-path="url(#clip_path)">
+        <image xl:href="context0.png" width="262" height="134" transform="matrix(.4429 0 0 .45947 334.703 118.17)"/>
+      </g>
+      <rect x="334.70301" y="118.16929" width="116.03823" height="61.56846" stroke="#000" stroke-linecap="round" stroke-linejoin="round"/>
+    </g>
+    <g filter="url(#Shadow)">
+      <rect x="272.34089" y="164.00984" width="111.54181" height="59.484254" id="path_2"/>
+      <clipPath id="clip_path_2">
+        <use xl:href="#path_2"/>
+      </clipPath>
+      <g clip-path="url(#clip_path_2)">
+        <image xl:href="context1.png" width="249" height="128" transform="matrix(.44796 0 0 .46472 272.34 164.01)"/>
+      </g>
+      <rect x="272.34089" y="164.00984" width="111.54181" height="59.484254" stroke="#000" stroke-linecap="round" stroke-linejoin="round"/>
+    </g>
+    <g filter="url(#Shadow)">
+      <path d="M263.118 428.031l199.433.002c4.42 0 8 3.58 8 8v148.41c0 4.417-3.58 8-8 8H263.12c-4.418 0-8-3.583-8-8V436.03c0-4.42 3.582-8 8-8z" fill="#fff"/>
+      <path d="M263.118 428.031l199.433.002c4.42 0 8 3.58 8 8v148.41c0 4.417-3.58 8-8 8H263.12c-4.418 0-8-3.583-8-8V436.03c0-4.42 3.582-8 8-8z" stroke="#000" stroke-linecap="round" stroke-linejoin="round"/>
+      <text transform="translate(260.118 433.03)" fill="#000">
+        <tspan font-family="Helvetica Neue" font-size="16" font-weight="500" x="69.972535" y="15" textLength="65.488">PatchSet</tspan>
+      </text>
+    </g>
+    <g filter="url(#Shadow)">
+      <rect x="271.68988" y="469.13385" width="182.44681" height="95.29952" id="path_3"/>
+      <clipPath id="clip_path_3">
+        <use xl:href="#path_3"/>
+      </clipPath>
+      <g clip-path="url(#clip_path_3)">
+        <image xl:href="patchSet.png" width="389" height="213" transform="matrix(.469 0 0 .44742 271.69 469.134)"/>
+      </g>
+      <rect x="271.68988" y="469.13385" width="182.44681" height="95.29952" stroke="#000" stroke-linecap="round" stroke-linejoin="round"/>
+    </g>
+    <path d="M450.74 148.56l149.91-1.02c11.047-.077 20.062 8.817 20.137 19.862v80.916" marker-end="url(#FilledArrow_Marker)" stroke="#1d5aab" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"/>
+    <path d="M271.69 516.402l-98.738-.413c-11-.047-19.897-8.966-19.916-19.966l-.094-52.687" marker-end="url(#FilledArrow_Marker)" stroke="#1d5aab" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"/>
+    <line x1="383.8827" y1="194.24581" x2="517.60874" y2="195.42993" marker-end="url(#FilledArrow_Marker)" stroke="#1d5aab" stroke-linecap="round" stroke-linejoin="round" stroke-width="3" stroke-dasharray="4,4"/>
+    <path d="M624.567 411.024l1.524 84.59c.2 11.043-8.59 20.157-19.635 20.356l-.294.003-133.883.446" marker-end="url(#FilledArrow_Marker)" stroke="#1d5aab" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"/>
+    <path d="M152.932 260.787l.098-47.958c.022-11.047 8.995-19.983 20.04-19.96h.074l81.057.46" marker-end="url(#FilledArrow_Marker)" stroke="#1d5aab" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"/>
+    <g filter="url(#Shadow)">
+      <path d="M521.07 266.457h199.434c4.418 0 8 3.58 8 8v148.41c0 4.417-3.582 8-8 8H521.07c-4.417 0-8-3.583-8-8v-148.41c0-4.42 3.583-8 8-8z" fill="#fff"/>
+      <path d="M521.07 266.457h199.434c4.418 0 8 3.58 8 8v148.41c0 4.417-3.582 8-8 8H521.07c-4.417 0-8-3.583-8-8v-148.41c0-4.42 3.583-8 8-8z" stroke="#000" stroke-linecap="round" stroke-linejoin="round"/>
+      <text transform="translate(518.07 271.457)" fill="#000">
+        <tspan font-family="Helvetica Neue" font-size="16" font-weight="500" x="0" y="15" textLength="9.776">V</tspan><tspan font-family="Helvetica Neue" font-size="16" font-weight="500" x="9.488" y="15" textLength="24.272">iew</tspan>
+      </text>
+    </g>
+    <g filter="url(#Shadow)">
+      <path d="M540.913 306.142H706.33c4.42 0 8 3.58 8 8v88.882c0 4.418-3.58 8-8 8H540.914c-4.418 0-8-3.582-8-8v-88.882c0-4.42 3.582-8 8-8z" fill="#fff"/>
+      <path d="M540.913 306.142H706.33c4.42 0 8 3.58 8 8v88.882c0 4.418-3.58 8-8 8H540.914c-4.418 0-8-3.582-8-8v-88.882c0-4.42 3.582-8 8-8z" stroke="#000" stroke-linecap="round" stroke-linejoin="round"/>
+      <text transform="translate(537.913 311.142)" fill="#000">
+        <tspan font-family="Helvetica Neue" font-size="16" font-weight="500" x="43.46866" y="15" textLength="84.48">Component</tspan>
+      </text>
+    </g>
+    <rect x="541.29102" y="331.65354" width="164.53574" height="70.86614" id="path_4"/>
+    <clipPath id="clip_path_4">
+      <use xl:href="#path_4"/>
+    </clipPath>
+    <g clip-path="url(#clip_path_4)">
+      <image xl:href="render.png" width="469" height="202" transform="translate(541.29 331.654) scale(.35082)"/>
+    </g>
+    <g filter="url(#Shadow)">
+      <path d="M104.378 260.787h96.773c4.42 0 8 3.582 8 8v148.41c0 4.418-3.58 8-8 8H104.38c-4.418 0-8-3.582-8-8v-148.41c0-4.418 3.582-8 8-8z" fill="#fff"/>
+      <path d="M104.378 260.787h96.773c4.42 0 8 3.582 8 8v148.41c0 4.418-3.58 8-8 8H104.38c-4.418 0-8-3.582-8-8v-148.41c0-4.418 3.582-8 8-8z" stroke="#000" stroke-linecap="round" stroke-linejoin="round"/>
+      <text transform="translate(101.378 333.768)" fill="#000">
+        <tspan font-family="Helvetica Neue" font-size="16" font-weight="500" x="28.274465" y="15" textLength="46.224">Scope</tspan>
+      </text>
+    </g>
+  </g>
+</svg>
