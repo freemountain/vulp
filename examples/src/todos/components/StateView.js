@@ -14,7 +14,7 @@ function render({ context }) {
   );
 }
 
-export default component([
+export default component(
   memoize(),
   styler()
-])(render);
+)(render);

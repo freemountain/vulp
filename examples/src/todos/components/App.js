@@ -46,8 +46,8 @@ function render() {
   );
 }
 
-export default component([
+export default component(
   checkContextType(contextType),
   memoize(),
   styler()
-])(render);
+)(render);

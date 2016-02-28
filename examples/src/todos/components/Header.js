@@ -27,9 +27,9 @@ function key(e, model, dispatch) {
   throttledCall(model.path, f);
 }
 
-export default component([
+export default component(
   controller({ key })
-])(({ context, dispatch }) => (
+)(({ context, dispatch }) => (
   <div>
     <input
       onKeyUp = {dispatch('key')}

@@ -9,16 +9,16 @@ const contextType = t.struct({
 
 const inc = (_, { context }) => [helper.$rep('/count', context.get('/count') + 1)];
 
-const IncBtn = component([
+const IncBtn = component(
   checkContextType(contextType),
   controller({ inc })
-])(({ dispatch }) => (
+)(({ dispatch }) => (
   <input type='button' onClick={dispatch('inc')}/>
 ));
 
-const App = component([
+const App = component(
   checkContextType(contextType)
-])(({ context }) => (
+)(({ context }) => (
   <div>
     <IncBtn />
     {context.get('/count')}
