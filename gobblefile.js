@@ -32,7 +32,10 @@ const starter = gobble('examples')
     dest: 'examples.zip'
   });
 
-const doc = gobble('src').transform(esdoc).moveTo('docs');
+const doc = gobble([
+  gobble('src').transform(esdoc),
+  gobble('img').moveTo('img')
+]).moveTo('docs');
 
 const examples = gobble([
   gobble([
