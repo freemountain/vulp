@@ -1,4 +1,4 @@
-<p align="center"><img width="100" src="img/fux.png"></p>
+<p align="center"><img width="100" src="manual/asset/fux.png"></p>
 
 # fux
 Fux is a user interface library with uni-directional dataflow.
@@ -34,7 +34,7 @@ helper.cycle(view, scope);
 ```
 
 ## Architecture
-![overview](/img/architecture.png)
+![overview](manual/asset/architecture.png)
 
 - Context
   - immutable data structure (struct)

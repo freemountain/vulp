@@ -1,8 +1,7 @@
 {
-  "source": "./src",
-  "destination": "./docs",
-  "test": {
-    "type": "mocha",
-    "source": "./src/tests"
+  "title": "fux",
+  "manual": {
+    "asset": "./manual/asset",
+    "overview": ["./manual/overview.md"]
   }
 }

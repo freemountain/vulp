@@ -33,8 +33,7 @@ const starter = gobble('examples')
   });
 
 const doc = gobble([
-  gobble('src').transform(esdoc),
-  gobble('img').moveTo('img')
+  gobble('src').transform(esdoc, require('./esdoc.json')),
 ]).moveTo('docs');
 
 const examples = gobble([
