@@ -1,0 +1,4245 @@
+[
+  {
+    "__docId__": 0,
+    "kind": "file",
+    "static": true,
+    "variation": null,
+    "name": "src/Context.js",
+    "memberof": null,
+    "longname": "src/Context.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1,
+    "content": "import t from 'tcomb';\nimport Immutable from 'immutable';\nimport applyPatch from 'immpatch';\n\nimport Transform from './Transform';\nimport JSONPointer from './JSONPointer';\nimport { get, unbox, box } from './state';\n\nfunction applyTransform(transform, state) {\n  const newState = Immutable.Map(transform.map)\n    .map(pointer => get(state, pointer));\n\n  return newState;\n}\n\nconst emptyInstance = {\n  type:      t.Any,\n  state:     box({}),\n  transform: Transform.ofTargets({})\n};\n\n/**\n * Context is passed to all components.\n */\nclass Context {\n\n  /**\n   * Context constructors\n   *\n   * @param {Object} instance - instances sdds\n   * @param {Object} instance.state - states  sd\n   * @param {Transform} instance.transform - transform sdds\n   */\n  constructor(instance = {}) {\n    Object.assign(this, emptyInstance, instance);\n\n    Object.freeze(this);\n  }\n\n\n  /**\n   * create Context of state, transform is identity\n   * @param  {object} state - state of ctx\n   * @return {Context}\n   */\n\n  static ofState(state = {}) {\n    return new Context({\n      state:     box(state),\n      transform: Transform.ofTargets({})\n    });\n  }\n\n  /**\n   * get value from state\n   * @param {string|JSONPointer} path = '' - pointer to value\n   * @param {boolean} toJS = false - unbox value?\n   * @return {any} value\n   */\n  get(path = '', toJS = false) {\n    if(t.Boolean.is(path)) return this.get('', path);\n\n    const result = get(this.state, JSONPointer.ofString(path));\n\n    return toJS ? unbox(result) : result;\n  }\n\n  /**\n   * transform ctx with target sub\n   * @param  {Transform} sub [description]\n   * @return {Context}\n   */\n  sub(sub) {\n    const transform = this.transform.sub(sub);\n    const state = applyTransform(sub, this.state);\n\n    return new Context({ transform, state });\n  }\n\n  /**\n   * check if ctx has  changed\n   * @param  {Context} last - the last COntext\n   * @return {boolean}\n   */\n  changed(last) {\n    const keys = last.state.keySeq().toJS();\n\n    if(!this.transform.equals(last.transform)) return true;\n    return keys.some(key => this.get(key) !== last.get(key));\n  }\n\n  update(patchSet) {\n    if(!this.transform.isIdentity())\n      console.log('WARNING: Context.update, this.transform should be identity');\n\n    if(patchSet.length === 0) return this;\n\n    const newState = applyPatch(this.state, patchSet);\n    // assert type\n\n    const rawState = newState.toJS();\n\n    this.type(rawState);\n\n    return new Context({\n      type:      this.type,\n      transform: this.transform,\n      state:     newState\n    });\n  }\n\n\n}\n\nexport default Context;\n"
+  },
+  {
+    "__docId__": 1,
+    "kind": "function",
+    "static": true,
+    "variation": null,
+    "name": "applyTransform",
+    "memberof": "src/Context.js",
+    "longname": "src/Context.js~applyTransform",
+    "access": null,
+    "export": false,
+    "importPath": "fux/src/Context.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 9,
+    "undocument": true,
+    "params": [
+      {
+        "name": "transform",
+        "types": [
+          "*"
+        ]
+      },
+      {
+        "name": "state",
+        "types": [
+          "*"
+        ]
+      }
+    ],
+    "return": {
+      "types": [
+        "*"
+      ]
+    },
+    "generator": false
+  },
+  {
+    "__docId__": 2,
+    "kind": "variable",
+    "static": true,
+    "variation": null,
+    "name": "emptyInstance",
+    "memberof": "src/Context.js",
+    "longname": "src/Context.js~emptyInstance",
+    "access": null,
+    "export": false,
+    "importPath": "fux/src/Context.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 16,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 3,
+    "kind": "class",
+    "static": true,
+    "variation": null,
+    "name": "Context",
+    "memberof": "src/Context.js",
+    "longname": "src/Context.js~Context",
+    "access": null,
+    "export": true,
+    "importPath": "fux/src/Context.js",
+    "importStyle": "Context",
+    "description": "Context is passed to all components.",
+    "lineNumber": 25,
+    "interface": false
+  },
+  {
+    "__docId__": 4,
+    "kind": "constructor",
+    "static": false,
+    "variation": null,
+    "name": "constructor",
+    "memberof": "src/Context.js~Context",
+    "longname": "src/Context.js~Context#constructor",
+    "access": null,
+    "description": "Context constructors",
+    "lineNumber": 34,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "Object"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "instance",
+        "description": "instances sdds"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Object"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "instance.state",
+        "description": "states  sd"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Transform"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "instance.transform",
+        "description": "transform sdds"
+      }
+    ],
+    "generator": false
+  },
+  {
+    "__docId__": 5,
+    "kind": "method",
+    "static": true,
+    "variation": null,
+    "name": "ofState",
+    "memberof": "src/Context.js~Context",
+    "longname": "src/Context.js~Context.ofState",
+    "access": null,
+    "description": "create Context of state, transform is identity",
+    "lineNumber": 47,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "object"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "state",
+        "description": "state of ctx"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Context"
+      ],
+      "spread": false,
+      "description": ""
+    },
+    "generator": false
+  },
+  {
+    "__docId__": 6,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "get",
+    "memberof": "src/Context.js~Context",
+    "longname": "src/Context.js~Context#get",
+    "access": null,
+    "description": "get value from state",
+    "lineNumber": 60,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "string",
+          "JSONPointer"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "path",
+        "description": "= '' - pointer to value"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "boolean"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "toJS",
+        "description": "= false - unbox value?"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "any"
+      ],
+      "spread": false,
+      "description": "value"
+    },
+    "generator": false
+  },
+  {
+    "__docId__": 7,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "sub",
+    "memberof": "src/Context.js~Context",
+    "longname": "src/Context.js~Context#sub",
+    "access": null,
+    "description": "transform ctx with target sub",
+    "lineNumber": 73,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "Transform"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "sub",
+        "description": "[description]"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Context"
+      ],
+      "spread": false,
+      "description": ""
+    },
+    "generator": false
+  },
+  {
+    "__docId__": 8,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "changed",
+    "memberof": "src/Context.js~Context",
+    "longname": "src/Context.js~Context#changed",
+    "access": null,
+    "description": "check if ctx has  changed",
+    "lineNumber": 85,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "Context"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "last",
+        "description": "the last COntext"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "boolean"
+      ],
+      "spread": false,
+      "description": ""
+    },
+    "generator": false
+  },
+  {
+    "__docId__": 9,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "update",
+    "memberof": "src/Context.js~Context",
+    "longname": "src/Context.js~Context#update",
+    "access": null,
+    "description": null,
+    "lineNumber": 92,
+    "undocument": true,
+    "params": [
+      {
+        "name": "patchSet",
+        "types": [
+          "*"
+        ]
+      }
+    ],
+    "return": {
+      "types": [
+        "*"
+      ]
+    },
+    "generator": false
+  },
+  {
+    "__docId__": 10,
+    "kind": "file",
+    "static": true,
+    "variation": null,
+    "name": "src/JSONPointer/index.js",
+    "memberof": null,
+    "longname": "src/JSONPointer/index.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1,
+    "content": "import t from 'tcomb';\n\n/**\n * An array of Strings\n * TokenList holds JSONPath tokens.\n * @typedef {Array<string>} TokenList\n */\nconst TokenList = t.list(t.String);\n\n/**\n * \tJSON Pointer defines a string format for identifying a specific value within a JSON document.\n *  This class holds methods for manipulation of pointers.\n *\n *  For more information:\n *   - http://tools.ietf.org/html/rfc6901\n *   - http://jsonpatch.com/#json-pointer\n */\nclass JSONPointer {\n\n  /**\n   * JSONPointer constructors\n   *\n   * @param {Object} opts - options.\n   * @param {TokenList} opts.tokens - json path tokens\n   */\n  constructor(opts = {}) {\n    const tokens = TokenList(opts.tokens || []);\n\n    this.tokens = tokens;\n\n    Object.freeze(this.tokens);\n    Object.freeze(this);\n  }\n\n  static ofTokens(tokens) {\n    return new JSONPointer({ tokens });\n  }\n\n  /**\n   * parse str and return JSONPointer\n   *\n   * If x starts with '/' create will treat x as a JSONPointer.\n   * All other string will be treated like immutable js pointer (eg.: 'foo.bar')\n   *\n   * @param {string} str - pointer string\n   * @returns {JSONPointer}\n   */\n  static ofString(str) {\n    if(!t.String.is(str))\n      throw new Error('JSONPointer::ofString - expected string');\n\n    if(str === '') return new JSONPointer({\n      tokens: []\n    });\n\n    // pointer to key \"\" (rfc)\n    if(str === '/') return new JSONPointer({\n      tokens: ['']\n    });\n\n    if(str.startsWith('/')) return new JSONPointer({\n      tokens: str.split('/').slice(1)\n    });\n\n    return new JSONPointer({\n      tokens: str.split('.')\n    });\n  }\n\n  /**\n   * get rfc string representation\n   *\n   * @returns {string}\n   */\n  toRFC() {\n    return '/'.concat(this.tokens.join('/'));\n  }\n\n  /**\n   * get immutable js string representation\n   *\n   * @returns {string}\n   */\n  toImmutable() {\n    return this.tokens.join('.');\n  }\n\n  /**\n   * get first token\n   *\n   * Return value is the first entry from token list.\n   * @returns {string}\n   */\n  first() {\n    return this.tokens[ 0 ] || null;\n  }\n\n  /**\n   * return length of token array\n   * @returns {number}\n   */\n  size() {\n    return this.tokens.length;\n  }\n\n  /**\n   * concat two JSONPointer\n   *\n   * @param {JSONPointer} sub - the pointer to concat\n   * @returns {JSONPointer}\n   */\n  concat(sub) {\n    if(!sub instanceof JSONPointer)\n      throw new Error('JSONPointer#concat argument should be JSONPointer');\n\n    return new JSONPointer({\n      tokens: this.tokens.concat(sub.tokens)\n    });\n  }\n\n  /**\n   * slice JSONPointer\n   *\n   * slice has the same signature like Array.prototype.slice.\n   *\n   * @returns {JSONPointer}\n   */\n  slice() {\n    return new JSONPointer({\n      tokens: Array.prototype.slice.apply(this.tokens, arguments)\n    });\n  }\n}\n\nexport default JSONPointer;\n"
+  },
+  {
+    "__docId__": 11,
+    "kind": "typedef",
+    "static": true,
+    "variation": null,
+    "name": "TokenList",
+    "memberof": "src/JSONPointer/index.js",
+    "longname": "src/JSONPointer/index.js~TokenList",
+    "access": null,
+    "description": "An array of Strings\nTokenList holds JSONPath tokens.",
+    "lineNumber": 8,
+    "type": {
+      "types": [
+        "Array<string>"
+      ],
+      "optional": false,
+      "name": "TokenList"
+    }
+  },
+  {
+    "__docId__": 12,
+    "kind": "class",
+    "static": true,
+    "variation": null,
+    "name": "JSONPointer",
+    "memberof": "src/JSONPointer/index.js",
+    "longname": "src/JSONPointer/index.js~JSONPointer",
+    "access": null,
+    "export": true,
+    "importPath": "fux/src/JSONPointer/index.js",
+    "importStyle": "JSONPointer",
+    "description": "\tJSON Pointer defines a string format for identifying a specific value within a JSON document.\n This class holds methods for manipulation of pointers.\n\n For more information:\n  - http://tools.ietf.org/html/rfc6901\n  - http://jsonpatch.com/#json-pointer",
+    "lineNumber": 18,
+    "interface": false
+  },
+  {
+    "__docId__": 13,
+    "kind": "constructor",
+    "static": false,
+    "variation": null,
+    "name": "constructor",
+    "memberof": "src/JSONPointer/index.js~JSONPointer",
+    "longname": "src/JSONPointer/index.js~JSONPointer#constructor",
+    "access": null,
+    "description": "JSONPointer constructors",
+    "lineNumber": 26,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "Object"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "opts",
+        "description": "options."
+      },
+      {
+        "nullable": null,
+        "types": [
+          "TokenList"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "opts.tokens",
+        "description": "json path tokens"
+      }
+    ],
+    "generator": false
+  },
+  {
+    "__docId__": 14,
+    "kind": "member",
+    "static": false,
+    "variation": null,
+    "name": "tokens",
+    "memberof": "src/JSONPointer/index.js~JSONPointer",
+    "longname": "src/JSONPointer/index.js~JSONPointer#tokens",
+    "access": null,
+    "description": null,
+    "lineNumber": 29,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 15,
+    "kind": "method",
+    "static": true,
+    "variation": null,
+    "name": "ofTokens",
+    "memberof": "src/JSONPointer/index.js~JSONPointer",
+    "longname": "src/JSONPointer/index.js~JSONPointer.ofTokens",
+    "access": null,
+    "description": null,
+    "lineNumber": 35,
+    "undocument": true,
+    "params": [
+      {
+        "name": "tokens",
+        "types": [
+          "*"
+        ]
+      }
+    ],
+    "return": {
+      "types": [
+        "*"
+      ]
+    },
+    "generator": false
+  },
+  {
+    "__docId__": 16,
+    "kind": "method",
+    "static": true,
+    "variation": null,
+    "name": "ofString",
+    "memberof": "src/JSONPointer/index.js~JSONPointer",
+    "longname": "src/JSONPointer/index.js~JSONPointer.ofString",
+    "access": null,
+    "description": "parse str and return JSONPointer\n\nIf x starts with '/' create will treat x as a JSONPointer.\nAll other string will be treated like immutable js pointer (eg.: 'foo.bar')",
+    "lineNumber": 48,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{JSONPointer}"
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "str",
+        "description": "pointer string"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "JSONPointer"
+      ],
+      "spread": false,
+      "description": ""
+    },
+    "generator": false
+  },
+  {
+    "__docId__": 17,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "toRFC",
+    "memberof": "src/JSONPointer/index.js~JSONPointer",
+    "longname": "src/JSONPointer/index.js~JSONPointer#toRFC",
+    "access": null,
+    "description": "get rfc string representation",
+    "lineNumber": 75,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{string}"
+      }
+    ],
+    "params": [],
+    "return": {
+      "nullable": null,
+      "types": [
+        "string"
+      ],
+      "spread": false,
+      "description": ""
+    },
+    "generator": false
+  },
+  {
+    "__docId__": 18,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "toImmutable",
+    "memberof": "src/JSONPointer/index.js~JSONPointer",
+    "longname": "src/JSONPointer/index.js~JSONPointer#toImmutable",
+    "access": null,
+    "description": "get immutable js string representation",
+    "lineNumber": 84,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{string}"
+      }
+    ],
+    "params": [],
+    "return": {
+      "nullable": null,
+      "types": [
+        "string"
+      ],
+      "spread": false,
+      "description": ""
+    },
+    "generator": false
+  },
+  {
+    "__docId__": 19,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "first",
+    "memberof": "src/JSONPointer/index.js~JSONPointer",
+    "longname": "src/JSONPointer/index.js~JSONPointer#first",
+    "access": null,
+    "description": "get first token\n\nReturn value is the first entry from token list.",
+    "lineNumber": 94,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{string}"
+      }
+    ],
+    "params": [],
+    "return": {
+      "nullable": null,
+      "types": [
+        "string"
+      ],
+      "spread": false,
+      "description": ""
+    },
+    "generator": false
+  },
+  {
+    "__docId__": 20,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "size",
+    "memberof": "src/JSONPointer/index.js~JSONPointer",
+    "longname": "src/JSONPointer/index.js~JSONPointer#size",
+    "access": null,
+    "description": "return length of token array",
+    "lineNumber": 102,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{number}"
+      }
+    ],
+    "params": [],
+    "return": {
+      "nullable": null,
+      "types": [
+        "number"
+      ],
+      "spread": false,
+      "description": ""
+    },
+    "generator": false
+  },
+  {
+    "__docId__": 21,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "concat",
+    "memberof": "src/JSONPointer/index.js~JSONPointer",
+    "longname": "src/JSONPointer/index.js~JSONPointer#concat",
+    "access": null,
+    "description": "concat two JSONPointer",
+    "lineNumber": 112,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{JSONPointer}"
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "JSONPointer"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "sub",
+        "description": "the pointer to concat"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "JSONPointer"
+      ],
+      "spread": false,
+      "description": ""
+    },
+    "generator": false
+  },
+  {
+    "__docId__": 22,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "slice",
+    "memberof": "src/JSONPointer/index.js~JSONPointer",
+    "longname": "src/JSONPointer/index.js~JSONPointer#slice",
+    "access": null,
+    "description": "slice JSONPointer\n\nslice has the same signature like Array.prototype.slice.",
+    "lineNumber": 128,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{JSONPointer}"
+      }
+    ],
+    "params": [],
+    "return": {
+      "nullable": null,
+      "types": [
+        "JSONPointer"
+      ],
+      "spread": false,
+      "description": ""
+    },
+    "generator": false
+  },
+  {
+    "__docId__": 23,
+    "kind": "file",
+    "static": true,
+    "variation": null,
+    "name": "src/Patch.js",
+    "memberof": null,
+    "longname": "src/Patch.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1,
+    "content": "import t from 'tcomb';\n\nimport check from './utils/checkType';\nimport { box } from './state';\n\nconst specificString = str => t.irreducible(`String: ${str}`, x => str === x);\n\nconst BasePatch = t.struct({\n  path: t.String\n});\n\nconst AddPatch = BasePatch.extend({\n  op:    specificString('add'),\n  value: t.Any\n}, 'AddPatch');\n\nconst RemovePatch = BasePatch.extend({\n  op: specificString('remove')\n}, 'RemovePatch');\n\nconst ReplacePatch = BasePatch.extend({\n  op:    specificString('replace'),\n  value: t.Any\n}, 'ReplacePatch');\n\n/**\n * json patch type.\n * - only add, remove and replace patches are supported\n * - http://jsonpatch.com\n * @typedef {object} Patch\n */\nexport const Patch = t.union([AddPatch, RemovePatch, ReplacePatch], 'Patch');\n\n/* eslint-disable consistent-return */\nPatch.dispatch = function(x) {\n  if(check(AddPatch, x)) return AddPatch;\n  if(check(RemovePatch, x)) return RemovePatch;\n  if(check(ReplacePatch, x)) return ReplacePatch;\n};\n\n/* eslint-enable consistent-return */\n\nfunction createPatchJSON(obj) {\n  // assert patch is ok, and return pojo\n  Patch(obj);\n  return {\n    op:    obj.op,\n    path:  obj.path,\n    value: obj.value\n  };\n}\n\n/**\n * replace patch shortcut\n * @param  {string} path - patch path\n * @param  {any} value - patch value\n * @return {Patch}\n */\nexport const $rep = (path, value) => createPatchJSON({\n  op:    'replace',\n  path,\n  value: box(value)\n});\n\n/**\n * add patch shortcut\n * @param  {string} path - patch path\n * @param  {any} value - patch value\n * @return {Patch}\n */\nexport const $add =  (path, value) => createPatchJSON({\n  op:    'add',\n  path,\n  value: box(value)\n});\n"
+  },
+  {
+    "__docId__": 24,
+    "kind": "variable",
+    "static": true,
+    "variation": null,
+    "name": "specificString",
+    "memberof": "src/Patch.js",
+    "longname": "src/Patch.js~specificString",
+    "access": null,
+    "export": false,
+    "importPath": "fux/src/Patch.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 6,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 25,
+    "kind": "variable",
+    "static": true,
+    "variation": null,
+    "name": "BasePatch",
+    "memberof": "src/Patch.js",
+    "longname": "src/Patch.js~BasePatch",
+    "access": null,
+    "export": false,
+    "importPath": "fux/src/Patch.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 8,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 26,
+    "kind": "variable",
+    "static": true,
+    "variation": null,
+    "name": "AddPatch",
+    "memberof": "src/Patch.js",
+    "longname": "src/Patch.js~AddPatch",
+    "access": null,
+    "export": false,
+    "importPath": "fux/src/Patch.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 12,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 27,
+    "kind": "variable",
+    "static": true,
+    "variation": null,
+    "name": "RemovePatch",
+    "memberof": "src/Patch.js",
+    "longname": "src/Patch.js~RemovePatch",
+    "access": null,
+    "export": false,
+    "importPath": "fux/src/Patch.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 17,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 28,
+    "kind": "variable",
+    "static": true,
+    "variation": null,
+    "name": "ReplacePatch",
+    "memberof": "src/Patch.js",
+    "longname": "src/Patch.js~ReplacePatch",
+    "access": null,
+    "export": false,
+    "importPath": "fux/src/Patch.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 21,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 29,
+    "kind": "typedef",
+    "static": true,
+    "variation": null,
+    "name": "Patch",
+    "memberof": "src/Patch.js",
+    "longname": "src/Patch.js~Patch",
+    "access": null,
+    "description": "json patch type.\n- only add, remove and replace patches are supported\n- http://jsonpatch.com",
+    "lineNumber": 32,
+    "type": {
+      "types": [
+        "object"
+      ],
+      "optional": false,
+      "name": "Patch"
+    }
+  },
+  {
+    "__docId__": 30,
+    "kind": "function",
+    "static": true,
+    "variation": null,
+    "name": "dispatch",
+    "memberof": "src/Patch.js",
+    "longname": "src/Patch.js~dispatch",
+    "access": null,
+    "export": false,
+    "importPath": "fux/src/Patch.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 35,
+    "undocument": true,
+    "params": [
+      {
+        "name": "x",
+        "types": [
+          "*"
+        ]
+      }
+    ],
+    "return": {
+      "types": [
+        "*"
+      ]
+    },
+    "generator": false
+  },
+  {
+    "__docId__": 31,
+    "kind": "function",
+    "static": true,
+    "variation": null,
+    "name": "createPatchJSON",
+    "memberof": "src/Patch.js",
+    "longname": "src/Patch.js~createPatchJSON",
+    "access": null,
+    "export": false,
+    "importPath": "fux/src/Patch.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 43,
+    "undocument": true,
+    "params": [
+      {
+        "name": "obj",
+        "types": [
+          "*"
+        ]
+      }
+    ],
+    "return": {
+      "types": [
+        "*"
+      ]
+    },
+    "generator": false
+  },
+  {
+    "__docId__": 32,
+    "kind": "variable",
+    "static": true,
+    "variation": null,
+    "name": "$rep",
+    "memberof": "src/Patch.js",
+    "longname": "src/Patch.js~$rep",
+    "access": null,
+    "export": true,
+    "importPath": "fux/src/Patch.js",
+    "importStyle": "{$rep}",
+    "description": "replace patch shortcut",
+    "lineNumber": 59,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "path",
+        "description": "patch path"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "any"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "value",
+        "description": "patch value"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Patch"
+      ],
+      "spread": false,
+      "description": ""
+    },
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 33,
+    "kind": "variable",
+    "static": true,
+    "variation": null,
+    "name": "$add",
+    "memberof": "src/Patch.js",
+    "longname": "src/Patch.js~$add",
+    "access": null,
+    "export": true,
+    "importPath": "fux/src/Patch.js",
+    "importStyle": "{$add}",
+    "description": "add patch shortcut",
+    "lineNumber": 71,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "path",
+        "description": "patch path"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "any"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "value",
+        "description": "patch value"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Patch"
+      ],
+      "spread": false,
+      "description": ""
+    },
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 34,
+    "kind": "file",
+    "static": true,
+    "variation": null,
+    "name": "src/Transform.js",
+    "memberof": null,
+    "longname": "src/Transform.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1,
+    "content": "import t from 'tcomb';\nimport mapObj from '@f/map-obj';\n\nimport JSONPointer from './JSONPointer';\n\nfunction substitutePointer(pointer, targets) {\n  const root = pointer.first();\n\n  if(t.Nil.is(targets[ root ]))\n    throw new Error(`No target found for key ${root}. Possible targets: ${targets.toString()}`);\n\n  const tokens = targets[ root ].tokens.concat(pointer.tokens.slice(1));\n\n  return JSONPointer.ofTokens(tokens);\n}\n\n/**\n * Map holds transform informations.\n *\n * @typedef {Map<string, JSONPointer>} Map\n */\n\nconst Map = t.dict(t.String, JSONPointer);\n\nconst parseTargets = desc => mapObj(JSONPointer.ofString, desc);\n\n\n/**\n * Transform tracks changes to state structure,\n * is used for mounting transforms.\n */\n\nclass Transform {\n\n  /**\n   * Transform constructors\n   *\n   * @param {Map} map - instances sdds\n   */\n\n  constructor(map = Map({})) {\n    this.length = Object.keys(map).length;\n    this.map = map;\n\n    Object.freeze(this.length);\n    Object.freeze(this.map);\n    Object.freeze(this);\n  }\n\n  /**\n   * parse target keys to json pointer and return transform\n   * @param {Object<string, string>} targets\n   * @returns {Transform}\n   */\n\n  static ofTargets(targets = {}) {\n    const map = parseTargets(targets);\n\n    return new Transform(map);\n  }\n\n  /**\n   * resolve keys from child transform with targets from object\n   * @param {Transform} child - the child\n   * @returns {Transform}\n   */\n\n  sub(child) {\n    if(this.isIdentity()) return child;\n    if(child.isIdentity()) return this;\n\n    const childMap = mapObj(target => substitutePointer(target, this.map), child.map);\n\n    return new Transform(childMap);\n  }\n\n  /**\n   * apply transform on JSONPointer\n   * @param {JSONPointer} pointer - pointer\n   * @returns {Transform}\n   */\n\n  apply(pointer) {\n    const target = pointer.first();\n\n    if(t.Nil.is(this.map[ target ])) return pointer;\n\n    const tail = pointer.slice(1);\n\n    return this.map[ target ].concat(tail);\n  }\n\n  /**\n   * returns targets (target pointer as rfc string)\n   * @returns {Object<string, string>}\n   */\n  toTargets() {\n    return mapObj(pointer => pointer.toRFC(), this.map);\n  }\n\n  /**\n   * check if transforms are equal\n   * @param {Transform} x - transfrom to check against\n   * @returns {boolean}\n   */\n  equals(x) {\n    if(this.length !== x.length) return false;\n\n    return Object\n      .keys(this.map)\n      .every(target => x.map[ target ] && this.map[ target ].toRFC() === x.map[ target ].toRFC());\n  }\n\n  /**\n   * check if transform is identify\n   * @returns {boolean}\n   */\n  isIdentity() {\n    return this.length === 0;\n  }\n\n\n}\n\nexport default Transform;\n"
+  },
+  {
+    "__docId__": 35,
+    "kind": "function",
+    "static": true,
+    "variation": null,
+    "name": "substitutePointer",
+    "memberof": "src/Transform.js",
+    "longname": "src/Transform.js~substitutePointer",
+    "access": null,
+    "export": false,
+    "importPath": "fux/src/Transform.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 6,
+    "undocument": true,
+    "params": [
+      {
+        "name": "pointer",
+        "types": [
+          "*"
+        ]
+      },
+      {
+        "name": "targets",
+        "types": [
+          "*"
+        ]
+      }
+    ],
+    "return": {
+      "types": [
+        "*"
+      ]
+    },
+    "generator": false
+  },
+  {
+    "__docId__": 36,
+    "kind": "typedef",
+    "static": true,
+    "variation": null,
+    "name": "Map",
+    "memberof": "src/Transform.js",
+    "longname": "src/Transform.js~Map",
+    "access": null,
+    "description": "Map holds transform informations.",
+    "lineNumber": 23,
+    "type": {
+      "types": [
+        "Map<string, JSONPointer>"
+      ],
+      "optional": false,
+      "name": "Map"
+    }
+  },
+  {
+    "__docId__": 37,
+    "kind": "variable",
+    "static": true,
+    "variation": null,
+    "name": "parseTargets",
+    "memberof": "src/Transform.js",
+    "longname": "src/Transform.js~parseTargets",
+    "access": null,
+    "export": false,
+    "importPath": "fux/src/Transform.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 25,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 38,
+    "kind": "class",
+    "static": true,
+    "variation": null,
+    "name": "Transform",
+    "memberof": "src/Transform.js",
+    "longname": "src/Transform.js~Transform",
+    "access": null,
+    "export": true,
+    "importPath": "fux/src/Transform.js",
+    "importStyle": "Transform",
+    "description": "Transform tracks changes to state structure,\nis used for mounting transforms.",
+    "lineNumber": 33,
+    "interface": false
+  },
+  {
+    "__docId__": 39,
+    "kind": "constructor",
+    "static": false,
+    "variation": null,
+    "name": "constructor",
+    "memberof": "src/Transform.js~Transform",
+    "longname": "src/Transform.js~Transform#constructor",
+    "access": null,
+    "description": "Transform constructors",
+    "lineNumber": 41,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "Map"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "map",
+        "description": "instances sdds"
+      }
+    ],
+    "generator": false
+  },
+  {
+    "__docId__": 40,
+    "kind": "member",
+    "static": false,
+    "variation": null,
+    "name": "length",
+    "memberof": "src/Transform.js~Transform",
+    "longname": "src/Transform.js~Transform#length",
+    "access": null,
+    "description": null,
+    "lineNumber": 42,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 41,
+    "kind": "member",
+    "static": false,
+    "variation": null,
+    "name": "map",
+    "memberof": "src/Transform.js~Transform",
+    "longname": "src/Transform.js~Transform#map",
+    "access": null,
+    "description": null,
+    "lineNumber": 43,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 42,
+    "kind": "method",
+    "static": true,
+    "variation": null,
+    "name": "ofTargets",
+    "memberof": "src/Transform.js~Transform",
+    "longname": "src/Transform.js~Transform.ofTargets",
+    "access": null,
+    "description": "parse target keys to json pointer and return transform",
+    "lineNumber": 56,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{Transform}"
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "Object<string, string>"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "targets",
+        "description": ""
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Transform"
+      ],
+      "spread": false,
+      "description": ""
+    },
+    "generator": false
+  },
+  {
+    "__docId__": 43,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "sub",
+    "memberof": "src/Transform.js~Transform",
+    "longname": "src/Transform.js~Transform#sub",
+    "access": null,
+    "description": "resolve keys from child transform with targets from object",
+    "lineNumber": 68,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{Transform}"
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "Transform"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "child",
+        "description": "the child"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Transform"
+      ],
+      "spread": false,
+      "description": ""
+    },
+    "generator": false
+  },
+  {
+    "__docId__": 44,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "apply",
+    "memberof": "src/Transform.js~Transform",
+    "longname": "src/Transform.js~Transform#apply",
+    "access": null,
+    "description": "apply transform on JSONPointer",
+    "lineNumber": 83,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{Transform}"
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "JSONPointer"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "pointer",
+        "description": "pointer"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Transform"
+      ],
+      "spread": false,
+      "description": ""
+    },
+    "generator": false
+  },
+  {
+    "__docId__": 45,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "toTargets",
+    "memberof": "src/Transform.js~Transform",
+    "longname": "src/Transform.js~Transform#toTargets",
+    "access": null,
+    "description": "returns targets (target pointer as rfc string)",
+    "lineNumber": 97,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{Object<string, string>}"
+      }
+    ],
+    "params": [],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Object<string, string>"
+      ],
+      "spread": false,
+      "description": ""
+    },
+    "generator": false
+  },
+  {
+    "__docId__": 46,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "equals",
+    "memberof": "src/Transform.js~Transform",
+    "longname": "src/Transform.js~Transform#equals",
+    "access": null,
+    "description": "check if transforms are equal",
+    "lineNumber": 106,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{boolean}"
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "Transform"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "x",
+        "description": "transfrom to check against"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "boolean"
+      ],
+      "spread": false,
+      "description": ""
+    },
+    "generator": false
+  },
+  {
+    "__docId__": 47,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "isIdentity",
+    "memberof": "src/Transform.js~Transform",
+    "longname": "src/Transform.js~Transform#isIdentity",
+    "access": null,
+    "description": "check if transform is identify",
+    "lineNumber": 118,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{boolean}"
+      }
+    ],
+    "params": [],
+    "return": {
+      "nullable": null,
+      "types": [
+        "boolean"
+      ],
+      "spread": false,
+      "description": ""
+    },
+    "generator": false
+  },
+  {
+    "__docId__": 48,
+    "kind": "file",
+    "static": true,
+    "variation": null,
+    "name": "src/decorators/checkContextType.js",
+    "memberof": null,
+    "longname": "src/decorators/checkContextType.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1,
+    "content": "import curry from './../utils/curry';\nimport generateSpec from './../utils/generateSpec';\nimport normalize from './../utils/normalizeComponent';\n\nfunction assert(T, ctx, name = 'undefinedh') {\n  const raw = ctx.get(true);\n  let error = null;\n\n  try {\n    T(raw);\n  } catch(e) {\n    e.message = (`\n      component decorator mount error!\n      component.name: ${name}\n      \\n`).concat(e.message);\n\n    error = e;\n  }\n  if(error) throw error;\n}\n\nfunction decorateHook(component, T, name) {\n  if(!component[ name ]) return null;\n\n  return function(model) {\n    assert(T, model.context, component.Name);\n    return component[ name ](model);\n  };\n}\n\nexport default T => rawComponent => {\n  const component = normalize(rawComponent);\n  const decorator = curry(decorateHook)(component, T);\n  const spec = generateSpec(decorator);\n\n  return Object.assign({}, component, spec);\n};\n"
+  },
+  {
+    "__docId__": 49,
+    "kind": "function",
+    "static": true,
+    "variation": null,
+    "name": "assert",
+    "memberof": "src/decorators/checkContextType.js",
+    "longname": "src/decorators/checkContextType.js~assert",
+    "access": null,
+    "export": false,
+    "importPath": "fux/src/decorators/checkContextType.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 5,
+    "undocument": true,
+    "params": [
+      {
+        "name": "T",
+        "types": [
+          "*"
+        ]
+      },
+      {
+        "name": "ctx",
+        "types": [
+          "*"
+        ]
+      },
+      {
+        "name": "name",
+        "optional": true,
+        "types": [
+          "string"
+        ],
+        "defaultRaw": "undefinedh",
+        "defaultValue": "undefinedh"
+      }
+    ],
+    "generator": false
+  },
+  {
+    "__docId__": 50,
+    "kind": "function",
+    "static": true,
+    "variation": null,
+    "name": "decorateHook",
+    "memberof": "src/decorators/checkContextType.js",
+    "longname": "src/decorators/checkContextType.js~decorateHook",
+    "access": null,
+    "export": false,
+    "importPath": "fux/src/decorators/checkContextType.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 22,
+    "undocument": true,
+    "params": [
+      {
+        "name": "component",
+        "types": [
+          "*"
+        ]
+      },
+      {
+        "name": "T",
+        "types": [
+          "*"
+        ]
+      },
+      {
+        "name": "name",
+        "types": [
+          "*"
+        ]
+      }
+    ],
+    "return": {
+      "types": [
+        "*"
+      ]
+    },
+    "generator": false
+  },
+  {
+    "__docId__": 51,
+    "kind": "file",
+    "static": true,
+    "variation": null,
+    "name": "src/decorators/component.js",
+    "memberof": null,
+    "longname": "src/decorators/component.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1,
+    "content": "import normalize from './../utils/normalizeComponent';\n\n/**\n * decorate component\n * @param  {Array} decoration - list of component decorators\n * @param {Component} component -  the target\n * @return {Component} decorated component\n */\n\nconst f = decoration => rawComponent => {\n  const component = normalize(rawComponent);\n\n  return decoration\n   .slice()\n   .reverse()\n   .reduce((target, decorator) => decorator(target), component);\n};\n\nexport default f;\n"
+  },
+  {
+    "__docId__": 52,
+    "kind": "variable",
+    "static": true,
+    "variation": null,
+    "name": "f",
+    "memberof": "src/decorators/component.js",
+    "longname": "src/decorators/component.js~f",
+    "access": null,
+    "export": true,
+    "importPath": "fux/src/decorators/component.js",
+    "importStyle": "f",
+    "description": "decorate component",
+    "lineNumber": 10,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "Array"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "decoration",
+        "description": "list of component decorators"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Component"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "component",
+        "description": "the target"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Component"
+      ],
+      "spread": false,
+      "description": "decorated component"
+    },
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 53,
+    "kind": "file",
+    "static": true,
+    "variation": null,
+    "name": "src/decorators/controller.js",
+    "memberof": null,
+    "longname": "src/decorators/controller.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1,
+    "content": "import JSONPointer from './../JSONPointer';\nimport normalize from './../utils/normalizeComponent';\n\nconst controllerDecorator = controller => rawComponent => {\n  const component = normalize(rawComponent);\n\n  function render(model) {\n    const dispatch = function(name) {\n      if(!controller[ name ]) return () => null;\n      return function(e) {\n        const decoratedDispatch = function(patchSet = []) {\n          model.dispatch(patchSet.map(function(patch) {\n            if(!patch.path) return patch;\n            const newPatch = Object.assign({}, patch);\n            const pointer = JSONPointer.ofString(patch.path);\n\n            newPatch.path = model.context.transform.apply(pointer).toRFC();\n            return newPatch;\n          }));\n        };\n\n        const patchSet = controller[ name ](e, model, decoratedDispatch);\n\n        decoratedDispatch(patchSet);\n      };\n    };\n\n    const decoratedModel = Object.assign({}, model, { dispatch });\n\n    return component.render(decoratedModel);\n  }\n\n  return Object.assign({}, component, { render });\n};\n\nexport default controllerDecorator;\n"
+  },
+  {
+    "__docId__": 54,
+    "kind": "variable",
+    "static": true,
+    "variation": null,
+    "name": "controllerDecorator",
+    "memberof": "src/decorators/controller.js",
+    "longname": "src/decorators/controller.js~controllerDecorator",
+    "access": null,
+    "export": true,
+    "importPath": "fux/src/decorators/controller.js",
+    "importStyle": "controllerDecorator",
+    "description": null,
+    "lineNumber": 4,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 55,
+    "kind": "file",
+    "static": true,
+    "variation": null,
+    "name": "src/decorators/index.js",
+    "memberof": null,
+    "longname": "src/decorators/index.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1,
+    "content": "import mount from './mount';\nimport controller from './controller';\nimport memoize from './memoize';\nimport styler from './styler';\nimport checkContextType from './checkContextType';\nimport component from './component';\n\nexport default {\n  component,\n  mount,\n  controller,\n  memoize,\n  styler,\n  checkContextType\n};\n"
+  },
+  {
+    "__docId__": 56,
+    "kind": "file",
+    "static": true,
+    "variation": null,
+    "name": "src/decorators/memoize.js",
+    "memberof": null,
+    "longname": "src/decorators/memoize.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1,
+    "content": "import dekuMemoize from 'deku-memoize';\n\nimport normalize from './../utils/normalizeComponent';\n\nfunction defaultShouldUpdate(prev, next) {\n  return next.context.changed(prev.context);\n}\n\nexport default (shouldUpdate = defaultShouldUpdate) => rawComponent => {\n  const component = normalize(rawComponent);\n  const decoratedComponent = Object.assign({}, component, { shouldUpdate });\n\n  return dekuMemoize(decoratedComponent);\n};\n"
+  },
+  {
+    "__docId__": 57,
+    "kind": "function",
+    "static": true,
+    "variation": null,
+    "name": "defaultShouldUpdate",
+    "memberof": "src/decorators/memoize.js",
+    "longname": "src/decorators/memoize.js~defaultShouldUpdate",
+    "access": null,
+    "export": false,
+    "importPath": "fux/src/decorators/memoize.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 5,
+    "undocument": true,
+    "params": [
+      {
+        "name": "prev",
+        "types": [
+          "*"
+        ]
+      },
+      {
+        "name": "next",
+        "types": [
+          "*"
+        ]
+      }
+    ],
+    "return": {
+      "types": [
+        "*"
+      ]
+    },
+    "generator": false
+  },
+  {
+    "__docId__": 58,
+    "kind": "file",
+    "static": true,
+    "variation": null,
+    "name": "src/decorators/mount.js",
+    "memberof": null,
+    "longname": "src/decorators/mount.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1,
+    "content": "import curry from './../utils/curry';\nimport normalize from './../utils/normalizeComponent';\nimport { vnode as element } from 'deku';\nimport Transform from './../Transform';\n\nconst { isThunk, isText, isEmpty }  = element;\n\nimport generateSpec from './../utils/generateSpec';\n\nfunction decorateHook(targets, targetComponent, hookName) {\n  if(!targetComponent[ hookName ]) return null;\n\n  return function(model) {\n    const context = model.context.sub(targets);\n    const decoratedModel = Object.assign({}, model, { context });\n\n    targetComponent[ hookName ](decoratedModel);\n  };\n}\n\nfunction decorateChildren(cache, targets, vnode) {\n  return (vnode.children || []).map(child => decorateNode(cache, child, targets));\n}\n\nfunction decorateNode(cache, vnode, targets) {\n  if(isText(vnode) || isEmpty(vnode)) return vnode;\n\n  const children = decorateChildren(cache, targets, vnode);\n  const decoratedVnode = Object.assign({}, vnode, { children });\n\n  if(!isThunk(vnode)) return decoratedVnode;\n\n  let cacheEntry = cache.get(vnode.component);\n\n  if(!cacheEntry) cacheEntry = mount(targets, vnode.component);\n  cache.set(vnode.component, cacheEntry);\n\n  return Object.assign({}, decoratedVnode, { component: cacheEntry });\n}\n\nfunction mount(targets, rawComponent) {\n  const component = normalize(rawComponent);\n  const cache = new WeakMap();\n  const transform = Transform.ofTargets(targets);\n\n  function render(model) {\n    const context = model.context.sub(transform);\n    const decoratedModel = Object.assign({}, model, { context });\n    const vnode = component.render(decoratedModel);\n\n    const output = decorateNode(cache, vnode, targets);\n\n    return output;\n  }\n\n  const decorator = curry(decorateHook)(targets, component);\n  const spec = generateSpec(decorator);\n\n  spec.render = render;\n  return Object.assign({}, component, spec);\n}\n\nexport default mount;\n"
+  },
+  {
+    "__docId__": 59,
+    "kind": "variable",
+    "static": true,
+    "variation": null,
+    "name": "isThunk",
+    "memberof": "src/decorators/mount.js",
+    "longname": "src/decorators/mount.js~isThunk",
+    "access": null,
+    "export": false,
+    "importPath": "fux/src/decorators/mount.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 6,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 60,
+    "kind": "function",
+    "static": true,
+    "variation": null,
+    "name": "decorateHook",
+    "memberof": "src/decorators/mount.js",
+    "longname": "src/decorators/mount.js~decorateHook",
+    "access": null,
+    "export": false,
+    "importPath": "fux/src/decorators/mount.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 10,
+    "undocument": true,
+    "params": [
+      {
+        "name": "targets",
+        "types": [
+          "*"
+        ]
+      },
+      {
+        "name": "targetComponent",
+        "types": [
+          "*"
+        ]
+      },
+      {
+        "name": "hookName",
+        "types": [
+          "*"
+        ]
+      }
+    ],
+    "return": {
+      "types": [
+        "*"
+      ]
+    },
+    "generator": false
+  },
+  {
+    "__docId__": 61,
+    "kind": "function",
+    "static": true,
+    "variation": null,
+    "name": "decorateChildren",
+    "memberof": "src/decorators/mount.js",
+    "longname": "src/decorators/mount.js~decorateChildren",
+    "access": null,
+    "export": false,
+    "importPath": "fux/src/decorators/mount.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 21,
+    "undocument": true,
+    "params": [
+      {
+        "name": "cache",
+        "types": [
+          "*"
+        ]
+      },
+      {
+        "name": "targets",
+        "types": [
+          "*"
+        ]
+      },
+      {
+        "name": "vnode",
+        "types": [
+          "*"
+        ]
+      }
+    ],
+    "return": {
+      "types": [
+        "*"
+      ]
+    },
+    "generator": false
+  },
+  {
+    "__docId__": 62,
+    "kind": "function",
+    "static": true,
+    "variation": null,
+    "name": "decorateNode",
+    "memberof": "src/decorators/mount.js",
+    "longname": "src/decorators/mount.js~decorateNode",
+    "access": null,
+    "export": false,
+    "importPath": "fux/src/decorators/mount.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 25,
+    "undocument": true,
+    "params": [
+      {
+        "name": "cache",
+        "types": [
+          "*"
+        ]
+      },
+      {
+        "name": "vnode",
+        "types": [
+          "*"
+        ]
+      },
+      {
+        "name": "targets",
+        "types": [
+          "*"
+        ]
+      }
+    ],
+    "return": {
+      "types": [
+        "*"
+      ]
+    },
+    "generator": false
+  },
+  {
+    "__docId__": 63,
+    "kind": "function",
+    "static": true,
+    "variation": null,
+    "name": "mount",
+    "memberof": "src/decorators/mount.js",
+    "longname": "src/decorators/mount.js~mount",
+    "access": null,
+    "export": true,
+    "importPath": "fux/src/decorators/mount.js",
+    "importStyle": "mount",
+    "description": null,
+    "lineNumber": 41,
+    "undocument": true,
+    "params": [
+      {
+        "name": "targets",
+        "types": [
+          "*"
+        ]
+      },
+      {
+        "name": "rawComponent",
+        "types": [
+          "*"
+        ]
+      }
+    ],
+    "return": {
+      "types": [
+        "*"
+      ]
+    },
+    "generator": false
+  },
+  {
+    "__docId__": 64,
+    "kind": "file",
+    "static": true,
+    "variation": null,
+    "name": "src/decorators/styler.js",
+    "memberof": null,
+    "longname": "src/decorators/styler.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1,
+    "content": "import inflection from 'inflection';\nimport { vnode as element } from 'deku';\n\nimport normalize from './../utils/normalizeComponent';\n\nconst { isText, isEmpty }  = element;\nconst toDash = x => inflection.underscore(x).split('_').join('-');\n\nfunction decorateChildren(vnode) {\n  if(isText(vnode) || isEmpty(vnode) || !vnode.children) return vnode;\n  const children = vnode.children.map(child => decorateVnode(child));\n\n  return Object.assign({}, vnode, { children });\n}\n\nfunction decorateVnode(vnode) {\n  if(isText(vnode) || isEmpty(vnode)) return vnode;\n\n  const decoratedNode = decorateChildren(vnode);\n\n  if(!vnode.attributes || !vnode.attributes.style)\n    return decoratedNode;\n\n  const rule = Object.keys(vnode.attributes.style)\n    .map(key => `${toDash(key)}:${vnode.attributes.style[ key ]};`)\n    .join('');\n\n  const attributes = Object.assign({}, decoratedNode.attributes, { style: rule });\n\n  return Object.assign({}, decoratedNode, { attributes });\n}\n\n\nconst styler = () => rawComponent => {\n  const component = normalize(rawComponent);\n\n  function render(model) {\n    const vnode = component.render(model);\n\n    return decorateVnode(vnode);\n  }\n\n  return Object.assign({}, component, { render });\n};\n\nexport default styler;\n"
+  },
+  {
+    "__docId__": 65,
+    "kind": "variable",
+    "static": true,
+    "variation": null,
+    "name": "isText",
+    "memberof": "src/decorators/styler.js",
+    "longname": "src/decorators/styler.js~isText",
+    "access": null,
+    "export": false,
+    "importPath": "fux/src/decorators/styler.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 6,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 66,
+    "kind": "variable",
+    "static": true,
+    "variation": null,
+    "name": "toDash",
+    "memberof": "src/decorators/styler.js",
+    "longname": "src/decorators/styler.js~toDash",
+    "access": null,
+    "export": false,
+    "importPath": "fux/src/decorators/styler.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 7,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 67,
+    "kind": "function",
+    "static": true,
+    "variation": null,
+    "name": "decorateChildren",
+    "memberof": "src/decorators/styler.js",
+    "longname": "src/decorators/styler.js~decorateChildren",
+    "access": null,
+    "export": false,
+    "importPath": "fux/src/decorators/styler.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 9,
+    "undocument": true,
+    "params": [
+      {
+        "name": "vnode",
+        "types": [
+          "*"
+        ]
+      }
+    ],
+    "return": {
+      "types": [
+        "*"
+      ]
+    },
+    "generator": false
+  },
+  {
+    "__docId__": 68,
+    "kind": "function",
+    "static": true,
+    "variation": null,
+    "name": "decorateVnode",
+    "memberof": "src/decorators/styler.js",
+    "longname": "src/decorators/styler.js~decorateVnode",
+    "access": null,
+    "export": false,
+    "importPath": "fux/src/decorators/styler.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 16,
+    "undocument": true,
+    "params": [
+      {
+        "name": "vnode",
+        "types": [
+          "*"
+        ]
+      }
+    ],
+    "return": {
+      "types": [
+        "*"
+      ]
+    },
+    "generator": false
+  },
+  {
+    "__docId__": 69,
+    "kind": "variable",
+    "static": true,
+    "variation": null,
+    "name": "styler",
+    "memberof": "src/decorators/styler.js",
+    "longname": "src/decorators/styler.js~styler",
+    "access": null,
+    "export": true,
+    "importPath": "fux/src/decorators/styler.js",
+    "importStyle": "styler",
+    "description": null,
+    "lineNumber": 34,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 70,
+    "kind": "file",
+    "static": true,
+    "variation": null,
+    "name": "src/index.js",
+    "memberof": null,
+    "longname": "src/index.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1,
+    "content": "import { element } from 'deku';\nimport rawDecorators from './decorators';\nimport scopes from './scopes';\nimport curry from './utils/curry.js';\nimport { $rep, $add } from './Patch';\n\nimport createRenderSubject from './utils/createRenderSubject';\nimport decorateComponent from './utils/decorateComponent';\nimport choke from './utils/choke';\nimport cycle from './utils/cycle';\nimport patch from './utils/patch';\nimport mapObj from '@f/map-obj';\nimport dom from './views/dom';\n\n/**\n * @see http://dekujs.github.io/deku/docs/basics/components.html#model\n * @typedef {Object} model\n * @property {Map<string, any>} model.props\n * @property {string} model.path - unique path to the component\n * @property {Context} model.context\n * @property {Array<vnode>} model.children\n */\n\n/**\n * @see http://dekujs.github.io/deku/docs/basics/components.html\n * @typedef {Object} Component\n * @property {function(model: model): vnode} Component.render\n * @property {function(model: model)} Component.onCreate\n * @property {function(model: model)} Component.onUpdate\n * @property {function(model: model)} Component.onRemove\n */\n\n/**\n * @see http://dekujs.github.io/deku/docs/basics/elements.html\n * @typedef {Object} vnode\n * @property {string|Component} vnode.type\n * @property {Map<string, any>} vnode.attributes\n * @property {Array<vnode>} vnode.children\n */\n\n/**\n * @see https://github.com/Reactive-Extensions/RxJS/blob/master/doc/gettingstarted/subjects.md\n * @typedef {Object} Subject\n * @property {function} Subject.subscribe\n * @property {function(val: any)} Subject.onNext\n\n */\n\n/**\n * curried decorators\n * @private\n */\n\nconst decorators = mapObj(decorator => curry(decorator), rawDecorators);\n\n/**\n * curried decorateComponent\n * @private\n */\n\nconst decorate = decorateComponent;\n\n/**\n * exported helper\n * @private\n */\n\nconst helper = {\n  $rep,\n  $add,\n  choke,\n  cycle,\n  patch\n};\n\nconst views = {\n  dom\n};\n\n/**\n * jsx compatible element function.\n * @external {h} http://dekujs.github.io/deku/docs/api/element.html\n */\n\nconst h = element;\n\nexport {\n  scopes,\n  views,\n  decorators,\n  decorate,\n  helper,\n  createRenderSubject,\n  h\n};\n"
+  },
+  {
+    "__docId__": 71,
+    "kind": "variable",
+    "static": true,
+    "variation": null,
+    "name": "views",
+    "memberof": "src/index.js",
+    "longname": "src/index.js~views",
+    "access": null,
+    "export": true,
+    "importPath": "fux/src/index.js",
+    "importStyle": "{views}",
+    "description": null,
+    "lineNumber": 76,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 72,
+    "kind": "typedef",
+    "static": true,
+    "variation": null,
+    "name": "model",
+    "memberof": "src/index.js",
+    "longname": "src/index.js~model",
+    "access": null,
+    "description": "",
+    "see": [
+      "http://dekujs.github.io/deku/docs/basics/components.html#model"
+    ],
+    "properties": [
+      {
+        "nullable": null,
+        "types": [
+          "Map<string, any>"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "model.props",
+        "description": ""
+      },
+      {
+        "nullable": null,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "model.path",
+        "description": "unique path to the component"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Context"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "model.context",
+        "description": ""
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Array<vnode>"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "model.children",
+        "description": ""
+      }
+    ],
+    "type": {
+      "types": [
+        "Object"
+      ],
+      "optional": false,
+      "name": "model"
+    }
+  },
+  {
+    "__docId__": 73,
+    "kind": "typedef",
+    "static": true,
+    "variation": null,
+    "name": "Component",
+    "memberof": "src/index.js",
+    "longname": "src/index.js~Component",
+    "access": null,
+    "description": "",
+    "see": [
+      "http://dekujs.github.io/deku/docs/basics/components.html"
+    ],
+    "properties": [
+      {
+        "nullable": null,
+        "types": [
+          "function(model: model): vnode"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "Component.render",
+        "description": ""
+      },
+      {
+        "nullable": null,
+        "types": [
+          "function(model: model)"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "Component.onCreate",
+        "description": ""
+      },
+      {
+        "nullable": null,
+        "types": [
+          "function(model: model)"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "Component.onUpdate",
+        "description": ""
+      },
+      {
+        "nullable": null,
+        "types": [
+          "function(model: model)"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "Component.onRemove",
+        "description": ""
+      }
+    ],
+    "type": {
+      "types": [
+        "Object"
+      ],
+      "optional": false,
+      "name": "Component"
+    }
+  },
+  {
+    "__docId__": 74,
+    "kind": "typedef",
+    "static": true,
+    "variation": null,
+    "name": "vnode",
+    "memberof": "src/index.js",
+    "longname": "src/index.js~vnode",
+    "access": null,
+    "description": "",
+    "see": [
+      "http://dekujs.github.io/deku/docs/basics/elements.html"
+    ],
+    "properties": [
+      {
+        "nullable": null,
+        "types": [
+          "string",
+          "Component"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "vnode.type",
+        "description": ""
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Map<string, any>"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "vnode.attributes",
+        "description": ""
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Array<vnode>"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "vnode.children",
+        "description": ""
+      }
+    ],
+    "type": {
+      "types": [
+        "Object"
+      ],
+      "optional": false,
+      "name": "vnode"
+    }
+  },
+  {
+    "__docId__": 75,
+    "kind": "typedef",
+    "static": true,
+    "variation": null,
+    "name": "Subject",
+    "memberof": "src/index.js",
+    "longname": "src/index.js~Subject",
+    "access": null,
+    "description": "",
+    "see": [
+      "https://github.com/Reactive-Extensions/RxJS/blob/master/doc/gettingstarted/subjects.md"
+    ],
+    "properties": [
+      {
+        "nullable": null,
+        "types": [
+          "function"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "Subject.subscribe",
+        "description": ""
+      },
+      {
+        "nullable": null,
+        "types": [
+          "function(val: any)"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "Subject.onNext",
+        "description": ""
+      }
+    ],
+    "type": {
+      "types": [
+        "Object"
+      ],
+      "optional": false,
+      "name": "Subject"
+    }
+  },
+  {
+    "__docId__": 76,
+    "kind": "variable",
+    "static": true,
+    "variation": null,
+    "name": "decorators",
+    "memberof": "src/index.js",
+    "longname": "src/index.js~decorators",
+    "access": "private",
+    "export": true,
+    "importPath": "fux/src/index.js",
+    "importStyle": "{decorators}",
+    "description": "curried decorators",
+    "lineNumber": 54,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 77,
+    "kind": "variable",
+    "static": true,
+    "variation": null,
+    "name": "decorate",
+    "memberof": "src/index.js",
+    "longname": "src/index.js~decorate",
+    "access": "private",
+    "export": true,
+    "importPath": "fux/src/index.js",
+    "importStyle": "{decorate}",
+    "description": "curried decorateComponent",
+    "lineNumber": 61,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 78,
+    "kind": "variable",
+    "static": true,
+    "variation": null,
+    "name": "helper",
+    "memberof": "src/index.js",
+    "longname": "src/index.js~helper",
+    "access": "private",
+    "export": true,
+    "importPath": "fux/src/index.js",
+    "importStyle": "{helper}",
+    "description": "exported helper",
+    "lineNumber": 68,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 79,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "h",
+    "externalLink": "http://dekujs.github.io/deku/docs/api/element.html",
+    "memberof": "src/index.js",
+    "longname": "src/index.js~h",
+    "access": null,
+    "description": "jsx compatible element function.",
+    "lineNumber": 85
+  },
+  {
+    "__docId__": 80,
+    "kind": "file",
+    "static": true,
+    "variation": null,
+    "name": "src/scopes/combiner.js",
+    "memberof": null,
+    "longname": "src/scopes/combiner.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1,
+    "content": "import Immutable from 'immutable';\nimport t from 'tcomb';\nimport flyd from 'flyd';\n\nimport zipObj from '@f/zip-obj';\nimport curry from './../utils/curry';\n\nimport Context from './../Context';\nimport JSONPointer from './../JSONPointer';\n\nconst slicePath     = patch => Object.assign({}, patch, { path: patch.path.slice(1) });\nconst stringifyPath = patch => Object.assign({}, patch, { path: patch.path.toRFC() });\nconst parsePath     = patch => Object.assign({}, patch, { path: JSONPointer.ofString(patch.path) });\n\nconst filterPatchSet = curry((name, patchSet) => patchSet\n  .map(parsePath)\n  .filter(patch => patch.path.first() === name)\n  .map(slicePath)\n  .map(stringifyPath));\n\nfunction readCtx(names, stores) {\n  const values = stores.map(store => store());\n  const stateMap = zipObj(names, values.map(ctx => ctx.state));\n  const typeMap = zipObj(names, values.map(ctx => ctx.type));\n\n  return new Context({\n    state: Immutable.Map(stateMap),\n    type:  t.struct(typeMap)\n  });\n}\n\nfunction createCombine(keys) {\n  return function(...args) {\n    // args = [input0, input1, ...inputN, self, updated]\n    return readCtx(keys, args.slice(0, 2));\n  };\n}\n\n\n/**\n * combiner scope factory\n * represents map of (sub)scopes.\n * @param {Map<string, ScopeFactory'>} scopeMap - the routing map\n * @return {Scope}\n */\n\nexport default function combiner(scopeMap, input) {\n  const names     = Object.keys(scopeMap);\n  const factories = names.map(name => scopeMap[ name ]);\n  const inputs    = names.map(name => flyd.map(filterPatchSet(name), input));\n  const stores    = factories.map((f, i) => f(inputs[ i ]));\n  const combineStreams  = createCombine(names);\n\n  return flyd.combine(combineStreams, stores);\n}\n"
+  },
+  {
+    "__docId__": 81,
+    "kind": "variable",
+    "static": true,
+    "variation": null,
+    "name": "slicePath",
+    "memberof": "src/scopes/combiner.js",
+    "longname": "src/scopes/combiner.js~slicePath",
+    "access": null,
+    "export": false,
+    "importPath": "fux/src/scopes/combiner.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 11,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 82,
+    "kind": "variable",
+    "static": true,
+    "variation": null,
+    "name": "stringifyPath",
+    "memberof": "src/scopes/combiner.js",
+    "longname": "src/scopes/combiner.js~stringifyPath",
+    "access": null,
+    "export": false,
+    "importPath": "fux/src/scopes/combiner.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 12,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 83,
+    "kind": "variable",
+    "static": true,
+    "variation": null,
+    "name": "parsePath",
+    "memberof": "src/scopes/combiner.js",
+    "longname": "src/scopes/combiner.js~parsePath",
+    "access": null,
+    "export": false,
+    "importPath": "fux/src/scopes/combiner.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 13,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 84,
+    "kind": "variable",
+    "static": true,
+    "variation": null,
+    "name": "filterPatchSet",
+    "memberof": "src/scopes/combiner.js",
+    "longname": "src/scopes/combiner.js~filterPatchSet",
+    "access": null,
+    "export": false,
+    "importPath": "fux/src/scopes/combiner.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 15,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 85,
+    "kind": "function",
+    "static": true,
+    "variation": null,
+    "name": "readCtx",
+    "memberof": "src/scopes/combiner.js",
+    "longname": "src/scopes/combiner.js~readCtx",
+    "access": null,
+    "export": false,
+    "importPath": "fux/src/scopes/combiner.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 21,
+    "undocument": true,
+    "params": [
+      {
+        "name": "names",
+        "types": [
+          "*"
+        ]
+      },
+      {
+        "name": "stores",
+        "types": [
+          "*"
+        ]
+      }
+    ],
+    "return": {
+      "types": [
+        "*"
+      ]
+    },
+    "generator": false
+  },
+  {
+    "__docId__": 86,
+    "kind": "function",
+    "static": true,
+    "variation": null,
+    "name": "createCombine",
+    "memberof": "src/scopes/combiner.js",
+    "longname": "src/scopes/combiner.js~createCombine",
+    "access": null,
+    "export": false,
+    "importPath": "fux/src/scopes/combiner.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 32,
+    "undocument": true,
+    "params": [
+      {
+        "name": "keys",
+        "types": [
+          "*"
+        ]
+      }
+    ],
+    "return": {
+      "types": [
+        "*"
+      ]
+    },
+    "generator": false
+  },
+  {
+    "__docId__": 87,
+    "kind": "function",
+    "static": true,
+    "variation": null,
+    "name": "combiner",
+    "memberof": "src/scopes/combiner.js",
+    "longname": "src/scopes/combiner.js~combiner",
+    "access": null,
+    "export": true,
+    "importPath": "fux/src/scopes/combiner.js",
+    "importStyle": "combiner",
+    "description": "combiner scope factory\nrepresents map of (sub)scopes.",
+    "lineNumber": 47,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "Map<string, ScopeFactory'>"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "scopeMap",
+        "description": "the routing map"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Scope"
+      ],
+      "spread": false,
+      "description": ""
+    },
+    "generator": false
+  },
+  {
+    "__docId__": 88,
+    "kind": "file",
+    "static": true,
+    "variation": null,
+    "name": "src/scopes/fragment.js",
+    "memberof": null,
+    "longname": "src/scopes/fragment.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1,
+    "content": "import flyd from 'flyd';\nimport filter from 'flyd/module/filter';\nimport Context from './../Context';\nimport value from './value';\n\nconst getFragment = () => location.hash.slice(1);\n\nfunction fragmentValue(input) {\n  const output = flyd.stream(getFragment());\n\n  window.addEventListener('hashchange', function() {\n    const current = getFragment();\n\n    if(output() === current) return;\n    output(current);\n  });\n\n  flyd.on(function(fragmentStr) {\n    if(output() === fragmentStr) return;\n    location.hash = '#'.concat(fragmentStr);\n    output(fragmentStr);\n  }, input);\n\n  return output;\n}\n\nconst createCtx = val => Context.ofState({ value: val });\n\n\n/**\n * fragment scope factory\n * represents value of fragment identifier.\n * Json structure:\n * \t{\n * \t\tvalue: String\n *  }\n * @param {Object} opts - not used\n * @param {Scope} input - input stream\n * @return {Scope}\n */\n\nfunction fragment(opts, input) {\n  const filteredInput = filter(patchSet => patchSet.length !== 0, input);\n  const valueStream = value({ value: getFragment() }, filteredInput);\n  const fragmentInput = flyd.map(ctx => ctx.get('/value'), valueStream);\n  const fragmentStream = fragmentValue(fragmentInput);\n  const output = flyd.map(fragmentStr => createCtx(fragmentStr), fragmentStream);\n\n  return output;\n}\n\nexport default fragment;\n"
+  },
+  {
+    "__docId__": 89,
+    "kind": "variable",
+    "static": true,
+    "variation": null,
+    "name": "getFragment",
+    "memberof": "src/scopes/fragment.js",
+    "longname": "src/scopes/fragment.js~getFragment",
+    "access": null,
+    "export": false,
+    "importPath": "fux/src/scopes/fragment.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 6,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 90,
+    "kind": "function",
+    "static": true,
+    "variation": null,
+    "name": "fragmentValue",
+    "memberof": "src/scopes/fragment.js",
+    "longname": "src/scopes/fragment.js~fragmentValue",
+    "access": null,
+    "export": false,
+    "importPath": "fux/src/scopes/fragment.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 8,
+    "undocument": true,
+    "params": [
+      {
+        "name": "input",
+        "types": [
+          "*"
+        ]
+      }
+    ],
+    "return": {
+      "types": [
+        "*"
+      ]
+    },
+    "generator": false
+  },
+  {
+    "__docId__": 91,
+    "kind": "variable",
+    "static": true,
+    "variation": null,
+    "name": "createCtx",
+    "memberof": "src/scopes/fragment.js",
+    "longname": "src/scopes/fragment.js~createCtx",
+    "access": null,
+    "export": false,
+    "importPath": "fux/src/scopes/fragment.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 27,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 92,
+    "kind": "function",
+    "static": true,
+    "variation": null,
+    "name": "fragment",
+    "memberof": "src/scopes/fragment.js",
+    "longname": "src/scopes/fragment.js~fragment",
+    "access": null,
+    "export": true,
+    "importPath": "fux/src/scopes/fragment.js",
+    "importStyle": "fragment",
+    "description": "fragment scope factory\nrepresents value of fragment identifier.\nJson structure:\n\t{\n\t\tvalue: String\n }",
+    "lineNumber": 42,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "Object"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "opts",
+        "description": "not used"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Scope"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "input",
+        "description": "input stream"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Scope"
+      ],
+      "spread": false,
+      "description": ""
+    },
+    "generator": false
+  },
+  {
+    "__docId__": 93,
+    "kind": "file",
+    "static": true,
+    "variation": null,
+    "name": "src/scopes/index.js",
+    "memberof": null,
+    "longname": "src/scopes/index.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1,
+    "content": "import _value from './value';\nimport _fragment from './fragment';\nimport _combiner from './combiner';\nimport flyd from 'flyd';\n\nconst wrapFactory = f => opts => input => f(opts, input);\n\nconst value = wrapFactory(_value);\nconst fragment = wrapFactory(_fragment);\nconst combiner = wrapFactory(_combiner);\n\nwindow.flyd  = flyd;\n\n\n/**\n * scope stream\n * - stream representation of json data that (may) change\n * - depends on input stream\n * - inputs are PatchActions\n * - outputs are Contexts\n * - flyd stream\n * @see https://github.com/paldepind/flyd#flydstream\n * @typedef {function(patchAction: List<Patch>) } Scope\n */\n\n/**\n * scope factory\n * - creates scope, who listen on input\n * - curried: opts -> inputStream -> scope\n * @typedef {function(options: Object, input: Scope): Scope} ScopeFactory\n */\n\n /**\n  * scope factory with bound options\n  * @typedef {function(input: Scope): Scope} ScopeFactory'\n  */\n\nexport default {\n  value,\n  fragment,\n  combiner\n};\n"
+  },
+  {
+    "__docId__": 94,
+    "kind": "variable",
+    "static": true,
+    "variation": null,
+    "name": "wrapFactory",
+    "memberof": "src/scopes/index.js",
+    "longname": "src/scopes/index.js~wrapFactory",
+    "access": null,
+    "export": false,
+    "importPath": "fux/src/scopes/index.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 6,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 95,
+    "kind": "variable",
+    "static": true,
+    "variation": null,
+    "name": "value",
+    "memberof": "src/scopes/index.js",
+    "longname": "src/scopes/index.js~value",
+    "access": null,
+    "export": false,
+    "importPath": "fux/src/scopes/index.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 8,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 96,
+    "kind": "variable",
+    "static": true,
+    "variation": null,
+    "name": "fragment",
+    "memberof": "src/scopes/index.js",
+    "longname": "src/scopes/index.js~fragment",
+    "access": null,
+    "export": false,
+    "importPath": "fux/src/scopes/index.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 9,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 97,
+    "kind": "variable",
+    "static": true,
+    "variation": null,
+    "name": "combiner",
+    "memberof": "src/scopes/index.js",
+    "longname": "src/scopes/index.js~combiner",
+    "access": null,
+    "export": false,
+    "importPath": "fux/src/scopes/index.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 10,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 98,
+    "kind": "typedef",
+    "static": true,
+    "variation": null,
+    "name": "Scope",
+    "memberof": "src/scopes/index.js",
+    "longname": "src/scopes/index.js~Scope",
+    "access": null,
+    "description": "scope stream\n- stream representation of json data that (may) change\n- depends on input stream\n- inputs are PatchActions\n- outputs are Contexts\n- flyd stream",
+    "see": [
+      "https://github.com/paldepind/flyd#flydstream"
+    ],
+    "type": {
+      "types": [
+        "function(patchAction: List<Patch>) "
+      ],
+      "optional": false,
+      "name": "Scope"
+    }
+  },
+  {
+    "__docId__": 99,
+    "kind": "typedef",
+    "static": true,
+    "variation": null,
+    "name": "ScopeFactory",
+    "memberof": "src/scopes/index.js",
+    "longname": "src/scopes/index.js~ScopeFactory",
+    "access": null,
+    "description": "scope factory\n- creates scope, who listen on input\n- curried: opts -> inputStream -> scope",
+    "type": {
+      "types": [
+        "function(options: Object, input: Scope): Scope"
+      ],
+      "optional": false,
+      "name": "ScopeFactory"
+    }
+  },
+  {
+    "__docId__": 100,
+    "kind": "typedef",
+    "static": true,
+    "variation": null,
+    "name": "ScopeFactory'",
+    "memberof": "src/scopes/index.js",
+    "longname": "src/scopes/index.js~ScopeFactory'",
+    "access": null,
+    "description": "scope factory with bound options",
+    "lineNumber": 38,
+    "type": {
+      "types": [
+        "function(input: Scope): Scope"
+      ],
+      "optional": false,
+      "name": "ScopeFactory'"
+    }
+  },
+  {
+    "__docId__": 101,
+    "kind": "file",
+    "static": true,
+    "variation": null,
+    "name": "src/scopes/value.js",
+    "memberof": null,
+    "longname": "src/scopes/value.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1,
+    "content": "import flyd from 'flyd';\n\nimport Context from './../Context';\n\n/**\n * value scope factory\n * Scope will update and emit value on every patch action.\n * @param {Object} init - init value as plain object\n * @param {stream} input - input flyd stream\n * @return {Scope}\n */\nfunction value(init, input) {\n  let current = Context.ofState(init);\n  const output = flyd.stream(current);\n\n  flyd.on(function(patchSet) {\n    if(patchSet.length === 0) return;\n    current = current.update(patchSet);\n    output(current);\n  }, input);\n\n  return output;\n}\nexport default value;\n"
+  },
+  {
+    "__docId__": 102,
+    "kind": "function",
+    "static": true,
+    "variation": null,
+    "name": "value",
+    "memberof": "src/scopes/value.js",
+    "longname": "src/scopes/value.js~value",
+    "access": null,
+    "export": true,
+    "importPath": "fux/src/scopes/value.js",
+    "importStyle": "value",
+    "description": "value scope factory\nScope will update and emit value on every patch action.",
+    "lineNumber": 12,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "Object"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "init",
+        "description": "init value as plain object"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "stream"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "input",
+        "description": "input flyd stream"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Scope"
+      ],
+      "spread": false,
+      "description": ""
+    },
+    "generator": false
+  },
+  {
+    "__docId__": 103,
+    "kind": "file",
+    "static": true,
+    "variation": null,
+    "name": "src/state/index.js",
+    "memberof": null,
+    "longname": "src/state/index.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1,
+    "content": "import t from 'tcomb';\nimport Immutable from 'immutable';\n\nexport const is = {\n  Irreducible: x => t.String.is(x) || t.Number.is(x) || t.Boolean.is(x) || t.Nil.is(x),\n  Object:      x => t.Object.is(x),\n  Array:       x => t.Array.is(x),\n  Map:         x => Immutable.Map.isMap(x),\n  List:        x => Immutable.List.isList(x)\n};\n\nexport function box(val) {\n  if(is.Irreducible(val)) return val;\n  if(is.Array(val)) return Immutable.List(val).map(e => box(e));\n  if(is.Object(val)) return Immutable.Map(val).map(e => box(e));\n\n  throw new Error('Value is Function...');\n}\n\nexport function unbox(state) {\n  if(is.Map(state) || is.List(state)) return state.map(e => unbox(e)).toJS();\n  return state;\n}\n\nexport function get(state, pointer, notFound = null) {\n  if(pointer.size() === 0) return state;\n\n  if(is.Irreducible(state)) return notFound;\n\n  const nextState = state.get(pointer.first(), notFound);\n  const nextPointer = pointer.slice(1);\n\n  return get(nextState, nextPointer, notFound);\n}\n"
+  },
+  {
+    "__docId__": 104,
+    "kind": "variable",
+    "static": true,
+    "variation": null,
+    "name": "is",
+    "memberof": "src/state/index.js",
+    "longname": "src/state/index.js~is",
+    "access": null,
+    "export": true,
+    "importPath": "fux/src/state/index.js",
+    "importStyle": "{is}",
+    "description": null,
+    "lineNumber": 4,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 105,
+    "kind": "function",
+    "static": true,
+    "variation": null,
+    "name": "box",
+    "memberof": "src/state/index.js",
+    "longname": "src/state/index.js~box",
+    "access": null,
+    "export": true,
+    "importPath": "fux/src/state/index.js",
+    "importStyle": "{box}",
+    "description": null,
+    "lineNumber": 12,
+    "undocument": true,
+    "params": [
+      {
+        "name": "val",
+        "types": [
+          "*"
+        ]
+      }
+    ],
+    "return": {
+      "types": [
+        "*"
+      ]
+    },
+    "generator": false
+  },
+  {
+    "__docId__": 106,
+    "kind": "function",
+    "static": true,
+    "variation": null,
+    "name": "unbox",
+    "memberof": "src/state/index.js",
+    "longname": "src/state/index.js~unbox",
+    "access": null,
+    "export": true,
+    "importPath": "fux/src/state/index.js",
+    "importStyle": "{unbox}",
+    "description": null,
+    "lineNumber": 20,
+    "undocument": true,
+    "params": [
+      {
+        "name": "state",
+        "types": [
+          "*"
+        ]
+      }
+    ],
+    "return": {
+      "types": [
+        "*"
+      ]
+    },
+    "generator": false
+  },
+  {
+    "__docId__": 107,
+    "kind": "function",
+    "static": true,
+    "variation": null,
+    "name": "get",
+    "memberof": "src/state/index.js",
+    "longname": "src/state/index.js~get",
+    "access": null,
+    "export": true,
+    "importPath": "fux/src/state/index.js",
+    "importStyle": "{get}",
+    "description": null,
+    "lineNumber": 25,
+    "undocument": true,
+    "params": [
+      {
+        "name": "state",
+        "types": [
+          "*"
+        ]
+      },
+      {
+        "name": "pointer",
+        "types": [
+          "*"
+        ]
+      },
+      {
+        "name": "notFound",
+        "optional": true,
+        "types": [
+          "*"
+        ],
+        "defaultRaw": null,
+        "defaultValue": "null"
+      }
+    ],
+    "return": {
+      "types": [
+        "*"
+      ]
+    },
+    "generator": false
+  },
+  {
+    "__docId__": 108,
+    "kind": "file",
+    "static": true,
+    "variation": null,
+    "name": "src/tests/Context.js",
+    "memberof": null,
+    "longname": "src/tests/Context.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1,
+    "content": "import { expect } from 'chai';\n\nimport Context from './../Context';\nimport Transform from './../Transform';\n\ndescribe('Context', function() {\n  describe('#of', function() {\n    it('creates Context', function() {\n      const context = Context.ofState({\n        counter: 1,\n        label:   'huhu'\n      });\n\n      expect(context instanceof Context).to.equal(true);\n      expect(context.state.get('counter')).to.equal(1);\n      expect(context.state.get('label')).to.equal('huhu');\n    });\n  });\n\n  describe('#sub', function() {\n    it('creates subcontext', function() {\n      const root = Context.ofState({\n        counter: 1,\n        label:   'huhu'\n      });\n\n      const sub = root.sub({\n        foo: '/counter',\n        bar: '/label'\n      });\n\n      expect(sub.state.foo).to.equal(root.state.counter);\n      expect(sub.state.bar).to.equal(root.state.label);\n    });\n  });\n\n  describe('#get', function() {\n    it('returns value', function() {\n      const root = Context.ofState({\n        foo: { bar: 1 },\n        baz: 'huhu'\n      });\n\n      expect(root.get('/baz')).to.equal('huhu');\n      expect(root.get('/foo/bar')).to.equal(1);\n    });\n  });\n\n  describe('#changed', function() {\n    it('empty', function() {\n      const a = Context.ofState();\n      const b = Context.ofState();\n      const c = Context.ofState({ i: 4 });\n\n\n      expect(a.changed(b)).to.equal(false);\n      expect(a.changed(c)).to.equal(true);\n    });\n\n    it('changed state', function() {\n      const a = Context.ofState({ i: 4 });\n      const b = Context.ofState({ i: 5 });\n\n      expect(a.changed(b)).to.equal(true);\n    });\n\n    it('changed Transform', function() {\n      const a = Context\n        .ofState({ i: 4 })\n        .sub(Transform.ofTargets({ i: '/foo' }));\n      const b = Context\n        .ofState({ i: 5 })\n        .sub(Transform.ofTargets({ i: '/bar' }));\n\n      expect(a.changed(b)).to.equal(true);\n    });\n  });\n});\n"
+  },
+  {
+    "__docId__": 109,
+    "kind": "file",
+    "static": true,
+    "variation": null,
+    "name": "src/tests/Transform.js",
+    "memberof": null,
+    "longname": "src/tests/Transform.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1,
+    "content": "import { expect } from 'chai';\n\nimport Transform from './../Transform';\nimport JSONPointer from './../JSONPointer';\n\n// const createCheck = (T, value) => () => T(value);\n\ndescribe('Transform', function() {\n  describe('#create', function() {\n    it('creates Transform', function() {\n      const transform = Transform.ofTargets({ foo: '/bar' });\n\n      expect(transform instanceof Transform).to.equal(true);\n      expect(transform.isIdentity()).to.equal(false);\n    });\n\n    it('empty call creates identity', function() {\n      const transform = Transform.ofTargets();\n\n      expect(transform instanceof Transform).to.equal(true);\n      expect(transform.isIdentity()).to.equal(true);\n    });\n  });\n\n  describe('#sub', function() {\n    it('sub returns Transform', function() {\n      const rootTransform = Transform.ofTargets({\n        a: '/foo/aaa',\n        b: '/bar/bbb'\n      });\n\n      const subTransform = Transform.ofTargets({\n        foo: '/a',\n        bar: '/b/someVal'\n      });\n\n      const result = rootTransform.sub(subTransform);\n      const targets = result.toTargets();\n\n      expect(result instanceof Transform).to.equal(true);\n      expect(targets.foo).to.equal('/foo/aaa');\n      expect(targets.bar).to.equal('/bar/bbb/someVal');\n    });\n  });\n\n  describe('#equals', function() {\n    it('s', function() {\n      const map = {\n        foo: '/bar'\n      };\n      const a = Transform.ofTargets(map);\n      const b = Transform.ofTargets(map);\n      const c = Transform.ofTargets({\n        foo: '/someotherprop'\n      });\n\n      expect(a.equals(b)).to.equal(true);\n      expect(a.equals(c)).to.equal(false);\n    });\n  });\n\n  describe('#apply', function() {\n    it('applies transform on pointer', function() {\n      const transform = Transform.ofTargets({\n        foo: '/aaa/bbb',\n        bar: '/ccc'\n      });\n\n      const fooPointer = JSONPointer.ofString('/foo/xxx');\n      const barPointer = JSONPointer.ofString('/bar/yyy');\n\n      const fooTransformed = transform.apply(fooPointer).toRFC();\n      const barTransformed = transform.apply(barPointer).toRFC();\n\n      expect(fooTransformed).to.equal('/aaa/bbb/xxx');\n      expect(barTransformed).to.equal('/ccc/yyy');\n    });\n  });\n});\n"
+  },
+  {
+    "__docId__": 110,
+    "kind": "file",
+    "static": true,
+    "variation": null,
+    "name": "src/tests/state.js",
+    "memberof": null,
+    "longname": "src/tests/state.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1,
+    "content": "import { expect } from 'chai';\n\nimport { box, unbox, get } from './../state';\nimport JSONPointer from './../JSONPointer';\n\ndescribe('state', function() {\n  describe('box', function() {\n    it('boxes Objects', function() {\n      const value = { foo: { bar: 'baz' } };\n      const state = box(value);\n\n      expect(state.get('foo').get('bar')).to.equal('baz');\n    });\n\n    it('boxes Array', function() {\n      const value = [1, [10, 11]];\n      const state = box(value);\n\n      expect(state.get(0)).to.equal(1);\n      expect(state.get(1).get(0)).to.equal(10);\n    });\n  });\n\n  it('#unbox', function() {\n    const unboxed = {\n      dict: { foo: 1 },\n      list: [0, 1]\n    };\n    const state = box(unboxed);\n    const value = unbox(state);\n\n    expect(value.dict.foo).to.equal(1);\n    expect(value.list[ 0 ]).to.equal(0);\n  });\n\n\n  it('#get', function() {\n    const state = box({\n      dict: { foo: 1 },\n      list: [0, 1]\n    });\n    const pointerFoo = JSONPointer.ofString('/dict/foo');\n    const pointer = JSONPointer.ofString('/list/0');\n\n    expect(get(state, pointerFoo)).to.equal(1);\n    expect(get(state, pointer)).to.equal(0);\n  });\n});\n"
+  },
+  {
+    "__docId__": 111,
+    "kind": "file",
+    "static": true,
+    "variation": null,
+    "name": "src/utils/checkType.js",
+    "memberof": null,
+    "longname": "src/utils/checkType.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1,
+    "content": "import t from 'tcomb';\n\n/**\n * tcomb type\n * @external {Type} https://github.com/gcanti/tcomb/blob/master/docs/API.md\n */\n\nconst Type = t.irreducible('Type', t.isType);\n\n/**\n * 'booleanized' check function from tcomb\n * @type Function\n * @param  {Type} T - tcomb type\n * @param  {Any} x - value to check\n * @return {Boolean}\n */\n\nconst check = t.func([Type, t.Any], t.Bool).of(function(T, x) {\n  let result = null;\n\n  /* eslint space-after-keywords: 0 */\n  try {\n    T(x);\n    result = true;\n  } catch(e) {\n    result = false;\n  }\n  return result;\n});\n\nexport default check;\n"
+  },
+  {
+    "__docId__": 112,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Type",
+    "externalLink": "https://github.com/gcanti/tcomb/blob/master/docs/API.md",
+    "memberof": "src/utils/checkType.js",
+    "longname": "src/utils/checkType.js~Type",
+    "access": null,
+    "description": "tcomb type",
+    "lineNumber": 8
+  },
+  {
+    "__docId__": 113,
+    "kind": "variable",
+    "static": true,
+    "variation": null,
+    "name": "check",
+    "memberof": "src/utils/checkType.js",
+    "longname": "src/utils/checkType.js~check",
+    "access": null,
+    "export": true,
+    "importPath": "fux/src/utils/checkType.js",
+    "importStyle": "check",
+    "description": "'booleanized' check function from tcomb",
+    "lineNumber": 18,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "Type"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "T",
+        "description": "tcomb type"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Any"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "x",
+        "description": "value to check"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Boolean"
+      ],
+      "spread": false,
+      "description": ""
+    },
+    "type": {
+      "nullable": null,
+      "types": [
+        "*"
+      ],
+      "spread": false,
+      "description": null
+    }
+  },
+  {
+    "__docId__": 114,
+    "kind": "file",
+    "static": true,
+    "variation": null,
+    "name": "src/utils/choke.js",
+    "memberof": null,
+    "longname": "src/utils/choke.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 11,
+    "content": "/**\n * creates a choke that throttle fuction calls\n *\n * The returned choke function will throttle calls with the same path argument\n * for delta milliseconds.\n *\n * @param  {Number} delta - the delta between calls [ms]\n * @return {function(path: String, f: Function)}\n */\n\nexport default function choke(delta) {\n  const cache = {};\n\n  function call(path, f) {\n    const lastTime = cache[ path ];\n    const currentTime = Date.now();\n\n    if(lastTime && currentTime - lastTime < delta) return;\n\n    cache[ path ] = Date.now();\n    f();\n  }\n\n  return call;\n}\n"
+  },
+  {
+    "__docId__": 115,
+    "kind": "function",
+    "static": true,
+    "variation": null,
+    "name": "choke",
+    "memberof": "src/utils/choke.js",
+    "longname": "src/utils/choke.js~choke",
+    "access": null,
+    "export": true,
+    "importPath": "fux/src/utils/choke.js",
+    "importStyle": "choke",
+    "description": "creates a choke that throttle fuction calls\n\nThe returned choke function will throttle calls with the same path argument\nfor delta milliseconds.",
+    "lineNumber": 11,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "Number"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "delta",
+        "description": "the delta between calls [ms]"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "function(path: String, f: Function)"
+      ],
+      "spread": false,
+      "description": ""
+    },
+    "generator": false
+  },
+  {
+    "__docId__": 116,
+    "kind": "file",
+    "static": true,
+    "variation": null,
+    "name": "src/utils/createRenderSubject.js",
+    "memberof": null,
+    "longname": "src/utils/createRenderSubject.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1,
+    "content": "import flyd from 'flyd';\nimport curry from './curry';\n\nimport { createApp as createDekuApp, element } from 'deku';\n\n/**\n * This function is used to create the render part of your app.\n * The returned Rx.Subject listen to state events.\n * State is used as context when rendering component with deku inside container.\n * All actions dispatched inside component, will be emitted from subject.\n * @param  {DOMElement} container - container dom element\n * @param  {Component} component - deku component\n * @return {Subject}\n */\n\nexport default curry(function createRenderSubject(container, component, input) {\n  const dispatchStream = flyd.stream();\n  const dispatch = val => dispatchStream(val);\n  const render = createDekuApp(container, dispatch);\n\n  flyd.on(function(ctx) {\n    const el = element(component, { __ctx: ctx.get(true) });\n\n    render(el, ctx);\n  }, input);\n\n  return dispatchStream;\n});\n"
+  },
+  {
+    "__docId__": 117,
+    "kind": "file",
+    "static": true,
+    "variation": null,
+    "name": "src/utils/curry.js",
+    "memberof": null,
+    "longname": "src/utils/curry.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1,
+    "content": "export default function(f, arity) {\n  const length = Number.isInteger(arity) ? arity : f.length;\n\n  function call(...args) {\n    if(args.length >= length) return f.apply(this, args);\n    return (...newArgs) => call(...args.concat(newArgs));\n  }\n\n  return call;\n}\n"
+  },
+  {
+    "__docId__": 118,
+    "kind": "function",
+    "static": true,
+    "variation": null,
+    "name": "curry",
+    "memberof": "src/utils/curry.js",
+    "longname": "src/utils/curry.js~curry",
+    "access": null,
+    "export": true,
+    "importPath": "fux/src/utils/curry.js",
+    "importStyle": "curry",
+    "description": null,
+    "lineNumber": 1,
+    "undocument": true,
+    "params": [
+      {
+        "name": "f",
+        "types": [
+          "*"
+        ]
+      },
+      {
+        "name": "arity",
+        "types": [
+          "*"
+        ]
+      }
+    ],
+    "return": {
+      "types": [
+        "*"
+      ]
+    },
+    "generator": false
+  },
+  {
+    "__docId__": 119,
+    "kind": "file",
+    "static": true,
+    "variation": null,
+    "name": "src/utils/cycle.js",
+    "memberof": null,
+    "longname": "src/utils/cycle.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1,
+    "content": "import flyd from 'flyd';\n\n/**\n * pipes a to b and b to a -> cycle a and b\n * @param  {Stream} a - flyd stream\n * @param  {Stream} b - flyd stream\n * @return {Stream} empty stream, use to end\n */\n\nexport default function cycle(a, b) {\n  const start = flyd.stream();\n  const streamA = a(start);\n  const streamB = b(streamA);\n\n  // flyd.on(val => console.log('a emitted:', val), streamA);\n  // flyd.on(val => console.log('b emitted:', val.get(true)), streamB);\n\n  return flyd.on(x => start(x), streamB);\n}\n"
+  },
+  {
+    "__docId__": 120,
+    "kind": "function",
+    "static": true,
+    "variation": null,
+    "name": "cycle",
+    "memberof": "src/utils/cycle.js",
+    "longname": "src/utils/cycle.js~cycle",
+    "access": null,
+    "export": true,
+    "importPath": "fux/src/utils/cycle.js",
+    "importStyle": "cycle",
+    "description": "pipes a to b and b to a -> cycle a and b",
+    "lineNumber": 10,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "Stream"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "a",
+        "description": "flyd stream"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Stream"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "b",
+        "description": "flyd stream"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Stream"
+      ],
+      "spread": false,
+      "description": "empty stream, use to end"
+    },
+    "generator": false
+  },
+  {
+    "__docId__": 121,
+    "kind": "file",
+    "static": true,
+    "variation": null,
+    "name": "src/utils/decorateComponent.js",
+    "memberof": null,
+    "longname": "src/utils/decorateComponent.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 8,
+    "content": "/**\n * decorate component\n * @param  {Array} decoration - list of component decorators\n * @param {Component} component -  the target\n * @return {Component} decorated component\n */\n\nexport default function decorate(decoration, component) {\n  console.log(decoration);\n  return decoration\n    .slice()\n    .reverse()\n    .reduce((target, decorator) => decorator(target), component);\n}\n"
+  },
+  {
+    "__docId__": 122,
+    "kind": "function",
+    "static": true,
+    "variation": null,
+    "name": "decorate",
+    "memberof": "src/utils/decorateComponent.js",
+    "longname": "src/utils/decorateComponent.js~decorate",
+    "access": null,
+    "export": true,
+    "importPath": "fux/src/utils/decorateComponent.js",
+    "importStyle": "decorate",
+    "description": "decorate component",
+    "lineNumber": 8,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "Array"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "decoration",
+        "description": "list of component decorators"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Component"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "component",
+        "description": "the target"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Component"
+      ],
+      "spread": false,
+      "description": "decorated component"
+    },
+    "generator": false
+  },
+  {
+    "__docId__": 123,
+    "kind": "file",
+    "static": true,
+    "variation": null,
+    "name": "src/utils/deepFreeze.js",
+    "memberof": null,
+    "longname": "src/utils/deepFreeze.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 7,
+    "content": "/**\n * deep freeze of Arrays and Objects\n * @param  {object} val - will be deeply freezed\n * @return {object} freezed val\n */\n\nexport default function deepFreeze(val) {\n  // Reminder: typeof [1,2] -> 'object'\n  if(typeof val !== 'object') return val;\n\n  const propNames = Object.getOwnPropertyNames(val);\n\n  propNames.forEach(name => deepFreeze(val[ name ]));\n\n  return Object.freeze(val);\n}\n"
+  },
+  {
+    "__docId__": 124,
+    "kind": "function",
+    "static": true,
+    "variation": null,
+    "name": "deepFreeze",
+    "memberof": "src/utils/deepFreeze.js",
+    "longname": "src/utils/deepFreeze.js~deepFreeze",
+    "access": null,
+    "export": true,
+    "importPath": "fux/src/utils/deepFreeze.js",
+    "importStyle": "deepFreeze",
+    "description": "deep freeze of Arrays and Objects",
+    "lineNumber": 7,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "object"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "val",
+        "description": "will be deeply freezed"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "object"
+      ],
+      "spread": false,
+      "description": "freezed val"
+    },
+    "generator": false
+  },
+  {
+    "__docId__": 125,
+    "kind": "file",
+    "static": true,
+    "variation": null,
+    "name": "src/utils/generateSpec.js",
+    "memberof": null,
+    "longname": "src/utils/generateSpec.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1,
+    "content": "import t from 'tcomb';\n\n/**\n * generate update spec for component hooks\n * @param  {function} decorator - decorator is applied on all targets\n * @param  {Array} targets - targets for decorator\n * @return {Component}\n */\n\nexport default function generateSpec(decorator, targets = ['onCreate', 'onUpdate', 'render', 'onRemove']) {\n  const spec = {};\n\n  targets.forEach(function(target) {\n    const result = decorator(target);\n\n    if(t.Nil.is(result)) return;\n\n    spec[ target ] = result;\n  });\n\n  return spec;\n}\n"
+  },
+  {
+    "__docId__": 126,
+    "kind": "function",
+    "static": true,
+    "variation": null,
+    "name": "generateSpec",
+    "memberof": "src/utils/generateSpec.js",
+    "longname": "src/utils/generateSpec.js~generateSpec",
+    "access": null,
+    "export": true,
+    "importPath": "fux/src/utils/generateSpec.js",
+    "importStyle": "generateSpec",
+    "description": "generate update spec for component hooks",
+    "lineNumber": 10,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "function"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "decorator",
+        "description": "decorator is applied on all targets"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Array"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "targets",
+        "description": "targets for decorator"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Component"
+      ],
+      "spread": false,
+      "description": ""
+    },
+    "generator": false
+  },
+  {
+    "__docId__": 127,
+    "kind": "file",
+    "static": true,
+    "variation": null,
+    "name": "src/utils/normalizeComponent.js",
+    "memberof": null,
+    "longname": "src/utils/normalizeComponent.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1,
+    "content": "import t from 'tcomb';\n\nexport default function normalize(component) {\n  if(t.Function.is(component)) return { render: component };\n\n  if(t.Object.is(component) && t.Function.is(component.render))\n    return component;\n\n  throw new TypeError('component must be function or object with render function');\n}\n"
+  },
+  {
+    "__docId__": 128,
+    "kind": "function",
+    "static": true,
+    "variation": null,
+    "name": "normalize",
+    "memberof": "src/utils/normalizeComponent.js",
+    "longname": "src/utils/normalizeComponent.js~normalize",
+    "access": null,
+    "export": true,
+    "importPath": "fux/src/utils/normalizeComponent.js",
+    "importStyle": "normalize",
+    "description": null,
+    "lineNumber": 3,
+    "undocument": true,
+    "params": [
+      {
+        "name": "component",
+        "types": [
+          "*"
+        ]
+      }
+    ],
+    "return": {
+      "types": [
+        "*"
+      ]
+    },
+    "generator": false
+  },
+  {
+    "__docId__": 129,
+    "kind": "file",
+    "static": true,
+    "variation": null,
+    "name": "src/utils/patch.js",
+    "memberof": null,
+    "longname": "src/utils/patch.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1,
+    "content": "import t from 'tcomb';\n\nexport function patch(...args) {\n  if(args.length % 2 !== 0) throw new Error('length of arguments must be even');\n\n  const pairs = args.reduce(function(current, e, i) {\n    if(i % 2 === 0) current.push([]);\n    current[ current.length - 1 ].push(e);\n\n    return current;\n  }, []);\n\n  const patchSet = pairs.map(pair => ({\n    op:    'replace',\n    path:  pair[ 0 ],\n    value: pair[ 1 ]\n  }));\n\n  return patchSet;\n}\n\nconst toPatch = (path, value) => ({\n  op: 'replace',\n  path,\n  value\n});\n\nexport default function handler(...args) {\n  if(args.length % 2 !== 0) throw new Error('length of arguments must be even');\n\n  const pairs = args.reduce(function(current, e, i) {\n    if(i % 2 === 0) current.push([]);\n    current[ current.length - 1 ].push(e);\n\n    return current;\n  }, []);\n\n  return (_, { context }) => pairs.map(function([path, value]) {\n    if(!t.Function.is(value)) return toPatch(path, value);\n\n    const currentValue = context.get(path, true);\n    const nextValue = value(currentValue);\n\n    return toPatch(path, nextValue);\n  });\n}\n"
+  },
+  {
+    "__docId__": 130,
+    "kind": "function",
+    "static": true,
+    "variation": null,
+    "name": "patch",
+    "memberof": "src/utils/patch.js",
+    "longname": "src/utils/patch.js~patch",
+    "access": null,
+    "export": true,
+    "importPath": "fux/src/utils/patch.js",
+    "importStyle": "{patch}",
+    "description": null,
+    "lineNumber": 3,
+    "undocument": true,
+    "params": [
+      {
+        "name": "args",
+        "types": [
+          "...*"
+        ],
+        "spread": true
+      }
+    ],
+    "return": {
+      "types": [
+        "*"
+      ]
+    },
+    "generator": false
+  },
+  {
+    "__docId__": 131,
+    "kind": "variable",
+    "static": true,
+    "variation": null,
+    "name": "toPatch",
+    "memberof": "src/utils/patch.js",
+    "longname": "src/utils/patch.js~toPatch",
+    "access": null,
+    "export": false,
+    "importPath": "fux/src/utils/patch.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 22,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 132,
+    "kind": "function",
+    "static": true,
+    "variation": null,
+    "name": "handler",
+    "memberof": "src/utils/patch.js",
+    "longname": "src/utils/patch.js~handler",
+    "access": null,
+    "export": true,
+    "importPath": "fux/src/utils/patch.js",
+    "importStyle": "handler",
+    "description": null,
+    "lineNumber": 28,
+    "undocument": true,
+    "params": [
+      {
+        "name": "args",
+        "types": [
+          "...*"
+        ],
+        "spread": true
+      }
+    ],
+    "return": {
+      "types": [
+        "*"
+      ]
+    },
+    "generator": false
+  },
+  {
+    "__docId__": 133,
+    "kind": "file",
+    "static": true,
+    "variation": null,
+    "name": "src/views/dom.js",
+    "memberof": null,
+    "longname": "src/views/dom.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1,
+    "content": "import flyd from 'flyd';\nimport curry from './../utils/curry';\n\nimport { createApp as createDekuApp, element } from 'deku';\n\n/**\n * This function is used to create the render part of your app.\n * The returned Rx.Subject listen to state events.\n * State is used as context when rendering component with deku inside container.\n * All actions dispatched inside component, will be emitted from subject.\n * @param  {DOMElement} container - container dom element\n * @param  {Component} component - deku component\n * @return {Subject}\n */\n\nexport default curry(function(container, component, input) {\n  const dispatchStream = flyd.stream();\n  const dispatch = val => dispatchStream(val);\n  const render = createDekuApp(container, dispatch);\n\n  flyd.on(function(ctx) {\n    const el = element(component, { __ctx: ctx.get(true) });\n\n    render(el, ctx);\n  }, input);\n\n  return dispatchStream;\n});\n"
+  },
+  {
+    "__docId__": 135,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Infinity",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Infinity",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Infinity",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 136,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "NaN",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/NaN",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~NaN",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 137,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "undefined",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~undefined",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 138,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "null",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/null",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~null",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 139,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Object",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Object",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 140,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "object",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~object",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 141,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Function",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Function",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 142,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "function",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~function",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 143,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Boolean",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Boolean",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 144,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "boolean",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~boolean",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 145,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Symbol",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Symbol",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 146,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Error",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Error",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 147,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "EvalError",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/EvalError",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~EvalError",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 148,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "InternalError",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/InternalError",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~InternalError",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 149,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "RangeError",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RangeError",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~RangeError",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 150,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "ReferenceError",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ReferenceError",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~ReferenceError",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 151,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "SyntaxError",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SyntaxError",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~SyntaxError",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 152,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "TypeError",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypeError",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~TypeError",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 153,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "URIError",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/URIError",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~URIError",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 154,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Number",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Number",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 155,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "number",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~number",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 156,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Date",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Date",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 157,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "String",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~String",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 158,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "string",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~string",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 159,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "RegExp",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~RegExp",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 160,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Array",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 161,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Int8Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Int8Array",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Int8Array",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 162,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Uint8Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint8Array",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Uint8Array",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 163,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Uint8ClampedArray",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint8ClampedArray",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Uint8ClampedArray",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 164,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Int16Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Int16Array",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Int16Array",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 165,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Uint16Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint16Array",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Uint16Array",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 166,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Int32Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Int32Array",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Int32Array",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 167,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Uint32Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint32Array",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Uint32Array",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 168,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Float32Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Float32Array",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Float32Array",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 169,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Float64Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Float64Array",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Float64Array",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 170,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Map",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Map",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 171,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Set",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Set",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 172,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "WeakMap",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakMap",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~WeakMap",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 173,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "WeakSet",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakSet",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~WeakSet",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 174,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "ArrayBuffer",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~ArrayBuffer",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 175,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "DataView",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DataView",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~DataView",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 176,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "JSON",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~JSON",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 177,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Promise",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Promise",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 178,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Generator",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Generator",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Generator",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 179,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "GeneratorFunction",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/GeneratorFunction",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~GeneratorFunction",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 180,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Reflect",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Reflect",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Reflect",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 181,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Proxy",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Proxy",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 183,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "CanvasRenderingContext2D",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D",
+    "memberof": "BuiltinExternal/WebAPIExternal.js",
+    "longname": "BuiltinExternal/WebAPIExternal.js~CanvasRenderingContext2D",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 184,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "DocumentFragment",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/API/DocumentFragment",
+    "memberof": "BuiltinExternal/WebAPIExternal.js",
+    "longname": "BuiltinExternal/WebAPIExternal.js~DocumentFragment",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 185,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Element",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/API/Element",
+    "memberof": "BuiltinExternal/WebAPIExternal.js",
+    "longname": "BuiltinExternal/WebAPIExternal.js~Element",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 186,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Event",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/API/Event",
+    "memberof": "BuiltinExternal/WebAPIExternal.js",
+    "longname": "BuiltinExternal/WebAPIExternal.js~Event",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 187,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Node",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/API/Node",
+    "memberof": "BuiltinExternal/WebAPIExternal.js",
+    "longname": "BuiltinExternal/WebAPIExternal.js~Node",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 188,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "NodeList",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/API/NodeList",
+    "memberof": "BuiltinExternal/WebAPIExternal.js",
+    "longname": "BuiltinExternal/WebAPIExternal.js~NodeList",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 189,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "XMLHttpRequest",
+    "externalLink": "https://developer.mozilla.org/en/docs/Web/API/XMLHttpRequest",
+    "memberof": "BuiltinExternal/WebAPIExternal.js",
+    "longname": "BuiltinExternal/WebAPIExternal.js~XMLHttpRequest",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 190,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "AudioContext",
+    "externalLink": "https://developer.mozilla.org/en/docs/Web/API/AudioContext",
+    "memberof": "BuiltinExternal/WebAPIExternal.js",
+    "longname": "BuiltinExternal/WebAPIExternal.js~AudioContext",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  }
+]

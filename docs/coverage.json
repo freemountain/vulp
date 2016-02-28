@@ -1,0 +1,145 @@
+{
+  "coverage": "67.3%",
+  "expectCount": 52,
+  "actualCount": 35,
+  "files": {
+    "src/Patch.js": {
+      "expectCount": 2,
+      "actualCount": 2,
+      "undocumentLines": []
+    },
+    "src/Context.js": {
+      "expectCount": 7,
+      "actualCount": 6,
+      "undocumentLines": [
+        92
+      ]
+    },
+    "src/JSONPointer/index.js": {
+      "expectCount": 11,
+      "actualCount": 9,
+      "undocumentLines": [
+        35,
+        29
+      ]
+    },
+    "src/Transform.js": {
+      "expectCount": 10,
+      "actualCount": 8,
+      "undocumentLines": [
+        42,
+        43
+      ]
+    },
+    "src/state/index.js": {
+      "expectCount": 4,
+      "actualCount": 0,
+      "undocumentLines": [
+        12,
+        25,
+        4,
+        20
+      ]
+    },
+    "src/utils/checkType.js": {
+      "expectCount": 1,
+      "actualCount": 1,
+      "undocumentLines": []
+    },
+    "src/utils/choke.js": {
+      "expectCount": 1,
+      "actualCount": 1,
+      "undocumentLines": []
+    },
+    "src/scopes/combiner.js": {
+      "expectCount": 1,
+      "actualCount": 1,
+      "undocumentLines": []
+    },
+    "src/decorators/controller.js": {
+      "expectCount": 1,
+      "actualCount": 0,
+      "undocumentLines": [
+        4
+      ]
+    },
+    "src/utils/curry.js": {
+      "expectCount": 1,
+      "actualCount": 0,
+      "undocumentLines": [
+        1
+      ]
+    },
+    "src/utils/cycle.js": {
+      "expectCount": 1,
+      "actualCount": 1,
+      "undocumentLines": []
+    },
+    "src/utils/decorateComponent.js": {
+      "expectCount": 1,
+      "actualCount": 1,
+      "undocumentLines": []
+    },
+    "src/utils/deepFreeze.js": {
+      "expectCount": 1,
+      "actualCount": 1,
+      "undocumentLines": []
+    },
+    "src/decorators/component.js": {
+      "expectCount": 1,
+      "actualCount": 1,
+      "undocumentLines": []
+    },
+    "src/scopes/fragment.js": {
+      "expectCount": 1,
+      "actualCount": 1,
+      "undocumentLines": []
+    },
+    "src/utils/generateSpec.js": {
+      "expectCount": 1,
+      "actualCount": 1,
+      "undocumentLines": []
+    },
+    "src/utils/patch.js": {
+      "expectCount": 2,
+      "actualCount": 0,
+      "undocumentLines": [
+        28,
+        3
+      ]
+    },
+    "src/decorators/mount.js": {
+      "expectCount": 1,
+      "actualCount": 0,
+      "undocumentLines": [
+        41
+      ]
+    },
+    "src/utils/normalizeComponent.js": {
+      "expectCount": 1,
+      "actualCount": 0,
+      "undocumentLines": [
+        3
+      ]
+    },
+    "src/decorators/styler.js": {
+      "expectCount": 1,
+      "actualCount": 0,
+      "undocumentLines": [
+        34
+      ]
+    },
+    "src/scopes/value.js": {
+      "expectCount": 1,
+      "actualCount": 1,
+      "undocumentLines": []
+    },
+    "src/index.js": {
+      "expectCount": 1,
+      "actualCount": 0,
+      "undocumentLines": [
+        76
+      ]
+    }
+  }
+}
