@@ -1,7 +1,8 @@
 import { h, views, scopes, decorators, helper } from './../fux';
 
 const { component, controller } = decorators;
-const btnController = { inc: helper.patch('/count', v => v + 1) };
+// const btnController = { inc: ['/count', v => v + 1] };
+const btnController = { inc: ['/count', v => v + 1] };
 
 const App = component(
   controller(btnController)

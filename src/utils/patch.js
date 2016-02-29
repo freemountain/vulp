@@ -26,6 +26,9 @@ const toPatch = (path, value) => ({
 });
 
 export default function handler(...args) {
+  const pairs = args;
+
+  /*
   if(args.length % 2 !== 0) throw new Error('length of arguments must be even');
 
   const pairs = args.reduce(function(current, e, i) {
@@ -34,6 +37,7 @@ export default function handler(...args) {
 
     return current;
   }, []);
+  */
 
   return (_, { context }) => pairs.map(function([path, value]) {
     if(!t.Function.is(value)) return toPatch(path, value);

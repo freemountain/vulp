@@ -10,7 +10,6 @@ import normalize from './../utils/normalizeComponent';
 const f = (...decoration) => rawComponent => {
   const component = normalize(rawComponent);
 
-  console.log(decoration);
   return decoration
    .slice()
    .reverse()

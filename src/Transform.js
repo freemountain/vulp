@@ -122,4 +122,6 @@ class Transform {
 
 }
 
+window.Transform = Transform;
+
 export default Transform;
