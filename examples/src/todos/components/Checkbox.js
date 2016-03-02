@@ -1,13 +1,12 @@
-import { h, helper, decorators } from './../../fux';
+import { h, decorators } from './../../fux';
 
 const { memoize, controller, component} = decorators;
-const { $rep } = helper;
 
 export default component(
   memoize(),
   controller({
-    uncheck: () => [$rep('/checked', false)],
-    check:   () => [$rep('/checked', true)]
+    uncheck: ['/checked', false],
+    check:   ['/checked', true]
   })
 )(({ context, dispatch }) => {
   const checked = context.get('/checked');

@@ -2,6 +2,7 @@ import flyd from 'flyd';
 import curry from './../utils/curry';
 
 import { createApp as createDekuApp, element } from 'deku';
+import base from './../decorators/base';
 
 /**
  * This function is used to create the render part of your app.
@@ -13,15 +14,17 @@ import { createApp as createDekuApp, element } from 'deku';
  * @return {Subject}
  */
 
-export default curry(function(container, component, input) {
+export default curry(function(container, rawComponent, input) {
   const dispatchStream = flyd.stream();
   const dispatch = val => dispatchStream(val);
+  const cache = new WeakMap();
+  const component = base(cache)(rawComponent);
   const render = createDekuApp(container, dispatch);
 
   flyd.on(function(ctx) {
     const el = element(component, { __ctx: ctx.get(true) });
 
-    render(el, ctx);
+    return render(el, ctx);
   }, input);
 
   return dispatchStream;

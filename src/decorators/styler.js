@@ -1,7 +1,7 @@
 import inflection from 'inflection';
 import { vnode as element } from 'deku';
 
-import normalize from './../utils/normalizeComponent';
+import { specDecorator } from './utils';
 
 const { isText, isEmpty }  = element;
 const toDash = x => inflection.underscore(x).split('_').join('-');
@@ -30,17 +30,16 @@ function decorateVnode(vnode) {
   return Object.assign({}, decoratedNode, { attributes });
 }
 
-
-const styler = () => rawComponent => {
-  const component = normalize(rawComponent);
-
-  function render(model) {
+const spec = {
+  deep:   false,
+  cache:  null,
+  render: function(component, model) {
     const vnode = component.render(model);
 
     return decorateVnode(vnode);
   }
-
-  return Object.assign({}, component, { render });
 };
 
-export default styler;
+const decorator = specDecorator(spec);
+
+export default () => decorator;

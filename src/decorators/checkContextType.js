@@ -1,8 +1,6 @@
-import curry from './../utils/curry';
-import generateSpec from './../utils/generateSpec';
-import normalize from './../utils/normalizeComponent';
+import { specDecorator } from './utils';
 
-function assert(T, ctx, name = 'undefinedh') {
+function assert(T, ctx, name = 'undefined') {
   const raw = ctx.get(true);
   let error = null;
 
@@ -19,19 +17,16 @@ function assert(T, ctx, name = 'undefinedh') {
   if(error) throw error;
 }
 
-function decorateHook(component, T, name) {
-  if(!component[ name ]) return null;
+export default function(T) {
+  const spec = {
+    deep:  false,
+    cache: null,
+    model: function(component, model) {
+      assert(T, model.context, component.Name);
 
-  return function(model) {
-    assert(T, model.context, component.Name);
-    return component[ name ](model);
+      return model;
+    }
   };
+
+  return specDecorator(spec);
 }
-
-export default T => rawComponent => {
-  const component = normalize(rawComponent);
-  const decorator = curry(decorateHook)(component, T);
-  const spec = generateSpec(decorator);
-
-  return Object.assign({}, component, spec);
-};

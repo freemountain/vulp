@@ -33,6 +33,6 @@ function render({ context, dispatch }) {
 export default component(
   memoize(),
   controller({
-    filterChange: e => [$rep('/filter', e.srcElement.value)]
+    filterChange: ({ event }) => ['/filter', event.srcElement.value]
   })
 )(render);

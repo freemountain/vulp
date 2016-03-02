@@ -24,6 +24,8 @@ const ChangeSet = t.irreducible('ChangeSet', function(x) {
   return t.list(t.tuple([t.String, t.Any])).is(pairs);
 });
 
+const Set = t.union([PatchSet, ChangeSet]);
+
 const normalizePatch = model => patch => {
   if(!patch.path) return patch;
   const newPatch = Object.assign({}, patch);
@@ -58,14 +60,16 @@ const createHandler = x => t.match(x,
   ChangeSet, changeSet => createChangeHandler(changeSet),
 );
 
-
 const createDispatch = (controller, model) => function(name) {
   if(!controller[ name ]) return () => null;
 
-  function dispatch(patchSet) {
-    if(t.Nil.is(patchSet) || patchSet.length === 0) return;
+  function dispatch(payload) {
+    const result = t.match(payload,
+      PatchSet, patchSet => patchSet,
+      ChangeSet, changeSet => patchUtil(changeSet)(null, model)
+    );
 
-    const normalizedPatchSet = patchSet.map(normalizePatch(model));
+    const normalizedPatchSet = result.map(normalizePatch(model));
 
     model.dispatch(normalizedPatchSet);
   }
@@ -80,11 +84,45 @@ const createDispatch = (controller, model) => function(name) {
 };
 
 
+const rootDispatch = model => function(payload) {
+  const result = t.match(payload,
+    PatchSet, patchSet => patchSet,
+    ChangeSet, changeSet => patchUtil(changeSet)(null, model)
+  ).map(normalizePatch(model));
+
+  model.dispatch(result);
+};
+
+window.trash = [rootDispatch, createDispatch];
+
+const componentDispatch = (model, controller) => function(payload) {
+  if(!t.String.is(payload)) return model.dispatch(payload);
+
+  const target = controller[ payload ];
+  const orgDispatch = model.dispatch;
+
+  const dispatch = x => t.match(x,
+    PatchSet, patchSet => orgDispatch(patchSet),
+    ChangeSet, changeSet => orgDispatch(patchUtil(changeSet)(null, model))
+  );
+
+  const handlerModel = Object.assign({}, model, { dispatch });
+  const eventModel = event => Object.assign({}, handlerModel, { event });
+
+  if(t.Nil.is(target)) throw new TypeError(`controler['${payload}'] must not be ${target}`);
+
+  return event => t.match(target,
+    t.Function, f => dispatch(f(eventModel(event))),
+    Set, set => dispatch(set)
+  );
+};
+
+
 const controllerDecorator = controller => rawComponent => {
   const component = normalizeComponent(rawComponent);
 
   function render(model) {
-    const dispatch = createDispatch(controller, model);
+    const dispatch = componentDispatch(model, controller);
     const decoratedModel = Object.assign({}, model, { dispatch });
 
     return component.render(decoratedModel);

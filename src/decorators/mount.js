@@ -1,5 +1,5 @@
 import curry from './../utils/curry';
-import normalize from './../utils/normalizeComponent';
+import { normalize } from './utils';
 import { vnode as element } from 'deku';
 import Transform from './../Transform';
 
