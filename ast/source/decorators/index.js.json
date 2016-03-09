@@ -440,6 +440,245 @@
       }
     },
     {
+      "type": "ImportDeclaration",
+      "specifiers": [
+        {
+          "type": "ImportDefaultSpecifier",
+          "local": {
+            "type": "Identifier",
+            "name": "name",
+            "range": [
+              227,
+              231
+            ],
+            "loc": {
+              "start": {
+                "line": 7,
+                "column": 7
+              },
+              "end": {
+                "line": 7,
+                "column": 11
+              }
+            }
+          },
+          "range": [
+            227,
+            231
+          ],
+          "loc": {
+            "start": {
+              "line": 7,
+              "column": 7
+            },
+            "end": {
+              "line": 7,
+              "column": 11
+            }
+          }
+        }
+      ],
+      "source": {
+        "type": "Literal",
+        "value": "./name",
+        "raw": "'./name'",
+        "range": [
+          237,
+          245
+        ],
+        "loc": {
+          "start": {
+            "line": 7,
+            "column": 17
+          },
+          "end": {
+            "line": 7,
+            "column": 25
+          }
+        }
+      },
+      "range": [
+        220,
+        246
+      ],
+      "loc": {
+        "start": {
+          "line": 7,
+          "column": 0
+        },
+        "end": {
+          "line": 7,
+          "column": 26
+        }
+      }
+    },
+    {
+      "type": "ImportDeclaration",
+      "specifiers": [
+        {
+          "type": "ImportDefaultSpecifier",
+          "local": {
+            "type": "Identifier",
+            "name": "dispatchChangeSets",
+            "range": [
+              254,
+              272
+            ],
+            "loc": {
+              "start": {
+                "line": 8,
+                "column": 7
+              },
+              "end": {
+                "line": 8,
+                "column": 25
+              }
+            }
+          },
+          "range": [
+            254,
+            272
+          ],
+          "loc": {
+            "start": {
+              "line": 8,
+              "column": 7
+            },
+            "end": {
+              "line": 8,
+              "column": 25
+            }
+          }
+        }
+      ],
+      "source": {
+        "type": "Literal",
+        "value": "./dispatchChangeSets",
+        "raw": "'./dispatchChangeSets'",
+        "range": [
+          278,
+          300
+        ],
+        "loc": {
+          "start": {
+            "line": 8,
+            "column": 31
+          },
+          "end": {
+            "line": 8,
+            "column": 53
+          }
+        }
+      },
+      "range": [
+        247,
+        301
+      ],
+      "loc": {
+        "start": {
+          "line": 8,
+          "column": 0
+        },
+        "end": {
+          "line": 8,
+          "column": 54
+        }
+      }
+    },
+    {
+      "type": "ImportDeclaration",
+      "specifiers": [
+        {
+          "type": "ImportDefaultSpecifier",
+          "local": {
+            "type": "Identifier",
+            "name": "logLifecycle",
+            "range": [
+              309,
+              321
+            ],
+            "loc": {
+              "start": {
+                "line": 9,
+                "column": 7
+              },
+              "end": {
+                "line": 9,
+                "column": 19
+              }
+            }
+          },
+          "range": [
+            309,
+            321
+          ],
+          "loc": {
+            "start": {
+              "line": 9,
+              "column": 7
+            },
+            "end": {
+              "line": 9,
+              "column": 19
+            }
+          }
+        }
+      ],
+      "source": {
+        "type": "Literal",
+        "value": "./log",
+        "raw": "'./log'",
+        "range": [
+          327,
+          334
+        ],
+        "loc": {
+          "start": {
+            "line": 9,
+            "column": 25
+          },
+          "end": {
+            "line": 9,
+            "column": 32
+          }
+        }
+      },
+      "range": [
+        302,
+        335
+      ],
+      "loc": {
+        "start": {
+          "line": 9,
+          "column": 0
+        },
+        "end": {
+          "line": 9,
+          "column": 33
+        }
+      },
+      "trailingComments": [
+        {
+          "type": "Block",
+          "value": "*\n * Higher Order Component\n * @typedef {function(component: Component): Component} HOC\n ",
+          "range": [
+            337,
+            430
+          ],
+          "loc": {
+            "start": {
+              "line": 11,
+              "column": 0
+            },
+            "end": {
+              "line": 14,
+              "column": 3
+            }
+          }
+        }
+      ]
+    },
+    {
       "type": "ExportDefaultDeclaration",
       "declaration": {
         "type": "ObjectExpression",
@@ -448,18 +687,75 @@
             "type": "Property",
             "key": {
               "type": "Identifier",
-              "name": "component",
+              "name": "name",
               "range": [
-                240,
-                249
+                451,
+                455
               ],
               "loc": {
                 "start": {
-                  "line": 9,
+                  "line": 17,
                   "column": 2
                 },
                 "end": {
-                  "line": 9,
+                  "line": 17,
+                  "column": 6
+                }
+              }
+            },
+            "value": {
+              "type": "Identifier",
+              "name": "name",
+              "range": [
+                451,
+                455
+              ],
+              "loc": {
+                "start": {
+                  "line": 17,
+                  "column": 2
+                },
+                "end": {
+                  "line": 17,
+                  "column": 6
+                }
+              }
+            },
+            "kind": "init",
+            "method": false,
+            "shorthand": true,
+            "computed": false,
+            "range": [
+              451,
+              455
+            ],
+            "loc": {
+              "start": {
+                "line": 17,
+                "column": 2
+              },
+              "end": {
+                "line": 17,
+                "column": 6
+              }
+            }
+          },
+          {
+            "type": "Property",
+            "key": {
+              "type": "Identifier",
+              "name": "component",
+              "range": [
+                459,
+                468
+              ],
+              "loc": {
+                "start": {
+                  "line": 18,
+                  "column": 2
+                },
+                "end": {
+                  "line": 18,
                   "column": 11
                 }
               }
@@ -468,16 +764,16 @@
               "type": "Identifier",
               "name": "component",
               "range": [
-                240,
-                249
+                459,
+                468
               ],
               "loc": {
                 "start": {
-                  "line": 9,
+                  "line": 18,
                   "column": 2
                 },
                 "end": {
-                  "line": 9,
+                  "line": 18,
                   "column": 11
                 }
               }
@@ -487,16 +783,16 @@
             "shorthand": true,
             "computed": false,
             "range": [
-              240,
-              249
+              459,
+              468
             ],
             "loc": {
               "start": {
-                "line": 9,
+                "line": 18,
                 "column": 2
               },
               "end": {
-                "line": 9,
+                "line": 18,
                 "column": 11
               }
             }
@@ -507,16 +803,16 @@
               "type": "Identifier",
               "name": "mount",
               "range": [
-                253,
-                258
+                472,
+                477
               ],
               "loc": {
                 "start": {
-                  "line": 10,
+                  "line": 19,
                   "column": 2
                 },
                 "end": {
-                  "line": 10,
+                  "line": 19,
                   "column": 7
                 }
               }
@@ -525,16 +821,16 @@
               "type": "Identifier",
               "name": "mount",
               "range": [
-                253,
-                258
+                472,
+                477
               ],
               "loc": {
                 "start": {
-                  "line": 10,
+                  "line": 19,
                   "column": 2
                 },
                 "end": {
-                  "line": 10,
+                  "line": 19,
                   "column": 7
                 }
               }
@@ -544,16 +840,16 @@
             "shorthand": true,
             "computed": false,
             "range": [
-              253,
-              258
+              472,
+              477
             ],
             "loc": {
               "start": {
-                "line": 10,
+                "line": 19,
                 "column": 2
               },
               "end": {
-                "line": 10,
+                "line": 19,
                 "column": 7
               }
             }
@@ -564,16 +860,16 @@
               "type": "Identifier",
               "name": "controller",
               "range": [
-                262,
-                272
+                481,
+                491
               ],
               "loc": {
                 "start": {
-                  "line": 11,
+                  "line": 20,
                   "column": 2
                 },
                 "end": {
-                  "line": 11,
+                  "line": 20,
                   "column": 12
                 }
               }
@@ -582,16 +878,16 @@
               "type": "Identifier",
               "name": "controller",
               "range": [
-                262,
-                272
+                481,
+                491
               ],
               "loc": {
                 "start": {
-                  "line": 11,
+                  "line": 20,
                   "column": 2
                 },
                 "end": {
-                  "line": 11,
+                  "line": 20,
                   "column": 12
                 }
               }
@@ -601,16 +897,16 @@
             "shorthand": true,
             "computed": false,
             "range": [
-              262,
-              272
+              481,
+              491
             ],
             "loc": {
               "start": {
-                "line": 11,
+                "line": 20,
                 "column": 2
               },
               "end": {
-                "line": 11,
+                "line": 20,
                 "column": 12
               }
             }
@@ -621,16 +917,16 @@
               "type": "Identifier",
               "name": "memoize",
               "range": [
-                276,
-                283
+                495,
+                502
               ],
               "loc": {
                 "start": {
-                  "line": 12,
+                  "line": 21,
                   "column": 2
                 },
                 "end": {
-                  "line": 12,
+                  "line": 21,
                   "column": 9
                 }
               }
@@ -639,16 +935,16 @@
               "type": "Identifier",
               "name": "memoize",
               "range": [
-                276,
-                283
+                495,
+                502
               ],
               "loc": {
                 "start": {
-                  "line": 12,
+                  "line": 21,
                   "column": 2
                 },
                 "end": {
-                  "line": 12,
+                  "line": 21,
                   "column": 9
                 }
               }
@@ -658,16 +954,16 @@
             "shorthand": true,
             "computed": false,
             "range": [
-              276,
-              283
+              495,
+              502
             ],
             "loc": {
               "start": {
-                "line": 12,
+                "line": 21,
                 "column": 2
               },
               "end": {
-                "line": 12,
+                "line": 21,
                 "column": 9
               }
             }
@@ -678,16 +974,16 @@
               "type": "Identifier",
               "name": "styler",
               "range": [
-                287,
-                293
+                506,
+                512
               ],
               "loc": {
                 "start": {
-                  "line": 13,
+                  "line": 22,
                   "column": 2
                 },
                 "end": {
-                  "line": 13,
+                  "line": 22,
                   "column": 8
                 }
               }
@@ -696,16 +992,16 @@
               "type": "Identifier",
               "name": "styler",
               "range": [
-                287,
-                293
+                506,
+                512
               ],
               "loc": {
                 "start": {
-                  "line": 13,
+                  "line": 22,
                   "column": 2
                 },
                 "end": {
-                  "line": 13,
+                  "line": 22,
                   "column": 8
                 }
               }
@@ -715,16 +1011,16 @@
             "shorthand": true,
             "computed": false,
             "range": [
-              287,
-              293
+              506,
+              512
             ],
             "loc": {
               "start": {
-                "line": 13,
+                "line": 22,
                 "column": 2
               },
               "end": {
-                "line": 13,
+                "line": 22,
                 "column": 8
               }
             }
@@ -735,16 +1031,16 @@
               "type": "Identifier",
               "name": "checkContextType",
               "range": [
-                297,
-                313
+                516,
+                532
               ],
               "loc": {
                 "start": {
-                  "line": 14,
+                  "line": 23,
                   "column": 2
                 },
                 "end": {
-                  "line": 14,
+                  "line": 23,
                   "column": 18
                 }
               }
@@ -753,16 +1049,16 @@
               "type": "Identifier",
               "name": "checkContextType",
               "range": [
-                297,
-                313
+                516,
+                532
               ],
               "loc": {
                 "start": {
-                  "line": 14,
+                  "line": 23,
                   "column": 2
                 },
                 "end": {
-                  "line": 14,
+                  "line": 23,
                   "column": 18
                 }
               }
@@ -772,58 +1068,211 @@
             "shorthand": true,
             "computed": false,
             "range": [
-              297,
-              313
+              516,
+              532
             ],
             "loc": {
               "start": {
-                "line": 14,
+                "line": 23,
                 "column": 2
               },
               "end": {
-                "line": 14,
+                "line": 23,
                 "column": 18
+              }
+            }
+          },
+          {
+            "type": "Property",
+            "key": {
+              "type": "Identifier",
+              "name": "dispatchChangeSets",
+              "range": [
+                536,
+                554
+              ],
+              "loc": {
+                "start": {
+                  "line": 24,
+                  "column": 2
+                },
+                "end": {
+                  "line": 24,
+                  "column": 20
+                }
+              }
+            },
+            "value": {
+              "type": "Identifier",
+              "name": "dispatchChangeSets",
+              "range": [
+                536,
+                554
+              ],
+              "loc": {
+                "start": {
+                  "line": 24,
+                  "column": 2
+                },
+                "end": {
+                  "line": 24,
+                  "column": 20
+                }
+              }
+            },
+            "kind": "init",
+            "method": false,
+            "shorthand": true,
+            "computed": false,
+            "range": [
+              536,
+              554
+            ],
+            "loc": {
+              "start": {
+                "line": 24,
+                "column": 2
+              },
+              "end": {
+                "line": 24,
+                "column": 20
+              }
+            }
+          },
+          {
+            "type": "Property",
+            "key": {
+              "type": "Identifier",
+              "name": "logLifecycle",
+              "range": [
+                558,
+                570
+              ],
+              "loc": {
+                "start": {
+                  "line": 25,
+                  "column": 2
+                },
+                "end": {
+                  "line": 25,
+                  "column": 14
+                }
+              }
+            },
+            "value": {
+              "type": "Identifier",
+              "name": "logLifecycle",
+              "range": [
+                558,
+                570
+              ],
+              "loc": {
+                "start": {
+                  "line": 25,
+                  "column": 2
+                },
+                "end": {
+                  "line": 25,
+                  "column": 14
+                }
+              }
+            },
+            "kind": "init",
+            "method": false,
+            "shorthand": true,
+            "computed": false,
+            "range": [
+              558,
+              570
+            ],
+            "loc": {
+              "start": {
+                "line": 25,
+                "column": 2
+              },
+              "end": {
+                "line": 25,
+                "column": 14
               }
             }
           }
         ],
         "range": [
-          236,
-          315
+          447,
+          572
         ],
         "loc": {
           "start": {
-            "line": 8,
+            "line": 16,
             "column": 15
           },
           "end": {
-            "line": 15,
+            "line": 26,
             "column": 1
           }
         },
-        "leadingComments": [],
+        "leadingComments": [
+          {
+            "type": "Block",
+            "value": "*\n * Higher Order Component\n * @typedef {function(component: Component): Component} HOC\n ",
+            "range": [
+              337,
+              430
+            ],
+            "loc": {
+              "start": {
+                "line": 11,
+                "column": 0
+              },
+              "end": {
+                "line": 14,
+                "column": 3
+              }
+            }
+          }
+        ],
         "trailingComments": []
       },
       "range": [
-        221,
-        316
+        432,
+        573
       ],
       "loc": {
         "start": {
-          "line": 8,
+          "line": 16,
           "column": 0
         },
         "end": {
-          "line": 15,
+          "line": 26,
           "column": 2
         }
-      }
+      },
+      "leadingComments": [
+        {
+          "type": "Block",
+          "value": "*\n * Higher Order Component\n * @typedef {function(component: Component): Component} HOC\n ",
+          "range": [
+            337,
+            430
+          ],
+          "loc": {
+            "start": {
+              "line": 11,
+              "column": 0
+            },
+            "end": {
+              "line": 14,
+              "column": 3
+            }
+          }
+        }
+      ]
     }
   ],
   "sourceType": "module",
   "range": [
     0,
-    316
+    573
   ],
   "loc": {
     "start": {
@@ -831,9 +1280,28 @@
       "column": 0
     },
     "end": {
-      "line": 15,
+      "line": 26,
       "column": 2
     }
   },
-  "comments": []
+  "comments": [
+    {
+      "type": "Block",
+      "value": "*\n * Higher Order Component\n * @typedef {function(component: Component): Component} HOC\n ",
+      "range": [
+        337,
+        430
+      ],
+      "loc": {
+        "start": {
+          "line": 11,
+          "column": 0
+        },
+        "end": {
+          "line": 14,
+          "column": 3
+        }
+      }
+    }
+  ]
 }

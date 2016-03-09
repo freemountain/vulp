@@ -1,17 +1,5 @@
 window.esdocSearchIndex = [
   [
-    "fux/src/patch.js~$add",
-    "variable/index.html#static-variable-$add",
-    "<span>$add</span> <span class=\"search-result-import-path\">fux/src/Patch.js</span>",
-    "variable"
-  ],
-  [
-    "fux/src/patch.js~$rep",
-    "variable/index.html#static-variable-$rep",
-    "<span>$rep</span> <span class=\"search-result-import-path\">fux/src/Patch.js</span>",
-    "variable"
-  ],
-  [
     "fux/src/context.js~context",
     "class/src/Context.js~Context.html",
     "<span>Context</span> <span class=\"search-result-import-path\">fux/src/Context.js</span>",
@@ -42,6 +30,12 @@ window.esdocSearchIndex = [
     "variable"
   ],
   [
+    "fux/src/decorators/checkcontexttype.js~checkcontexttype",
+    "function/index.html#static-function-checkContextType",
+    "<span>checkContextType</span> <span class=\"search-result-import-path\">fux/src/decorators/checkContextType.js</span>",
+    "function"
+  ],
+  [
     "fux/src/utils/choke.js~choke",
     "function/index.html#static-function-choke",
     "<span>choke</span> <span class=\"search-result-import-path\">fux/src/utils/choke.js</span>",
@@ -54,10 +48,16 @@ window.esdocSearchIndex = [
     "function"
   ],
   [
-    "fux/src/decorators/controller.js~controllerdecorator",
-    "variable/index.html#static-variable-controllerDecorator",
-    "<span>controllerDecorator</span> <span class=\"search-result-import-path\">fux/src/decorators/controller.js</span>",
-    "variable"
+    "fux/src/decorators/component.js~component",
+    "function/index.html#static-function-component",
+    "<span>component</span> <span class=\"search-result-import-path\">fux/src/decorators/component.js</span>",
+    "function"
+  ],
+  [
+    "fux/src/decorators/controller.js~controller",
+    "function/index.html#static-function-controller",
+    "<span>controller</span> <span class=\"search-result-import-path\">fux/src/decorators/controller.js</span>",
+    "function"
   ],
   [
     "fux/src/utils/curry.js~curry",
@@ -72,33 +72,21 @@ window.esdocSearchIndex = [
     "function"
   ],
   [
-    "fux/src/utils/decoratecomponent.js~decorate",
-    "function/index.html#static-function-decorate",
-    "<span>decorate</span> <span class=\"search-result-import-path\">fux/src/utils/decorateComponent.js</span>",
+    "fux/src/decorators/dispatchchangesets.js~dispatchchangesets",
+    "function/index.html#static-function-dispatchChangeSets",
+    "<span>dispatchChangeSets</span> <span class=\"search-result-import-path\">fux/src/decorators/dispatchChangeSets.js</span>",
     "function"
   ],
   [
-    "fux/src/utils/deepfreeze.js~deepfreeze",
-    "function/index.html#static-function-deepFreeze",
-    "<span>deepFreeze</span> <span class=\"search-result-import-path\">fux/src/utils/deepFreeze.js</span>",
+    "fux/src/views/dom.js~dom",
+    "function/index.html#static-function-dom",
+    "<span>dom</span> <span class=\"search-result-import-path\">fux/src/views/dom.js</span>",
     "function"
-  ],
-  [
-    "fux/src/decorators/component.js~f",
-    "variable/index.html#static-variable-f",
-    "<span>f</span> <span class=\"search-result-import-path\">fux/src/decorators/component.js</span>",
-    "variable"
   ],
   [
     "fux/src/scopes/fragment.js~fragment",
     "function/index.html#static-function-fragment",
     "<span>fragment</span> <span class=\"search-result-import-path\">fux/src/scopes/fragment.js</span>",
-    "function"
-  ],
-  [
-    "fux/src/utils/generatespec.js~generatespec",
-    "function/index.html#static-function-generateSpec",
-    "<span>generateSpec</span> <span class=\"search-result-import-path\">fux/src/utils/generateSpec.js</span>",
     "function"
   ],
   [
@@ -120,28 +108,52 @@ window.esdocSearchIndex = [
     "variable"
   ],
   [
+    "fux/src/decorators/utils.js~ishandler",
+    "variable/index.html#static-variable-isHandler",
+    "<span>isHandler</span> <span class=\"search-result-import-path\">fux/src/decorators/utils.js</span>",
+    "variable"
+  ],
+  [
+    "fux/src/decorators/log.js~log",
+    "function/index.html#static-function-log",
+    "<span>log</span> <span class=\"search-result-import-path\">fux/src/decorators/log.js</span>",
+    "function"
+  ],
+  [
+    "fux/src/decorators/utils.js~mapattributes",
+    "function/index.html#static-function-mapAttributes",
+    "<span>mapAttributes</span> <span class=\"search-result-import-path\">fux/src/decorators/utils.js</span>",
+    "function"
+  ],
+  [
+    "fux/src/decorators/memoize.js~memoize",
+    "function/index.html#static-function-memoize",
+    "<span>memoize</span> <span class=\"search-result-import-path\">fux/src/decorators/memoize.js</span>",
+    "function"
+  ],
+  [
     "fux/src/decorators/mount.js~mount",
     "function/index.html#static-function-mount",
     "<span>mount</span> <span class=\"search-result-import-path\">fux/src/decorators/mount.js</span>",
     "function"
   ],
   [
-    "fux/src/utils/normalizecomponent.js~normalize",
+    "fux/src/decorators/utils.js~normalize",
     "function/index.html#static-function-normalize",
-    "<span>normalize</span> <span class=\"search-result-import-path\">fux/src/utils/normalizeComponent.js</span>",
+    "<span>normalize</span> <span class=\"search-result-import-path\">fux/src/decorators/utils.js</span>",
     "function"
   ],
   [
-    "fux/src/utils/patch.js~patch",
-    "function/index.html#static-function-patch",
-    "<span>patch</span> <span class=\"search-result-import-path\">fux/src/utils/patch.js</span>",
+    "fux/src/decorators/utils.js~specdecorator",
+    "function/index.html#static-function-specDecorator",
+    "<span>specDecorator</span> <span class=\"search-result-import-path\">fux/src/decorators/utils.js</span>",
     "function"
   ],
   [
     "fux/src/decorators/styler.js~styler",
-    "variable/index.html#static-variable-styler",
+    "function/index.html#static-function-styler",
     "<span>styler</span> <span class=\"search-result-import-path\">fux/src/decorators/styler.js</span>",
-    "variable"
+    "function"
   ],
   [
     "fux/src/state/index.js~unbox",
@@ -154,12 +166,6 @@ window.esdocSearchIndex = [
     "function/index.html#static-function-value",
     "<span>value</span> <span class=\"search-result-import-path\">fux/src/scopes/value.js</span>",
     "function"
-  ],
-  [
-    "fux/src/index.js~views",
-    "variable/index.html#static-variable-views",
-    "<span>views</span> <span class=\"search-result-import-path\">fux/src/index.js</span>",
-    "variable"
   ],
   [
     "builtinexternal/ecmascriptexternal.js~array",
@@ -516,12 +522,6 @@ window.esdocSearchIndex = [
     "method"
   ],
   [
-    "src/context.js~context#sub",
-    "class/src/Context.js~Context.html#instance-method-sub",
-    "src/Context.js~Context#sub",
-    "method"
-  ],
-  [
     "src/context.js~context#update",
     "class/src/Context.js~Context.html#instance-method-update",
     "src/Context.js~Context#update",
@@ -555,6 +555,12 @@ window.esdocSearchIndex = [
     "src/jsonpointer/index.js~jsonpointer#first",
     "class/src/JSONPointer/index.js~JSONPointer.html#instance-method-first",
     "src/JSONPointer/index.js~JSONPointer#first",
+    "method"
+  ],
+  [
+    "src/jsonpointer/index.js~jsonpointer#last",
+    "class/src/JSONPointer/index.js~JSONPointer.html#instance-method-last",
+    "src/JSONPointer/index.js~JSONPointer#last",
     "method"
   ],
   [
@@ -702,9 +708,33 @@ window.esdocSearchIndex = [
     "file"
   ],
   [
+    "src/decorators/debug.js",
+    "file/src/decorators/debug.js.html",
+    "src/decorators/debug.js",
+    "file"
+  ],
+  [
+    "src/decorators/dispatchchangesets.js",
+    "file/src/decorators/dispatchChangeSets.js.html",
+    "src/decorators/dispatchChangeSets.js",
+    "file"
+  ],
+  [
     "src/decorators/index.js",
     "file/src/decorators/index.js.html",
     "src/decorators/index.js",
+    "file"
+  ],
+  [
+    "src/decorators/index.js~hoc",
+    "typedef/index.html#static-typedef-HOC",
+    "src/decorators/index.js~HOC",
+    "typedef"
+  ],
+  [
+    "src/decorators/log.js",
+    "file/src/decorators/log.js.html",
+    "src/decorators/log.js",
     "file"
   ],
   [
@@ -720,9 +750,21 @@ window.esdocSearchIndex = [
     "file"
   ],
   [
+    "src/decorators/name.js",
+    "file/src/decorators/name.js.html",
+    "src/decorators/name.js",
+    "file"
+  ],
+  [
     "src/decorators/styler.js",
     "file/src/decorators/styler.js.html",
     "src/decorators/styler.js",
+    "file"
+  ],
+  [
+    "src/decorators/utils.js",
+    "file/src/decorators/utils.js.html",
+    "src/decorators/utils.js",
     "file"
   ],
   [
@@ -735,12 +777,6 @@ window.esdocSearchIndex = [
     "src/index.js~component",
     "typedef/index.html#static-typedef-Component",
     "src/index.js~Component",
-    "typedef"
-  ],
-  [
-    "src/index.js~subject",
-    "typedef/index.html#static-typedef-Subject",
-    "src/index.js~Subject",
     "typedef"
   ],
   [
@@ -780,6 +816,12 @@ window.esdocSearchIndex = [
     "file"
   ],
   [
+    "src/scopes/index.js~boundscopefactory",
+    "typedef/index.html#static-typedef-BoundScopeFactory",
+    "src/scopes/index.js~BoundScopeFactory",
+    "typedef"
+  ],
+  [
     "src/scopes/index.js~scope",
     "typedef/index.html#static-typedef-Scope",
     "src/scopes/index.js~Scope",
@@ -789,12 +831,6 @@ window.esdocSearchIndex = [
     "src/scopes/index.js~scopefactory",
     "typedef/index.html#static-typedef-ScopeFactory",
     "src/scopes/index.js~ScopeFactory",
-    "typedef"
-  ],
-  [
-    "src/scopes/index.js~scopefactory'",
-    "typedef/index.html#static-typedef-ScopeFactory'",
-    "src/scopes/index.js~ScopeFactory'",
     "typedef"
   ],
   [
@@ -846,12 +882,6 @@ window.esdocSearchIndex = [
     "file"
   ],
   [
-    "src/utils/createrendersubject.js",
-    "file/src/utils/createRenderSubject.js.html",
-    "src/utils/createRenderSubject.js",
-    "file"
-  ],
-  [
     "src/utils/curry.js",
     "file/src/utils/curry.js.html",
     "src/utils/curry.js",
@@ -861,30 +891,6 @@ window.esdocSearchIndex = [
     "src/utils/cycle.js",
     "file/src/utils/cycle.js.html",
     "src/utils/cycle.js",
-    "file"
-  ],
-  [
-    "src/utils/decoratecomponent.js",
-    "file/src/utils/decorateComponent.js.html",
-    "src/utils/decorateComponent.js",
-    "file"
-  ],
-  [
-    "src/utils/deepfreeze.js",
-    "file/src/utils/deepFreeze.js.html",
-    "src/utils/deepFreeze.js",
-    "file"
-  ],
-  [
-    "src/utils/generatespec.js",
-    "file/src/utils/generateSpec.js.html",
-    "src/utils/generateSpec.js",
-    "file"
-  ],
-  [
-    "src/utils/normalizecomponent.js",
-    "file/src/utils/normalizeComponent.js.html",
-    "src/utils/normalizeComponent.js",
     "file"
   ],
   [
@@ -898,5 +904,29 @@ window.esdocSearchIndex = [
     "file/src/views/dom.js.html",
     "src/views/dom.js",
     "file"
+  ],
+  [
+    "src/views/index.js",
+    "file/src/views/index.js.html",
+    "src/views/index.js",
+    "file"
+  ],
+  [
+    "src/views/index.js~boundviewfactory",
+    "typedef/index.html#static-typedef-BoundViewFactory",
+    "src/views/index.js~BoundViewFactory",
+    "typedef"
+  ],
+  [
+    "src/views/index.js~view",
+    "typedef/index.html#static-typedef-View",
+    "src/views/index.js~View",
+    "typedef"
+  ],
+  [
+    "src/views/index.js~viewfactory",
+    "typedef/index.html#static-typedef-ViewFactory",
+    "src/views/index.js~ViewFactory",
+    "typedef"
   ]
 ]

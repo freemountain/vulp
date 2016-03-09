@@ -980,10 +980,10 @@
       "trailingComments": [
         {
           "type": "Block",
-          "value": "*\n * scope stream\n * - stream representation of json data that (may) change\n * - depends on input stream\n * - inputs are PatchActions\n * - outputs are Contexts\n * - flyd stream\n * @see https://github.com/paldepind/flyd#flydstream\n * @typedef {function(patchAction: List<Patch>) } Scope\n ",
+          "value": "*\n * scope\n * - stream representation of json data that (may) change\n´* - flyd stream\n * @see https://github.com/paldepind/flyd#flydstream\n * @listens {PatchSet}\n * @emits {Context}\n * @typedef {function(patchAction: PatchSet) } Scope\n ",
           "range": [
             328,
-            619
+            568
           ],
           "loc": {
             "start": {
@@ -991,43 +991,43 @@
               "column": 0
             },
             "end": {
-              "line": 24,
+              "line": 23,
               "column": 3
             }
           }
         },
         {
           "type": "Block",
-          "value": "*\n * scope factory\n * - creates scope, who listen on input\n * - curried: opts -> inputStream -> scope\n * @typedef {function(options: Object, input: Scope): Scope} ScopeFactory\n ",
+          "value": "*\n * scope factory\n * - creates scope, who listen on input\n * - curried: opts -> input -> scope\n * @typedef {function(...opts: any) : BoundScopeFactory} ScopeFactory\n ",
           "range": [
-            621,
-            802
+            570,
+            741
           ],
           "loc": {
             "start": {
-              "line": 26,
+              "line": 25,
               "column": 0
             },
             "end": {
-              "line": 31,
+              "line": 30,
               "column": 3
             }
           }
         },
         {
           "type": "Block",
-          "value": "*\n  * scope factory with bound options\n  * @typedef {function(input: Scope): Scope} ScopeFactory'\n  ",
+          "value": "*\n  * bound scope factory\n  * @typedef {function(input: any) : Context} BoundScopeFactory\n  ",
           "range": [
-            805,
-            909
+            744,
+            840
           ],
           "loc": {
             "start": {
-              "line": 33,
+              "line": 32,
               "column": 1
             },
             "end": {
-              "line": 36,
+              "line": 35,
               "column": 4
             }
           }
@@ -1045,16 +1045,16 @@
               "type": "Identifier",
               "name": "value",
               "range": [
-                930,
-                935
+                861,
+                866
               ],
               "loc": {
                 "start": {
-                  "line": 39,
+                  "line": 38,
                   "column": 2
                 },
                 "end": {
-                  "line": 39,
+                  "line": 38,
                   "column": 7
                 }
               }
@@ -1063,16 +1063,16 @@
               "type": "Identifier",
               "name": "value",
               "range": [
-                930,
-                935
+                861,
+                866
               ],
               "loc": {
                 "start": {
-                  "line": 39,
+                  "line": 38,
                   "column": 2
                 },
                 "end": {
-                  "line": 39,
+                  "line": 38,
                   "column": 7
                 }
               }
@@ -1082,16 +1082,16 @@
             "shorthand": true,
             "computed": false,
             "range": [
-              930,
-              935
+              861,
+              866
             ],
             "loc": {
               "start": {
-                "line": 39,
+                "line": 38,
                 "column": 2
               },
               "end": {
-                "line": 39,
+                "line": 38,
                 "column": 7
               }
             }
@@ -1102,16 +1102,16 @@
               "type": "Identifier",
               "name": "fragment",
               "range": [
-                939,
-                947
+                870,
+                878
               ],
               "loc": {
                 "start": {
-                  "line": 40,
+                  "line": 39,
                   "column": 2
                 },
                 "end": {
-                  "line": 40,
+                  "line": 39,
                   "column": 10
                 }
               }
@@ -1120,16 +1120,16 @@
               "type": "Identifier",
               "name": "fragment",
               "range": [
-                939,
-                947
+                870,
+                878
               ],
               "loc": {
                 "start": {
-                  "line": 40,
+                  "line": 39,
                   "column": 2
                 },
                 "end": {
-                  "line": 40,
+                  "line": 39,
                   "column": 10
                 }
               }
@@ -1139,16 +1139,16 @@
             "shorthand": true,
             "computed": false,
             "range": [
-              939,
-              947
+              870,
+              878
             ],
             "loc": {
               "start": {
-                "line": 40,
+                "line": 39,
                 "column": 2
               },
               "end": {
-                "line": 40,
+                "line": 39,
                 "column": 10
               }
             }
@@ -1159,16 +1159,16 @@
               "type": "Identifier",
               "name": "combiner",
               "range": [
-                951,
-                959
+                882,
+                890
               ],
               "loc": {
                 "start": {
-                  "line": 41,
+                  "line": 40,
                   "column": 2
                 },
                 "end": {
-                  "line": 41,
+                  "line": 40,
                   "column": 10
                 }
               }
@@ -1177,16 +1177,16 @@
               "type": "Identifier",
               "name": "combiner",
               "range": [
-                951,
-                959
+                882,
+                890
               ],
               "loc": {
                 "start": {
-                  "line": 41,
+                  "line": 40,
                   "column": 2
                 },
                 "end": {
-                  "line": 41,
+                  "line": 40,
                   "column": 10
                 }
               }
@@ -1196,42 +1196,42 @@
             "shorthand": true,
             "computed": false,
             "range": [
-              951,
-              959
+              882,
+              890
             ],
             "loc": {
               "start": {
-                "line": 41,
+                "line": 40,
                 "column": 2
               },
               "end": {
-                "line": 41,
+                "line": 40,
                 "column": 10
               }
             }
           }
         ],
         "range": [
-          926,
-          961
+          857,
+          892
         ],
         "loc": {
           "start": {
-            "line": 38,
+            "line": 37,
             "column": 15
           },
           "end": {
-            "line": 42,
+            "line": 41,
             "column": 1
           }
         },
         "leadingComments": [
           {
             "type": "Block",
-            "value": "*\n * scope stream\n * - stream representation of json data that (may) change\n * - depends on input stream\n * - inputs are PatchActions\n * - outputs are Contexts\n * - flyd stream\n * @see https://github.com/paldepind/flyd#flydstream\n * @typedef {function(patchAction: List<Patch>) } Scope\n ",
+            "value": "*\n * scope\n * - stream representation of json data that (may) change\n´* - flyd stream\n * @see https://github.com/paldepind/flyd#flydstream\n * @listens {PatchSet}\n * @emits {Context}\n * @typedef {function(patchAction: PatchSet) } Scope\n ",
             "range": [
               328,
-              619
+              568
             ],
             "loc": {
               "start": {
@@ -1239,43 +1239,43 @@
                 "column": 0
               },
               "end": {
-                "line": 24,
+                "line": 23,
                 "column": 3
               }
             }
           },
           {
             "type": "Block",
-            "value": "*\n * scope factory\n * - creates scope, who listen on input\n * - curried: opts -> inputStream -> scope\n * @typedef {function(options: Object, input: Scope): Scope} ScopeFactory\n ",
+            "value": "*\n * scope factory\n * - creates scope, who listen on input\n * - curried: opts -> input -> scope\n * @typedef {function(...opts: any) : BoundScopeFactory} ScopeFactory\n ",
             "range": [
-              621,
-              802
+              570,
+              741
             ],
             "loc": {
               "start": {
-                "line": 26,
+                "line": 25,
                 "column": 0
               },
               "end": {
-                "line": 31,
+                "line": 30,
                 "column": 3
               }
             }
           },
           {
             "type": "Block",
-            "value": "*\n  * scope factory with bound options\n  * @typedef {function(input: Scope): Scope} ScopeFactory'\n  ",
+            "value": "*\n  * bound scope factory\n  * @typedef {function(input: any) : Context} BoundScopeFactory\n  ",
             "range": [
-              805,
-              909
+              744,
+              840
             ],
             "loc": {
               "start": {
-                "line": 33,
+                "line": 32,
                 "column": 1
               },
               "end": {
-                "line": 36,
+                "line": 35,
                 "column": 4
               }
             }
@@ -1284,26 +1284,26 @@
         "trailingComments": []
       },
       "range": [
-        911,
-        962
+        842,
+        893
       ],
       "loc": {
         "start": {
-          "line": 38,
+          "line": 37,
           "column": 0
         },
         "end": {
-          "line": 42,
+          "line": 41,
           "column": 2
         }
       },
       "leadingComments": [
         {
           "type": "Block",
-          "value": "*\n * scope stream\n * - stream representation of json data that (may) change\n * - depends on input stream\n * - inputs are PatchActions\n * - outputs are Contexts\n * - flyd stream\n * @see https://github.com/paldepind/flyd#flydstream\n * @typedef {function(patchAction: List<Patch>) } Scope\n ",
+          "value": "*\n * scope\n * - stream representation of json data that (may) change\n´* - flyd stream\n * @see https://github.com/paldepind/flyd#flydstream\n * @listens {PatchSet}\n * @emits {Context}\n * @typedef {function(patchAction: PatchSet) } Scope\n ",
           "range": [
             328,
-            619
+            568
           ],
           "loc": {
             "start": {
@@ -1311,43 +1311,43 @@
               "column": 0
             },
             "end": {
-              "line": 24,
+              "line": 23,
               "column": 3
             }
           }
         },
         {
           "type": "Block",
-          "value": "*\n * scope factory\n * - creates scope, who listen on input\n * - curried: opts -> inputStream -> scope\n * @typedef {function(options: Object, input: Scope): Scope} ScopeFactory\n ",
+          "value": "*\n * scope factory\n * - creates scope, who listen on input\n * - curried: opts -> input -> scope\n * @typedef {function(...opts: any) : BoundScopeFactory} ScopeFactory\n ",
           "range": [
-            621,
-            802
+            570,
+            741
           ],
           "loc": {
             "start": {
-              "line": 26,
+              "line": 25,
               "column": 0
             },
             "end": {
-              "line": 31,
+              "line": 30,
               "column": 3
             }
           }
         },
         {
           "type": "Block",
-          "value": "*\n  * scope factory with bound options\n  * @typedef {function(input: Scope): Scope} ScopeFactory'\n  ",
+          "value": "*\n  * bound scope factory\n  * @typedef {function(input: any) : Context} BoundScopeFactory\n  ",
           "range": [
-            805,
-            909
+            744,
+            840
           ],
           "loc": {
             "start": {
-              "line": 33,
+              "line": 32,
               "column": 1
             },
             "end": {
-              "line": 36,
+              "line": 35,
               "column": 4
             }
           }
@@ -1358,7 +1358,7 @@
   "sourceType": "module",
   "range": [
     0,
-    962
+    893
   ],
   "loc": {
     "start": {
@@ -1366,17 +1366,17 @@
       "column": 0
     },
     "end": {
-      "line": 42,
+      "line": 41,
       "column": 2
     }
   },
   "comments": [
     {
       "type": "Block",
-      "value": "*\n * scope stream\n * - stream representation of json data that (may) change\n * - depends on input stream\n * - inputs are PatchActions\n * - outputs are Contexts\n * - flyd stream\n * @see https://github.com/paldepind/flyd#flydstream\n * @typedef {function(patchAction: List<Patch>) } Scope\n ",
+      "value": "*\n * scope\n * - stream representation of json data that (may) change\n´* - flyd stream\n * @see https://github.com/paldepind/flyd#flydstream\n * @listens {PatchSet}\n * @emits {Context}\n * @typedef {function(patchAction: PatchSet) } Scope\n ",
       "range": [
         328,
-        619
+        568
       ],
       "loc": {
         "start": {
@@ -1384,43 +1384,43 @@
           "column": 0
         },
         "end": {
-          "line": 24,
+          "line": 23,
           "column": 3
         }
       }
     },
     {
       "type": "Block",
-      "value": "*\n * scope factory\n * - creates scope, who listen on input\n * - curried: opts -> inputStream -> scope\n * @typedef {function(options: Object, input: Scope): Scope} ScopeFactory\n ",
+      "value": "*\n * scope factory\n * - creates scope, who listen on input\n * - curried: opts -> input -> scope\n * @typedef {function(...opts: any) : BoundScopeFactory} ScopeFactory\n ",
       "range": [
-        621,
-        802
+        570,
+        741
       ],
       "loc": {
         "start": {
-          "line": 26,
+          "line": 25,
           "column": 0
         },
         "end": {
-          "line": 31,
+          "line": 30,
           "column": 3
         }
       }
     },
     {
       "type": "Block",
-      "value": "*\n  * scope factory with bound options\n  * @typedef {function(input: Scope): Scope} ScopeFactory'\n  ",
+      "value": "*\n  * bound scope factory\n  * @typedef {function(input: any) : Context} BoundScopeFactory\n  ",
       "range": [
-        805,
-        909
+        744,
+        840
       ],
       "loc": {
         "start": {
-          "line": 33,
+          "line": 32,
           "column": 1
         },
         "end": {
-          "line": 36,
+          "line": 35,
           "column": 4
         }
       }

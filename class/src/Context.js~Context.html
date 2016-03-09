@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <base data-ice="baseUrl" href="../../">
-  <title data-ice="title">Context | API Document</title>
+  <title data-ice="title">Context | fux API Document</title>
   <link type="text/css" rel="stylesheet" href="css/style.css">
   <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
   <script src="script/prettify/prettify.js"></script>
@@ -15,7 +15,7 @@
 
 <header>
   <a href="./">Home</a>
-  
+  <a href="./manual/index.html" data-ice="manualHeaderLink">Manual</a>
   <a href="identifiers.html">Reference</a>
   <a href="source.html">Source</a>
   
@@ -34,28 +34,33 @@
     
   <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Context.js~Context.html">Context</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Transform.js~Transform.html">Transform</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-$add">$add</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-$rep">$rep</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-views">views</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-Patch">Patch</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-Map">Map</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-Component">Component</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-Subject">Subject</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-model">model</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-vnode">vnode</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="http://dekujs.github.io/deku/docs/api/element.html">h</a></span></span></li>
 <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">JSONPointer</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/JSONPointer/index.js~JSONPointer.html">JSONPointer</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-TokenList">TokenList</a></span></span></li>
-<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">decorators</div><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-mount">mount</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-f">f</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-controllerDecorator">controllerDecorator</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-styler">styler</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">decorators</div><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-checkContextType">checkContextType</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-component">component</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-controller">controller</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-dispatchChangeSets">dispatchChangeSets</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-log">log</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-memoize">memoize</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-mount">mount</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-styler">styler</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-mapAttributes">mapAttributes</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-normalize">normalize</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-specDecorator">specDecorator</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-isHandler">isHandler</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-HOC">HOC</a></span></span></li>
 <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">scopes</div><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-combiner">combiner</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-fragment">fragment</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-value">value</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-BoundScopeFactory">BoundScopeFactory</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-Scope">Scope</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-ScopeFactory">ScopeFactory</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-ScopeFactory&apos;">ScopeFactory&apos;</a></span></span></li>
 <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">state</div><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-box">box</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-get">get</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-unbox">unbox</a></span></span></li>
@@ -63,26 +68,25 @@
 <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">utils</div><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-choke">choke</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-curry">curry</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-cycle">cycle</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-decorate">decorate</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-deepFreeze">deepFreeze</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-generateSpec">generateSpec</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-normalize">normalize</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-handler">handler</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-patch">patch</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-check">check</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="https://github.com/gcanti/tcomb/blob/master/docs/API.md">Type</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">views</div><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-dom">dom</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-BoundViewFactory">BoundViewFactory</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-View">View</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-ViewFactory">ViewFactory</a></span></span></li>
 </ul>
 </div>
 </nav>
 
 <div class="content" data-ice="content"><div class="header-notice">
-  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import Context from &apos;<span><a href="file/src/Context.js.html#lineNumber25">fux/src/Context.js</a></span>&apos;</code></pre></div>
+  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import Context from &apos;<span><a href="file/src/Context.js.html#lineNumber15">fux/src/Context.js</a></span>&apos;</code></pre></div>
   <span data-ice="access">public</span>
   <span data-ice="kind">class</span>
   
   
   
-  <span data-ice="source">| <span><a href="file/src/Context.js.html#lineNumber25">source</a></span></span>
+  <span data-ice="source">| <span><a href="file/src/Context.js.html#lineNumber15">source</a></span></span>
 </div>
 
 <div class="self-detail detail">
@@ -249,32 +253,6 @@
     <td>
       <div>
         <p>
-           <span data-ice="name"><span><a href="class/src/Context.js~Context.html#instance-method-sub">sub</a></span></span><span data-ice="signature">(sub: <span><a href="class/src/Transform.js~Transform.html">Transform</a></span>): <span><a href="class/src/Context.js~Context.html">Context</a></span></span>
-        </p>
-      </div>
-      <div>
-        
-        
-        <div data-ice="description"><p>transform ctx with target sub</p>
-</div>
-      </div>
-    </td>
-    <td>
-      
-      
-    </td>
-  </tr>
-<tr data-ice="target">
-    <td>
-      <span class="access" data-ice="access">public</span>
-      
-      
-      
-      <span class="override" data-ice="override"></span>
-    </td>
-    <td>
-      <div>
-        <p>
            <span data-ice="name"><span><a href="class/src/Context.js~Context.html#instance-method-update">update</a></span></span><span data-ice="signature">(patchSet: <span>*</span>): <span>*</span></span>
         </p>
       </div>
@@ -309,7 +287,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/Context.js.html#lineNumber47">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/Context.js.html#lineNumber37">source</a></span></span>
     </span>
   </h3>
 
@@ -380,7 +358,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/Context.js.html#lineNumber34">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/Context.js.html#lineNumber24">source</a></span></span>
     </span>
   </h3>
 
@@ -456,7 +434,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/Context.js.html#lineNumber85">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/Context.js.html#lineNumber62">source</a></span></span>
     </span>
   </h3>
 
@@ -524,7 +502,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/Context.js.html#lineNumber60">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/Context.js.html#lineNumber49">source</a></span></span>
     </span>
   </h3>
 
@@ -590,74 +568,6 @@
   
 </div>
 <div class="detail" data-ice="detail">
-  <h3 data-ice="anchor" id="instance-method-sub">
-    <span class="access" data-ice="access">public</span>
-    
-    
-    
-    
-    <span data-ice="name">sub</span><span data-ice="signature">(sub: <span><a href="class/src/Transform.js~Transform.html">Transform</a></span>): <span><a href="class/src/Context.js~Context.html">Context</a></span></span>
-    <span class="right-info">
-      
-      
-      <span data-ice="source"><span><a href="file/src/Context.js.html#lineNumber73">source</a></span></span>
-    </span>
-  </h3>
-
-  
-  
-  
-  <div data-ice="description"><p>transform ctx with target sub</p>
-</div>
-
-  
-
-  <div data-ice="properties"><div data-ice="properties">
-  <h4 data-ice="title">Params:</h4>
-  <table class="params">
-    <thead>
-    <tr><td>Name</td><td>Type</td><td>Attribute</td><td>Description</td></tr>
-    </thead>
-    <tbody>
-    
-    <tr data-ice="property" data-depth="0">
-      <td data-ice="name" data-depth="0">sub</td>
-      <td data-ice="type"><span><a href="class/src/Transform.js~Transform.html">Transform</a></span></td>
-      <td data-ice="appendix"></td>
-      <td data-ice="description"><p>[description]</p>
-</td>
-    </tr>
-</tbody>
-  </table>
-</div>
-</div>
-
-  <div class="return-params" data-ice="returnParams">
-    <h4>Return:</h4>
-    <table>
-      <tr>
-        <td class="return-type" data-ice="returnType"><span><a href="class/src/Context.js~Context.html">Context</a></span></td>
-        
-      </tr>
-    </table>
-    <div data-ice="returnProperties">
-</div>
-  </div>
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-  
-</div>
-<div class="detail" data-ice="detail">
   <h3 data-ice="anchor" id="instance-method-update">
     <span class="access" data-ice="access">public</span>
     
@@ -668,7 +578,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/Context.js.html#lineNumber92">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/Context.js.html#lineNumber68">source</a></span></span>
     </span>
   </h3>
 

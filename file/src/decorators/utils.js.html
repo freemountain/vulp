@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <base data-ice="baseUrl" href="../../../">
-  <title data-ice="title">src/tests/Transform.js | fux API Document</title>
+  <title data-ice="title">src/decorators/utils.js | fux API Document</title>
   <link type="text/css" rel="stylesheet" href="css/style.css">
   <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
   <script src="script/prettify/prettify.js"></script>
@@ -79,86 +79,92 @@
 </div>
 </nav>
 
-<div class="content" data-ice="content"><h1 data-ice="title">src/tests/Transform.js</h1>
-<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import { expect } from &apos;chai&apos;;
+<div class="content" data-ice="content"><h1 data-ice="title">src/decorators/utils.js</h1>
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import pick from &apos;@f/pick&apos;;
+import mapObj from &apos;@f/map-obj&apos;;
+import t from &apos;tcomb&apos;;
+import { vnode as element } from &apos;deku&apos;;
 
-import Transform from &apos;./../Transform&apos;;
-import JSONPointer from &apos;./../JSONPointer&apos;;
+const { isThunk, isText, isEmpty }  = element;
 
-// const createCheck = (T, value) =&gt; () =&gt; T(value);
 
-describe(&apos;Transform&apos;, function() {
-  describe(&apos;#create&apos;, function() {
-    it(&apos;creates Transform&apos;, function() {
-      const transform = Transform.ofTargets({ foo: &apos;/bar&apos; });
+export function normalize(comp) {
+  const component = t.Function.is(comp) ? { render: comp } : comp;
 
-      expect(transform instanceof Transform).to.equal(true);
-      expect(transform.isIdentity()).to.equal(false);
-    });
+  if(!t.Object.is(component) &amp;&amp; !t.Function.is(component.render))
+    throw new TypeError(&apos;component must be function or object with render function&apos;);
 
-    it(&apos;empty call creates identity&apos;, function() {
-      const transform = Transform.ofTargets();
+  if(!component.name &amp;&amp; component.render.name !== &apos;&apos;) component.name = component.render.name;
+  return component;
+}
 
-      expect(transform instanceof Transform).to.equal(true);
-      expect(transform.isIdentity()).to.equal(true);
-    });
-  });
+export function mapAttributes(node, f, deep = false) {
+  if(isText(node) || isEmpty(node)) return node;
+  const name = isThunk(node) ? &apos;props&apos; : &apos;attributes&apos;;
+  const spec = {};
 
-  describe(&apos;#sub&apos;, function() {
-    it(&apos;sub returns Transform&apos;, function() {
-      const rootTransform = Transform.ofTargets({
-        a: &apos;/foo/aaa&apos;,
-        b: &apos;/bar/bbb&apos;
-      });
+  spec[ name ] = mapObj(f, node[ name ]);
+  if(deep) spec.children = node.children.map(child =&gt; mapAttributes(child, f, deep));
 
-      const subTransform = Transform.ofTargets({
-        foo: &apos;/a&apos;,
-        bar: &apos;/b/someVal&apos;
-      });
+  return Object.assign({}, node, spec);
+}
 
-      const result = rootTransform.sub(subTransform);
-      const targets = result.toTargets();
+export const isHandler = name =&gt; (
+  name.length &gt; 2 &amp;&amp;
+  name.slice(0, 2) === &apos;on&apos; &amp;&amp;
+  name[ 2 ] === name[ 2 ].toUpperCase()
+);
 
-      expect(result instanceof Transform).to.equal(true);
-      expect(targets.foo).to.equal(&apos;/foo/aaa&apos;);
-      expect(targets.bar).to.equal(&apos;/bar/bbb/someVal&apos;);
-    });
-  });
+const defaultOpts = {
+  deep:     false,
+  cache:    null,
+  model:    (component, model) =&gt; model,
+  render:   (component, model) =&gt; component.render(model),
+  onCreate: (component, model) =&gt; component.onCreate ? component.onCreate(model) : null,
+  onUpdate: (component, model) =&gt; component.onUpdate ? component.onUpdate(model) : null,
+  onRemove: (component, model) =&gt; component.onRemove ? component.onRemove(model) : null
+};
 
-  describe(&apos;#equals&apos;, function() {
-    it(&apos;s&apos;, function() {
-      const map = {
-        foo: &apos;/bar&apos;
-      };
-      const a = Transform.ofTargets(map);
-      const b = Transform.ofTargets(map);
-      const c = Transform.ofTargets({
-        foo: &apos;/someotherprop&apos;
-      });
+function applySpec(spec, rawComponent) {
+  const cacheEntry = spec.cache ? spec.cache.get(rawComponent) : null;
 
-      expect(a.equals(b)).to.equal(true);
-      expect(a.equals(c)).to.equal(false);
-    });
-  });
+  if(cacheEntry) return cacheEntry;
+  const component = normalize(rawComponent);
+  const hooks = pick([&apos;onCreate&apos;, &apos;onUpdate&apos;, &apos;onRemove&apos;], spec);
+  const componentSpec = mapObj(hook =&gt; model =&gt; hook(component, spec.model(component, model)), hooks);
 
-  describe(&apos;#apply&apos;, function() {
-    it(&apos;applies transform on pointer&apos;, function() {
-      const transform = Transform.ofTargets({
-        foo: &apos;/aaa/bbb&apos;,
-        bar: &apos;/ccc&apos;
-      });
+  componentSpec.render = function(model) {
+    const decoratedModel = spec.model(component, model);
+    const node = spec.render(component, decoratedModel);
 
-      const fooPointer = JSONPointer.ofString(&apos;/foo/xxx&apos;);
-      const barPointer = JSONPointer.ofString(&apos;/bar/yyy&apos;);
+    return spec.deep ? decorateNode(spec, node) : node;
+  };
 
-      const fooTransformed = transform.apply(fooPointer).toRFC();
-      const barTransformed = transform.apply(barPointer).toRFC();
+  const decorated =  Object.assign({}, component, componentSpec);
 
-      expect(fooTransformed).to.equal(&apos;/aaa/bbb/xxx&apos;);
-      expect(barTransformed).to.equal(&apos;/ccc/yyy&apos;);
-    });
-  });
-});
+  if(spec.cache) spec.cache.set(rawComponent, decorated);
+  return decorated;
+}
+
+function decorateNode(spec, node) {
+  const nodeSpec = {};
+
+  if(isThunk(node)) nodeSpec.component = applySpec(spec, node.component);
+  if(!t.Nil.is(node.children)) nodeSpec.children = node.children.map(child =&gt; decorateNode(spec, child));
+
+  return Object.assign({}, node, nodeSpec);
+}
+
+export function specDecorator(options) {
+  const cache = options.deep &amp;&amp; !options.cache ? new WeakMap() : options.cache;
+  const spec = Object.assign({}, defaultOpts, options, { cache });
+
+  return function(component) {
+    const decorated = applySpec(spec, component);
+
+    return decorated;
+  };
+}
 </code></pre>
 
 </div>

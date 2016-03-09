@@ -10,46 +10,10 @@
     "access": null,
     "description": null,
     "lineNumber": 1,
-    "content": "import t from 'tcomb';\nimport Immutable from 'immutable';\nimport applyPatch from 'immpatch';\n\nimport Transform from './Transform';\nimport JSONPointer from './JSONPointer';\nimport { get, unbox, box } from './state';\n\nfunction applyTransform(transform, state) {\n  const newState = Immutable.Map(transform.map)\n    .map(pointer => get(state, pointer));\n\n  return newState;\n}\n\nconst emptyInstance = {\n  type:      t.Any,\n  state:     box({}),\n  transform: Transform.ofTargets({})\n};\n\n/**\n * Context is passed to all components.\n */\nclass Context {\n\n  /**\n   * Context constructors\n   *\n   * @param {Object} instance - instances sdds\n   * @param {Object} instance.state - states  sd\n   * @param {Transform} instance.transform - transform sdds\n   */\n  constructor(instance = {}) {\n    Object.assign(this, emptyInstance, instance);\n\n    Object.freeze(this);\n  }\n\n\n  /**\n   * create Context of state, transform is identity\n   * @param  {object} state - state of ctx\n   * @return {Context}\n   */\n\n  static ofState(state = {}) {\n    return new Context({\n      state:     box(state),\n      transform: Transform.ofTargets({})\n    });\n  }\n\n  /**\n   * get value from state\n   * @param {string|JSONPointer} path = '' - pointer to value\n   * @param {boolean} toJS = false - unbox value?\n   * @return {any} value\n   */\n  get(path = '', toJS = false) {\n    if(t.Boolean.is(path)) return this.get('', path);\n\n    const result = get(this.state, JSONPointer.ofString(path));\n\n    return toJS ? unbox(result) : result;\n  }\n\n  /**\n   * transform ctx with target sub\n   * @param  {Transform} sub [description]\n   * @return {Context}\n   */\n  sub(sub) {\n    const transform = this.transform.sub(sub);\n    const state = applyTransform(sub, this.state);\n\n    return new Context({ transform, state });\n  }\n\n  /**\n   * check if ctx has  changed\n   * @param  {Context} last - the last COntext\n   * @return {boolean}\n   */\n  changed(last) {\n    const keys = last.state.keySeq().toJS();\n\n    if(!this.transform.equals(last.transform)) return true;\n    return keys.some(key => this.get(key) !== last.get(key));\n  }\n\n  update(patchSet) {\n    if(!this.transform.isIdentity())\n      console.log('WARNING: Context.update, this.transform should be identity');\n\n    if(patchSet.length === 0) return this;\n\n    const newState = applyPatch(this.state, patchSet);\n    // assert type\n\n    const rawState = newState.toJS();\n\n    this.type(rawState);\n\n    return new Context({\n      type:      this.type,\n      transform: this.transform,\n      state:     newState\n    });\n  }\n\n\n}\n\nexport default Context;\n"
+    "content": "import t from 'tcomb';\nimport applyPatch from 'immpatch';\n\nimport JSONPointer from './JSONPointer';\nimport { get, unbox, box } from './state';\n\nconst emptyInstance = {\n  type:  t.Any,\n  state: box({})\n};\n\n/**\n * Context is passed to all components.\n */\nclass Context {\n\n  /**\n   * Context constructors\n   *\n   * @param {Object} instance - instances sdds\n   * @param {Object} instance.state - states  sd\n   * @param {Transform} instance.transform - transform sdds\n   */\n  constructor(instance = {}) {\n    Object.assign(this, emptyInstance, instance);\n\n    Object.freeze(this);\n  }\n\n\n  /**\n   * create Context of state, transform is identity\n   * @param  {object} state - state of ctx\n   * @return {Context}\n   */\n\n  static ofState(state = {}) {\n    return new Context({\n      state: box(state)\n    });\n  }\n\n  /**\n   * get value from state\n   * @param {string|JSONPointer} path = '' - pointer to value\n   * @param {boolean} toJS = false - unbox value?\n   * @return {any} value\n   */\n  get(path = '', toJS = false) {\n    if(t.Boolean.is(path)) return this.get('', path);\n\n    const result = get(this.state, JSONPointer.ofString(path));\n\n    return toJS ? unbox(result) : result;\n  }\n\n  /**\n   * check if ctx has  changed\n   * @param  {Context} last - the last COntext\n   * @return {boolean}\n   */\n  changed(last) {\n    const keys = last.state.keySeq().toJS();\n\n    return keys.some(key => this.get(key) !== last.get(key));\n  }\n\n  update(patchSet) {\n    if(patchSet.length === 0) return this;\n\n    const newState = applyPatch(this.state, patchSet);\n    // assert type\n\n    const rawState = newState.toJS();\n\n    this.type(rawState);\n\n    return new Context({\n      type:  this.type,\n      // transform: this.transform,\n      state: newState\n    });\n  }\n\n\n}\n\nexport default Context;\n"
   },
   {
     "__docId__": 1,
-    "kind": "function",
-    "static": true,
-    "variation": null,
-    "name": "applyTransform",
-    "memberof": "src/Context.js",
-    "longname": "src/Context.js~applyTransform",
-    "access": null,
-    "export": false,
-    "importPath": "fux/src/Context.js",
-    "importStyle": null,
-    "description": null,
-    "lineNumber": 9,
-    "undocument": true,
-    "params": [
-      {
-        "name": "transform",
-        "types": [
-          "*"
-        ]
-      },
-      {
-        "name": "state",
-        "types": [
-          "*"
-        ]
-      }
-    ],
-    "return": {
-      "types": [
-        "*"
-      ]
-    },
-    "generator": false
-  },
-  {
-    "__docId__": 2,
     "kind": "variable",
     "static": true,
     "variation": null,
@@ -61,7 +25,7 @@
     "importPath": "fux/src/Context.js",
     "importStyle": null,
     "description": null,
-    "lineNumber": 16,
+    "lineNumber": 7,
     "undocument": true,
     "type": {
       "types": [
@@ -70,7 +34,7 @@
     }
   },
   {
-    "__docId__": 3,
+    "__docId__": 2,
     "kind": "class",
     "static": true,
     "variation": null,
@@ -82,11 +46,11 @@
     "importPath": "fux/src/Context.js",
     "importStyle": "Context",
     "description": "Context is passed to all components.",
-    "lineNumber": 25,
+    "lineNumber": 15,
     "interface": false
   },
   {
-    "__docId__": 4,
+    "__docId__": 3,
     "kind": "constructor",
     "static": false,
     "variation": null,
@@ -95,7 +59,7 @@
     "longname": "src/Context.js~Context#constructor",
     "access": null,
     "description": "Context constructors",
-    "lineNumber": 34,
+    "lineNumber": 24,
     "params": [
       {
         "nullable": null,
@@ -131,7 +95,7 @@
     "generator": false
   },
   {
-    "__docId__": 5,
+    "__docId__": 4,
     "kind": "method",
     "static": true,
     "variation": null,
@@ -140,7 +104,7 @@
     "longname": "src/Context.js~Context.ofState",
     "access": null,
     "description": "create Context of state, transform is identity",
-    "lineNumber": 47,
+    "lineNumber": 37,
     "params": [
       {
         "nullable": null,
@@ -164,7 +128,7 @@
     "generator": false
   },
   {
-    "__docId__": 6,
+    "__docId__": 5,
     "kind": "method",
     "static": false,
     "variation": null,
@@ -173,7 +137,7 @@
     "longname": "src/Context.js~Context#get",
     "access": null,
     "description": "get value from state",
-    "lineNumber": 60,
+    "lineNumber": 49,
     "params": [
       {
         "nullable": null,
@@ -208,40 +172,7 @@
     "generator": false
   },
   {
-    "__docId__": 7,
-    "kind": "method",
-    "static": false,
-    "variation": null,
-    "name": "sub",
-    "memberof": "src/Context.js~Context",
-    "longname": "src/Context.js~Context#sub",
-    "access": null,
-    "description": "transform ctx with target sub",
-    "lineNumber": 73,
-    "params": [
-      {
-        "nullable": null,
-        "types": [
-          "Transform"
-        ],
-        "spread": false,
-        "optional": false,
-        "name": "sub",
-        "description": "[description]"
-      }
-    ],
-    "return": {
-      "nullable": null,
-      "types": [
-        "Context"
-      ],
-      "spread": false,
-      "description": ""
-    },
-    "generator": false
-  },
-  {
-    "__docId__": 8,
+    "__docId__": 6,
     "kind": "method",
     "static": false,
     "variation": null,
@@ -250,7 +181,7 @@
     "longname": "src/Context.js~Context#changed",
     "access": null,
     "description": "check if ctx has  changed",
-    "lineNumber": 85,
+    "lineNumber": 62,
     "params": [
       {
         "nullable": null,
@@ -274,7 +205,7 @@
     "generator": false
   },
   {
-    "__docId__": 9,
+    "__docId__": 7,
     "kind": "method",
     "static": false,
     "variation": null,
@@ -283,7 +214,7 @@
     "longname": "src/Context.js~Context#update",
     "access": null,
     "description": null,
-    "lineNumber": 92,
+    "lineNumber": 68,
     "undocument": true,
     "params": [
       {
@@ -301,7 +232,7 @@
     "generator": false
   },
   {
-    "__docId__": 10,
+    "__docId__": 8,
     "kind": "file",
     "static": true,
     "variation": null,
@@ -311,10 +242,10 @@
     "access": null,
     "description": null,
     "lineNumber": 1,
-    "content": "import t from 'tcomb';\n\n/**\n * An array of Strings\n * TokenList holds JSONPath tokens.\n * @typedef {Array<string>} TokenList\n */\nconst TokenList = t.list(t.String);\n\n/**\n * \tJSON Pointer defines a string format for identifying a specific value within a JSON document.\n *  This class holds methods for manipulation of pointers.\n *\n *  For more information:\n *   - http://tools.ietf.org/html/rfc6901\n *   - http://jsonpatch.com/#json-pointer\n */\nclass JSONPointer {\n\n  /**\n   * JSONPointer constructors\n   *\n   * @param {Object} opts - options.\n   * @param {TokenList} opts.tokens - json path tokens\n   */\n  constructor(opts = {}) {\n    const tokens = TokenList(opts.tokens || []);\n\n    this.tokens = tokens;\n\n    Object.freeze(this.tokens);\n    Object.freeze(this);\n  }\n\n  static ofTokens(tokens) {\n    return new JSONPointer({ tokens });\n  }\n\n  /**\n   * parse str and return JSONPointer\n   *\n   * If x starts with '/' create will treat x as a JSONPointer.\n   * All other string will be treated like immutable js pointer (eg.: 'foo.bar')\n   *\n   * @param {string} str - pointer string\n   * @returns {JSONPointer}\n   */\n  static ofString(str) {\n    if(!t.String.is(str))\n      throw new Error('JSONPointer::ofString - expected string');\n\n    if(str === '') return new JSONPointer({\n      tokens: []\n    });\n\n    // pointer to key \"\" (rfc)\n    if(str === '/') return new JSONPointer({\n      tokens: ['']\n    });\n\n    if(str.startsWith('/')) return new JSONPointer({\n      tokens: str.split('/').slice(1)\n    });\n\n    return new JSONPointer({\n      tokens: str.split('.')\n    });\n  }\n\n  /**\n   * get rfc string representation\n   *\n   * @returns {string}\n   */\n  toRFC() {\n    return '/'.concat(this.tokens.join('/'));\n  }\n\n  /**\n   * get immutable js string representation\n   *\n   * @returns {string}\n   */\n  toImmutable() {\n    return this.tokens.join('.');\n  }\n\n  /**\n   * get first token\n   *\n   * Return value is the first entry from token list.\n   * @returns {string}\n   */\n  first() {\n    return this.tokens[ 0 ] || null;\n  }\n\n  /**\n   * return length of token array\n   * @returns {number}\n   */\n  size() {\n    return this.tokens.length;\n  }\n\n  /**\n   * concat two JSONPointer\n   *\n   * @param {JSONPointer} sub - the pointer to concat\n   * @returns {JSONPointer}\n   */\n  concat(sub) {\n    if(!sub instanceof JSONPointer)\n      throw new Error('JSONPointer#concat argument should be JSONPointer');\n\n    return new JSONPointer({\n      tokens: this.tokens.concat(sub.tokens)\n    });\n  }\n\n  /**\n   * slice JSONPointer\n   *\n   * slice has the same signature like Array.prototype.slice.\n   *\n   * @returns {JSONPointer}\n   */\n  slice() {\n    return new JSONPointer({\n      tokens: Array.prototype.slice.apply(this.tokens, arguments)\n    });\n  }\n}\n\nexport default JSONPointer;\n"
+    "content": "import t from 'tcomb';\n\n/**\n * An array of Strings\n * TokenList holds JSONPath tokens.\n * @typedef {Array<string>} TokenList\n */\nconst TokenList = t.list(t.String);\n\n/**\n * \tJSON Pointer defines a string format for identifying a specific value within a JSON document.\n *  This class holds methods for manipulation of pointers.\n *\n *  For more information:\n *   - http://tools.ietf.org/html/rfc6901\n *   - http://jsonpatch.com/#json-pointer\n */\nclass JSONPointer {\n\n  /**\n   * JSONPointer constructors\n   *\n   * @param {Object} opts - options.\n   * @param {TokenList} opts.tokens - json path tokens\n   */\n  constructor(opts = {}) {\n    const tokens = TokenList(opts.tokens || []);\n\n    this.tokens = tokens;\n\n    Object.freeze(this.tokens);\n    Object.freeze(this);\n  }\n\n  static ofTokens(tokens) {\n    return new JSONPointer({ tokens });\n  }\n\n  /**\n   * parse str and return JSONPointer\n   *\n   * If x starts with '/' create will treat x as a JSONPointer.\n   * All other string will be treated like immutable js pointer (eg.: 'foo.bar')\n   *\n   * @param {string} str - pointer string\n   * @returns {JSONPointer}\n   */\n  static ofString(str) {\n    if(!t.String.is(str))\n      throw new Error('JSONPointer::ofString - expected string');\n\n    if(str === '') return new JSONPointer({\n      tokens: []\n    });\n\n    // pointer to key \"\" (rfc)\n    if(str === '/') return new JSONPointer({\n      tokens: ['']\n    });\n\n    if(str.startsWith('/')) return new JSONPointer({\n      tokens: str.split('/').slice(1)\n    });\n\n    return new JSONPointer({\n      tokens: str.split('.')\n    });\n  }\n\n  /**\n   * get rfc string representation\n   *\n   * @returns {string}\n   */\n  toRFC() {\n    return '/'.concat(this.tokens.join('/'));\n  }\n\n  /**\n   * get immutable js string representation\n   *\n   * @returns {string}\n   */\n  toImmutable() {\n    return this.tokens.join('.');\n  }\n\n  /**\n   * get first token\n   *\n   * Return value is the first entry from token list.\n   * @returns {string}\n   */\n  first() {\n    return this.tokens[ 0 ] || null;\n  }\n\n  /**\n   * get last token\n   *\n   * Return value is the last entry from token list.\n   * @returns {string}\n   */\n  last() {\n    return this.tokens[ this.tokens.length - 1 ] || null;\n  }\n\n  /**\n   * return length of token array\n   * @returns {number}\n   */\n  size() {\n    return this.tokens.length;\n  }\n\n  /**\n   * concat two JSONPointer\n   *\n   * @param {JSONPointer} sub - the pointer to concat\n   * @returns {JSONPointer}\n   */\n  concat(sub) {\n    if(!sub instanceof JSONPointer)\n      throw new Error('JSONPointer#concat argument should be JSONPointer');\n\n    return new JSONPointer({\n      tokens: this.tokens.concat(sub.tokens)\n    });\n  }\n\n  /**\n   * slice JSONPointer\n   *\n   * slice has the same signature like Array.prototype.slice.\n   *\n   * @returns {JSONPointer}\n   */\n  slice() {\n    return new JSONPointer({\n      tokens: Array.prototype.slice.apply(this.tokens, arguments)\n    });\n  }\n}\n\nexport default JSONPointer;\n"
   },
   {
-    "__docId__": 11,
+    "__docId__": 9,
     "kind": "typedef",
     "static": true,
     "variation": null,
@@ -333,7 +264,7 @@
     }
   },
   {
-    "__docId__": 12,
+    "__docId__": 10,
     "kind": "class",
     "static": true,
     "variation": null,
@@ -349,7 +280,7 @@
     "interface": false
   },
   {
-    "__docId__": 13,
+    "__docId__": 11,
     "kind": "constructor",
     "static": false,
     "variation": null,
@@ -384,7 +315,7 @@
     "generator": false
   },
   {
-    "__docId__": 14,
+    "__docId__": 12,
     "kind": "member",
     "static": false,
     "variation": null,
@@ -402,7 +333,7 @@
     }
   },
   {
-    "__docId__": 15,
+    "__docId__": 13,
     "kind": "method",
     "static": true,
     "variation": null,
@@ -429,7 +360,7 @@
     "generator": false
   },
   {
-    "__docId__": 16,
+    "__docId__": 14,
     "kind": "method",
     "static": true,
     "variation": null,
@@ -468,7 +399,7 @@
     "generator": false
   },
   {
-    "__docId__": 17,
+    "__docId__": 15,
     "kind": "method",
     "static": false,
     "variation": null,
@@ -496,7 +427,7 @@
     "generator": false
   },
   {
-    "__docId__": 18,
+    "__docId__": 16,
     "kind": "method",
     "static": false,
     "variation": null,
@@ -524,7 +455,7 @@
     "generator": false
   },
   {
-    "__docId__": 19,
+    "__docId__": 17,
     "kind": "method",
     "static": false,
     "variation": null,
@@ -552,7 +483,35 @@
     "generator": false
   },
   {
-    "__docId__": 20,
+    "__docId__": 18,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "last",
+    "memberof": "src/JSONPointer/index.js~JSONPointer",
+    "longname": "src/JSONPointer/index.js~JSONPointer#last",
+    "access": null,
+    "description": "get last token\n\nReturn value is the last entry from token list.",
+    "lineNumber": 104,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{string}"
+      }
+    ],
+    "params": [],
+    "return": {
+      "nullable": null,
+      "types": [
+        "string"
+      ],
+      "spread": false,
+      "description": ""
+    },
+    "generator": false
+  },
+  {
+    "__docId__": 19,
     "kind": "method",
     "static": false,
     "variation": null,
@@ -561,7 +520,7 @@
     "longname": "src/JSONPointer/index.js~JSONPointer#size",
     "access": null,
     "description": "return length of token array",
-    "lineNumber": 102,
+    "lineNumber": 112,
     "unknown": [
       {
         "tagName": "@returns",
@@ -580,7 +539,7 @@
     "generator": false
   },
   {
-    "__docId__": 21,
+    "__docId__": 20,
     "kind": "method",
     "static": false,
     "variation": null,
@@ -589,7 +548,7 @@
     "longname": "src/JSONPointer/index.js~JSONPointer#concat",
     "access": null,
     "description": "concat two JSONPointer",
-    "lineNumber": 112,
+    "lineNumber": 122,
     "unknown": [
       {
         "tagName": "@returns",
@@ -619,7 +578,7 @@
     "generator": false
   },
   {
-    "__docId__": 22,
+    "__docId__": 21,
     "kind": "method",
     "static": false,
     "variation": null,
@@ -628,7 +587,7 @@
     "longname": "src/JSONPointer/index.js~JSONPointer#slice",
     "access": null,
     "description": "slice JSONPointer\n\nslice has the same signature like Array.prototype.slice.",
-    "lineNumber": 128,
+    "lineNumber": 138,
     "unknown": [
       {
         "tagName": "@returns",
@@ -647,7 +606,7 @@
     "generator": false
   },
   {
-    "__docId__": 23,
+    "__docId__": 22,
     "kind": "file",
     "static": true,
     "variation": null,
@@ -657,10 +616,10 @@
     "access": null,
     "description": null,
     "lineNumber": 1,
-    "content": "import t from 'tcomb';\n\nimport check from './utils/checkType';\nimport { box } from './state';\n\nconst specificString = str => t.irreducible(`String: ${str}`, x => str === x);\n\nconst BasePatch = t.struct({\n  path: t.String\n});\n\nconst AddPatch = BasePatch.extend({\n  op:    specificString('add'),\n  value: t.Any\n}, 'AddPatch');\n\nconst RemovePatch = BasePatch.extend({\n  op: specificString('remove')\n}, 'RemovePatch');\n\nconst ReplacePatch = BasePatch.extend({\n  op:    specificString('replace'),\n  value: t.Any\n}, 'ReplacePatch');\n\n/**\n * json patch type.\n * - only add, remove and replace patches are supported\n * - http://jsonpatch.com\n * @typedef {object} Patch\n */\nexport const Patch = t.union([AddPatch, RemovePatch, ReplacePatch], 'Patch');\n\n/* eslint-disable consistent-return */\nPatch.dispatch = function(x) {\n  if(check(AddPatch, x)) return AddPatch;\n  if(check(RemovePatch, x)) return RemovePatch;\n  if(check(ReplacePatch, x)) return ReplacePatch;\n};\n\n/* eslint-enable consistent-return */\n\nfunction createPatchJSON(obj) {\n  // assert patch is ok, and return pojo\n  Patch(obj);\n  return {\n    op:    obj.op,\n    path:  obj.path,\n    value: obj.value\n  };\n}\n\n/**\n * replace patch shortcut\n * @param  {string} path - patch path\n * @param  {any} value - patch value\n * @return {Patch}\n */\nexport const $rep = (path, value) => createPatchJSON({\n  op:    'replace',\n  path,\n  value: box(value)\n});\n\n/**\n * add patch shortcut\n * @param  {string} path - patch path\n * @param  {any} value - patch value\n * @return {Patch}\n */\nexport const $add =  (path, value) => createPatchJSON({\n  op:    'add',\n  path,\n  value: box(value)\n});\n"
+    "content": "import t from 'tcomb';\n\nconst specificString = str => t.irreducible(`String: ${str}`, x => str === x);\n\nconst BasePatch = t.struct({\n  path: t.String\n});\n\nconst AddPatch = BasePatch.extend({\n  op:    specificString('add'),\n  value: t.Any\n}, 'AddPatch');\n\nconst RemovePatch = BasePatch.extend({\n  op: specificString('remove')\n}, 'RemovePatch');\n\nconst ReplacePatch = BasePatch.extend({\n  op:    specificString('replace'),\n  value: t.Any\n}, 'ReplacePatch');\n\n/**\n * json patch type.\n * - only add, remove and replace patches are supported\n * - http://jsonpatch.com\n * @typedef {object} Patch\n */\n\nexport const Patch = t.union([AddPatch, RemovePatch, ReplacePatch], 'Patch');\n"
   },
   {
-    "__docId__": 24,
+    "__docId__": 23,
     "kind": "variable",
     "static": true,
     "variation": null,
@@ -672,7 +631,28 @@
     "importPath": "fux/src/Patch.js",
     "importStyle": null,
     "description": null,
-    "lineNumber": 6,
+    "lineNumber": 3,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 24,
+    "kind": "variable",
+    "static": true,
+    "variation": null,
+    "name": "BasePatch",
+    "memberof": "src/Patch.js",
+    "longname": "src/Patch.js~BasePatch",
+    "access": null,
+    "export": false,
+    "importPath": "fux/src/Patch.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 5,
     "undocument": true,
     "type": {
       "types": [
@@ -685,15 +665,15 @@
     "kind": "variable",
     "static": true,
     "variation": null,
-    "name": "BasePatch",
+    "name": "AddPatch",
     "memberof": "src/Patch.js",
-    "longname": "src/Patch.js~BasePatch",
+    "longname": "src/Patch.js~AddPatch",
     "access": null,
     "export": false,
     "importPath": "fux/src/Patch.js",
     "importStyle": null,
     "description": null,
-    "lineNumber": 8,
+    "lineNumber": 9,
     "undocument": true,
     "type": {
       "types": [
@@ -706,15 +686,15 @@
     "kind": "variable",
     "static": true,
     "variation": null,
-    "name": "AddPatch",
+    "name": "RemovePatch",
     "memberof": "src/Patch.js",
-    "longname": "src/Patch.js~AddPatch",
+    "longname": "src/Patch.js~RemovePatch",
     "access": null,
     "export": false,
     "importPath": "fux/src/Patch.js",
     "importStyle": null,
     "description": null,
-    "lineNumber": 12,
+    "lineNumber": 14,
     "undocument": true,
     "type": {
       "types": [
@@ -727,15 +707,15 @@
     "kind": "variable",
     "static": true,
     "variation": null,
-    "name": "RemovePatch",
+    "name": "ReplacePatch",
     "memberof": "src/Patch.js",
-    "longname": "src/Patch.js~RemovePatch",
+    "longname": "src/Patch.js~ReplacePatch",
     "access": null,
     "export": false,
     "importPath": "fux/src/Patch.js",
     "importStyle": null,
     "description": null,
-    "lineNumber": 17,
+    "lineNumber": 18,
     "undocument": true,
     "type": {
       "types": [
@@ -745,27 +725,6 @@
   },
   {
     "__docId__": 28,
-    "kind": "variable",
-    "static": true,
-    "variation": null,
-    "name": "ReplacePatch",
-    "memberof": "src/Patch.js",
-    "longname": "src/Patch.js~ReplacePatch",
-    "access": null,
-    "export": false,
-    "importPath": "fux/src/Patch.js",
-    "importStyle": null,
-    "description": null,
-    "lineNumber": 21,
-    "undocument": true,
-    "type": {
-      "types": [
-        "*"
-      ]
-    }
-  },
-  {
-    "__docId__": 29,
     "kind": "typedef",
     "static": true,
     "variation": null,
@@ -774,7 +733,7 @@
     "longname": "src/Patch.js~Patch",
     "access": null,
     "description": "json patch type.\n- only add, remove and replace patches are supported\n- http://jsonpatch.com",
-    "lineNumber": 32,
+    "lineNumber": 30,
     "type": {
       "types": [
         "object"
@@ -784,167 +743,7 @@
     }
   },
   {
-    "__docId__": 30,
-    "kind": "function",
-    "static": true,
-    "variation": null,
-    "name": "dispatch",
-    "memberof": "src/Patch.js",
-    "longname": "src/Patch.js~dispatch",
-    "access": null,
-    "export": false,
-    "importPath": "fux/src/Patch.js",
-    "importStyle": null,
-    "description": null,
-    "lineNumber": 35,
-    "undocument": true,
-    "params": [
-      {
-        "name": "x",
-        "types": [
-          "*"
-        ]
-      }
-    ],
-    "return": {
-      "types": [
-        "*"
-      ]
-    },
-    "generator": false
-  },
-  {
-    "__docId__": 31,
-    "kind": "function",
-    "static": true,
-    "variation": null,
-    "name": "createPatchJSON",
-    "memberof": "src/Patch.js",
-    "longname": "src/Patch.js~createPatchJSON",
-    "access": null,
-    "export": false,
-    "importPath": "fux/src/Patch.js",
-    "importStyle": null,
-    "description": null,
-    "lineNumber": 43,
-    "undocument": true,
-    "params": [
-      {
-        "name": "obj",
-        "types": [
-          "*"
-        ]
-      }
-    ],
-    "return": {
-      "types": [
-        "*"
-      ]
-    },
-    "generator": false
-  },
-  {
-    "__docId__": 32,
-    "kind": "variable",
-    "static": true,
-    "variation": null,
-    "name": "$rep",
-    "memberof": "src/Patch.js",
-    "longname": "src/Patch.js~$rep",
-    "access": null,
-    "export": true,
-    "importPath": "fux/src/Patch.js",
-    "importStyle": "{$rep}",
-    "description": "replace patch shortcut",
-    "lineNumber": 59,
-    "params": [
-      {
-        "nullable": null,
-        "types": [
-          "string"
-        ],
-        "spread": false,
-        "optional": false,
-        "name": "path",
-        "description": "patch path"
-      },
-      {
-        "nullable": null,
-        "types": [
-          "any"
-        ],
-        "spread": false,
-        "optional": false,
-        "name": "value",
-        "description": "patch value"
-      }
-    ],
-    "return": {
-      "nullable": null,
-      "types": [
-        "Patch"
-      ],
-      "spread": false,
-      "description": ""
-    },
-    "type": {
-      "types": [
-        "*"
-      ]
-    }
-  },
-  {
-    "__docId__": 33,
-    "kind": "variable",
-    "static": true,
-    "variation": null,
-    "name": "$add",
-    "memberof": "src/Patch.js",
-    "longname": "src/Patch.js~$add",
-    "access": null,
-    "export": true,
-    "importPath": "fux/src/Patch.js",
-    "importStyle": "{$add}",
-    "description": "add patch shortcut",
-    "lineNumber": 71,
-    "params": [
-      {
-        "nullable": null,
-        "types": [
-          "string"
-        ],
-        "spread": false,
-        "optional": false,
-        "name": "path",
-        "description": "patch path"
-      },
-      {
-        "nullable": null,
-        "types": [
-          "any"
-        ],
-        "spread": false,
-        "optional": false,
-        "name": "value",
-        "description": "patch value"
-      }
-    ],
-    "return": {
-      "nullable": null,
-      "types": [
-        "Patch"
-      ],
-      "spread": false,
-      "description": ""
-    },
-    "type": {
-      "types": [
-        "*"
-      ]
-    }
-  },
-  {
-    "__docId__": 34,
+    "__docId__": 29,
     "kind": "file",
     "static": true,
     "variation": null,
@@ -957,7 +756,7 @@
     "content": "import t from 'tcomb';\nimport mapObj from '@f/map-obj';\n\nimport JSONPointer from './JSONPointer';\n\nfunction substitutePointer(pointer, targets) {\n  const root = pointer.first();\n\n  if(t.Nil.is(targets[ root ]))\n    throw new Error(`No target found for key ${root}. Possible targets: ${targets.toString()}`);\n\n  const tokens = targets[ root ].tokens.concat(pointer.tokens.slice(1));\n\n  return JSONPointer.ofTokens(tokens);\n}\n\n/**\n * Map holds transform informations.\n *\n * @typedef {Map<string, JSONPointer>} Map\n */\n\nconst Map = t.dict(t.String, JSONPointer);\n\nconst parseTargets = desc => mapObj(JSONPointer.ofString, desc);\n\n\n/**\n * Transform tracks changes to state structure,\n * is used for mounting transforms.\n */\n\nclass Transform {\n\n  /**\n   * Transform constructors\n   *\n   * @param {Map} map - instances sdds\n   */\n\n  constructor(map = Map({})) {\n    this.length = Object.keys(map).length;\n    this.map = map;\n\n    Object.freeze(this.length);\n    Object.freeze(this.map);\n    Object.freeze(this);\n  }\n\n  /**\n   * parse target keys to json pointer and return transform\n   * @param {Object<string, string>} targets\n   * @returns {Transform}\n   */\n\n  static ofTargets(targets = {}) {\n    const map = parseTargets(targets);\n\n    return new Transform(map);\n  }\n\n  /**\n   * resolve keys from child transform with targets from object\n   * @param {Transform} child - the child\n   * @returns {Transform}\n   */\n\n  sub(child) {\n    if(this.isIdentity()) return child;\n    if(child.isIdentity()) return this;\n\n    const childMap = mapObj(target => substitutePointer(target, this.map), child.map);\n\n    return new Transform(childMap);\n  }\n\n  /**\n   * apply transform on JSONPointer\n   * @param {JSONPointer} pointer - pointer\n   * @returns {Transform}\n   */\n\n  apply(pointer) {\n    const target = pointer.first();\n\n    if(t.Nil.is(this.map[ target ])) return pointer;\n\n    const tail = pointer.slice(1);\n\n    return this.map[ target ].concat(tail);\n  }\n\n  /**\n   * returns targets (target pointer as rfc string)\n   * @returns {Object<string, string>}\n   */\n  toTargets() {\n    return mapObj(pointer => pointer.toRFC(), this.map);\n  }\n\n  /**\n   * check if transforms are equal\n   * @param {Transform} x - transfrom to check against\n   * @returns {boolean}\n   */\n  equals(x) {\n    if(this.length !== x.length) return false;\n\n    return Object\n      .keys(this.map)\n      .every(target => x.map[ target ] && this.map[ target ].toRFC() === x.map[ target ].toRFC());\n  }\n\n  /**\n   * check if transform is identify\n   * @returns {boolean}\n   */\n  isIdentity() {\n    return this.length === 0;\n  }\n\n\n}\n\nexport default Transform;\n"
   },
   {
-    "__docId__": 35,
+    "__docId__": 30,
     "kind": "function",
     "static": true,
     "variation": null,
@@ -993,7 +792,7 @@
     "generator": false
   },
   {
-    "__docId__": 36,
+    "__docId__": 31,
     "kind": "typedef",
     "static": true,
     "variation": null,
@@ -1012,7 +811,7 @@
     }
   },
   {
-    "__docId__": 37,
+    "__docId__": 32,
     "kind": "variable",
     "static": true,
     "variation": null,
@@ -1033,7 +832,7 @@
     }
   },
   {
-    "__docId__": 38,
+    "__docId__": 33,
     "kind": "class",
     "static": true,
     "variation": null,
@@ -1049,7 +848,7 @@
     "interface": false
   },
   {
-    "__docId__": 39,
+    "__docId__": 34,
     "kind": "constructor",
     "static": false,
     "variation": null,
@@ -1074,7 +873,7 @@
     "generator": false
   },
   {
-    "__docId__": 40,
+    "__docId__": 35,
     "kind": "member",
     "static": false,
     "variation": null,
@@ -1092,7 +891,7 @@
     }
   },
   {
-    "__docId__": 41,
+    "__docId__": 36,
     "kind": "member",
     "static": false,
     "variation": null,
@@ -1110,7 +909,7 @@
     }
   },
   {
-    "__docId__": 42,
+    "__docId__": 37,
     "kind": "method",
     "static": true,
     "variation": null,
@@ -1149,7 +948,7 @@
     "generator": false
   },
   {
-    "__docId__": 43,
+    "__docId__": 38,
     "kind": "method",
     "static": false,
     "variation": null,
@@ -1188,7 +987,7 @@
     "generator": false
   },
   {
-    "__docId__": 44,
+    "__docId__": 39,
     "kind": "method",
     "static": false,
     "variation": null,
@@ -1227,7 +1026,7 @@
     "generator": false
   },
   {
-    "__docId__": 45,
+    "__docId__": 40,
     "kind": "method",
     "static": false,
     "variation": null,
@@ -1255,7 +1054,7 @@
     "generator": false
   },
   {
-    "__docId__": 46,
+    "__docId__": 41,
     "kind": "method",
     "static": false,
     "variation": null,
@@ -1294,7 +1093,7 @@
     "generator": false
   },
   {
-    "__docId__": 47,
+    "__docId__": 42,
     "kind": "method",
     "static": false,
     "variation": null,
@@ -1322,7 +1121,7 @@
     "generator": false
   },
   {
-    "__docId__": 48,
+    "__docId__": 43,
     "kind": "file",
     "static": true,
     "variation": null,
@@ -1332,59 +1131,153 @@
     "access": null,
     "description": null,
     "lineNumber": 1,
-    "content": "import curry from './../utils/curry';\nimport generateSpec from './../utils/generateSpec';\nimport normalize from './../utils/normalizeComponent';\n\nfunction assert(T, ctx, name = 'undefinedh') {\n  const raw = ctx.get(true);\n  let error = null;\n\n  try {\n    T(raw);\n  } catch(e) {\n    e.message = (`\n      component decorator mount error!\n      component.name: ${name}\n      \\n`).concat(e.message);\n\n    error = e;\n  }\n  if(error) throw error;\n}\n\nfunction decorateHook(component, T, name) {\n  if(!component[ name ]) return null;\n\n  return function(model) {\n    assert(T, model.context, component.Name);\n    return component[ name ](model);\n  };\n}\n\nexport default T => rawComponent => {\n  const component = normalize(rawComponent);\n  const decorator = curry(decorateHook)(component, T);\n  const spec = generateSpec(decorator);\n\n  return Object.assign({}, component, spec);\n};\n"
+    "content": "import { specDecorator } from './utils';\nimport check from './../utils/checkType';\n\n/**\n * assert context type\n *\n * ```javascript\n * import t from 'tcomb'\n *\n * checkContextType(t.struct({\n * \tsomeProp: t.String\n * }))(model => { ... })\n * ```\n *\n * @param  {Type} T - type to check context again (tcomb type)\n * @return {HOC}\n */\nexport default function checkContextType(T) {\n  const resultCache = new WeakMap();\n  const spec = {\n    deep:  false,\n    model: function(component, model) {\n      const cacheEntry = resultCache.get(model.context);\n\n      if(cacheEntry === true) return model;\n      if(cacheEntry === false) T(model.context.get(true));\n\n      const unboxedCtx = model.context.get(true);\n      const result = check(T, unboxedCtx);\n\n      resultCache.set(model.context, result);\n      if(result === false) T(unboxedCtx);\n\n      return model;\n    }\n  };\n  const decorator = specDecorator(spec);\n\n  return comp => {\n    return decorator(comp);\n  };\n}\n"
+  },
+  {
+    "__docId__": 44,
+    "kind": "function",
+    "static": true,
+    "variation": null,
+    "name": "checkContextType",
+    "memberof": "src/decorators/checkContextType.js",
+    "longname": "src/decorators/checkContextType.js~checkContextType",
+    "access": null,
+    "export": true,
+    "importPath": "fux/src/decorators/checkContextType.js",
+    "importStyle": "checkContextType",
+    "description": "assert context type\n\n```javascript\nimport t from 'tcomb'\n\ncheckContextType(t.struct({\n\tsomeProp: t.String\n}))(model => { ... })\n```",
+    "lineNumber": 18,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "Type"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "T",
+        "description": "type to check context again (tcomb type)"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "HOC"
+      ],
+      "spread": false,
+      "description": ""
+    },
+    "generator": false
+  },
+  {
+    "__docId__": 45,
+    "kind": "file",
+    "static": true,
+    "variation": null,
+    "name": "src/decorators/component.js",
+    "memberof": null,
+    "longname": "src/decorators/component.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1,
+    "content": "import { normalize } from './utils/';\n\n/**\n * apply multiple decorators on component\n *\n * ```javascript\n * component(\n * \tsomeDeoraotor(),\n * \tsomeOther()\n * )(model => { ... })\n * ```\n *\n * @param  {...HOC} decoration - list of component decorators (hocs)\n * @return {HOC}\n */\n\nexport default function component(...decoration) {\n  return rawComponent => {\n    const comp = normalize(rawComponent);\n\n    return decoration\n     .slice()\n     .reverse()\n     .reduce((target, decorator) => decorator(target), comp);\n  };\n}\n"
+  },
+  {
+    "__docId__": 46,
+    "kind": "function",
+    "static": true,
+    "variation": null,
+    "name": "component",
+    "memberof": "src/decorators/component.js",
+    "longname": "src/decorators/component.js~component",
+    "access": null,
+    "export": true,
+    "importPath": "fux/src/decorators/component.js",
+    "importStyle": "component",
+    "description": "apply multiple decorators on component\n\n```javascript\ncomponent(\n\tsomeDeoraotor(),\n\tsomeOther()\n)(model => { ... })\n```",
+    "lineNumber": 17,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "...HOC"
+        ],
+        "spread": true,
+        "optional": false,
+        "name": "decoration",
+        "description": "list of component decorators (hocs)"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "HOC"
+      ],
+      "spread": false,
+      "description": ""
+    },
+    "generator": false
+  },
+  {
+    "__docId__": 47,
+    "kind": "file",
+    "static": true,
+    "variation": null,
+    "name": "src/decorators/controller.js",
+    "memberof": null,
+    "longname": "src/decorators/controller.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1,
+    "content": "import t from 'tcomb';\n\nimport { specDecorator, mapAttributes, isHandler } from './utils';\n\n\nfunction createModel(model, controller) {\n  function dispatch(name, payload) {\n    if(!t.String.is(name)) return model.dispatch(name, payload);\n    const target = controller[ name ];\n\n    if(t.Nil.is(target)) throw new TypeError(`controller[${name}] is ${target}`);\n    if(!t.Function.is(target)) return model.dispatch(target);\n    const targetModel = Object.assign({}, model, { event: payload });\n    const output = target(targetModel);\n\n    return model.dispatch(output);\n  }\n\n  return Object.assign({}, model, { dispatch });\n}\n\nfunction createRender(component, model) {\n  const output = component.render(model);\n\n  return mapAttributes(output, function(prop, name) {\n    if(!t.String.is(prop) || !isHandler(name)) return prop;\n    return event => model.dispatch(prop, event);\n  }, true);\n}\n\n/**\n * controller decorator.\n *\n * ```javascript\n * controller({\n * \tclick: (model) => { ... }\n * })(({ dispatch }) => (\n * \t<input type='button' onClick={event => dispatch('click', event)} />\n * \t// or\n * \t<input type='button' onClick='click' />\n * ))\n * ```\n *\n * You can dispatch actions to handlers in your controller when you call\n * model.dispatch with the property name as first argument and an optional event as second argument.\n *\n * If the property is a function, then the function will be called with model as the only argument.\n * The model object has an additional property 'event', which contains the second argument from dispatch.\n * Otherwise the property will just be dispatched.\n *\n * @param  {Map<string, any>} controller - action map\n * @return {HOC}\n */\nexport default function(controller) {\n  const spec = {\n    deep:   false,\n    cache:  new WeakMap(),\n    model:  (component, model) => createModel(model, controller),\n    render: (component, model) => createRender(component, model)\n  };\n\n  return specDecorator(spec);\n}\n"
+  },
+  {
+    "__docId__": 48,
+    "kind": "function",
+    "static": true,
+    "variation": null,
+    "name": "createModel",
+    "memberof": "src/decorators/controller.js",
+    "longname": "src/decorators/controller.js~createModel",
+    "access": null,
+    "export": false,
+    "importPath": "fux/src/decorators/controller.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 6,
+    "undocument": true,
+    "params": [
+      {
+        "name": "model",
+        "types": [
+          "*"
+        ]
+      },
+      {
+        "name": "controller",
+        "types": [
+          "*"
+        ]
+      }
+    ],
+    "return": {
+      "types": [
+        "*"
+      ]
+    },
+    "generator": false
   },
   {
     "__docId__": 49,
     "kind": "function",
     "static": true,
     "variation": null,
-    "name": "assert",
-    "memberof": "src/decorators/checkContextType.js",
-    "longname": "src/decorators/checkContextType.js~assert",
+    "name": "createRender",
+    "memberof": "src/decorators/controller.js",
+    "longname": "src/decorators/controller.js~createRender",
     "access": null,
     "export": false,
-    "importPath": "fux/src/decorators/checkContextType.js",
-    "importStyle": null,
-    "description": null,
-    "lineNumber": 5,
-    "undocument": true,
-    "params": [
-      {
-        "name": "T",
-        "types": [
-          "*"
-        ]
-      },
-      {
-        "name": "ctx",
-        "types": [
-          "*"
-        ]
-      },
-      {
-        "name": "name",
-        "optional": true,
-        "types": [
-          "string"
-        ],
-        "defaultRaw": "undefinedh",
-        "defaultValue": "undefinedh"
-      }
-    ],
-    "generator": false
-  },
-  {
-    "__docId__": 50,
-    "kind": "function",
-    "static": true,
-    "variation": null,
-    "name": "decorateHook",
-    "memberof": "src/decorators/checkContextType.js",
-    "longname": "src/decorators/checkContextType.js~decorateHook",
-    "access": null,
-    "export": false,
-    "importPath": "fux/src/decorators/checkContextType.js",
+    "importPath": "fux/src/decorators/controller.js",
     "importStyle": null,
     "description": null,
     "lineNumber": 22,
@@ -1397,13 +1290,7 @@
         ]
       },
       {
-        "name": "T",
-        "types": [
-          "*"
-        ]
-      },
-      {
-        "name": "name",
+        "name": "model",
         "types": [
           "*"
         ]
@@ -1417,62 +1304,69 @@
     "generator": false
   },
   {
+    "__docId__": 50,
+    "kind": "function",
+    "static": true,
+    "variation": null,
+    "name": "controller",
+    "memberof": "src/decorators/controller.js",
+    "longname": "src/decorators/controller.js~controller",
+    "access": null,
+    "export": true,
+    "importPath": "fux/src/decorators/controller.js",
+    "importStyle": "controller",
+    "description": "controller decorator.\n\n```javascript\ncontroller({\n\tclick: (model) => { ... }\n})(({ dispatch }) => (\n\t<input type='button' onClick={event => dispatch('click', event)} />\n\t// or\n\t<input type='button' onClick='click' />\n))\n```\n\nYou can dispatch actions to handlers in your controller when you call\nmodel.dispatch with the property name as first argument and an optional event as second argument.\n\nIf the property is a function, then the function will be called with model as the only argument.\nThe model object has an additional property 'event', which contains the second argument from dispatch.\nOtherwise the property will just be dispatched.",
+    "lineNumber": 54,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "Map<string, any>"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "controller",
+        "description": "action map"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "HOC"
+      ],
+      "spread": false,
+      "description": ""
+    },
+    "generator": false
+  },
+  {
     "__docId__": 51,
     "kind": "file",
     "static": true,
     "variation": null,
-    "name": "src/decorators/component.js",
+    "name": "src/decorators/debug.js",
     "memberof": null,
-    "longname": "src/decorators/component.js",
+    "longname": "src/decorators/debug.js",
     "access": null,
     "description": null,
     "lineNumber": 1,
-    "content": "import normalize from './../utils/normalizeComponent';\n\n/**\n * decorate component\n * @param  {Array} decoration - list of component decorators\n * @param {Component} component -  the target\n * @return {Component} decorated component\n */\n\nconst f = decoration => rawComponent => {\n  const component = normalize(rawComponent);\n\n  return decoration\n   .slice()\n   .reverse()\n   .reduce((target, decorator) => decorator(target), component);\n};\n\nexport default f;\n"
+    "content": "import { specDecorator } from './utils';\n\nconst warn = msg => console.warn ? console.warn(msg) : console.log(`Waring:\\n${msg}`);\nconst dir = obj => console.dir ? console.dir(obj) : console.log(obj);\nconst createHandler = name => function(component, model) {\n  try {\n    return component[ name ](model);\n  } catch(e) {\n    warn(`Error in ${component.name}#${name}`);\n    console.log('Component:');\n    dir(component);\n    throw e;\n  }\n};\n\nconst spec = {\n  deep:     true,\n  cache:    new WeakMap(),\n  name:     'debug',\n  render:   createHandler('render'),\n  onCreate: createHandler('onCreate'),\n  onUpdate: createHandler('onUpdate'),\n  onRemove: createHandler('onRemove')\n};\n\nexport default () => specDecorator(spec, false);\n"
   },
   {
     "__docId__": 52,
     "kind": "variable",
     "static": true,
     "variation": null,
-    "name": "f",
-    "memberof": "src/decorators/component.js",
-    "longname": "src/decorators/component.js~f",
+    "name": "warn",
+    "memberof": "src/decorators/debug.js",
+    "longname": "src/decorators/debug.js~warn",
     "access": null,
-    "export": true,
-    "importPath": "fux/src/decorators/component.js",
-    "importStyle": "f",
-    "description": "decorate component",
-    "lineNumber": 10,
-    "params": [
-      {
-        "nullable": null,
-        "types": [
-          "Array"
-        ],
-        "spread": false,
-        "optional": false,
-        "name": "decoration",
-        "description": "list of component decorators"
-      },
-      {
-        "nullable": null,
-        "types": [
-          "Component"
-        ],
-        "spread": false,
-        "optional": false,
-        "name": "component",
-        "description": "the target"
-      }
-    ],
-    "return": {
-      "nullable": null,
-      "types": [
-        "Component"
-      ],
-      "spread": false,
-      "description": "decorated component"
-    },
+    "export": false,
+    "importPath": "fux/src/decorators/debug.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 3,
+    "undocument": true,
     "type": {
       "types": [
         "*"
@@ -1481,29 +1375,16 @@
   },
   {
     "__docId__": 53,
-    "kind": "file",
-    "static": true,
-    "variation": null,
-    "name": "src/decorators/controller.js",
-    "memberof": null,
-    "longname": "src/decorators/controller.js",
-    "access": null,
-    "description": null,
-    "lineNumber": 1,
-    "content": "import JSONPointer from './../JSONPointer';\nimport normalize from './../utils/normalizeComponent';\n\nconst controllerDecorator = controller => rawComponent => {\n  const component = normalize(rawComponent);\n\n  function render(model) {\n    const dispatch = function(name) {\n      if(!controller[ name ]) return () => null;\n      return function(e) {\n        const decoratedDispatch = function(patchSet = []) {\n          model.dispatch(patchSet.map(function(patch) {\n            if(!patch.path) return patch;\n            const newPatch = Object.assign({}, patch);\n            const pointer = JSONPointer.ofString(patch.path);\n\n            newPatch.path = model.context.transform.apply(pointer).toRFC();\n            return newPatch;\n          }));\n        };\n\n        const patchSet = controller[ name ](e, model, decoratedDispatch);\n\n        decoratedDispatch(patchSet);\n      };\n    };\n\n    const decoratedModel = Object.assign({}, model, { dispatch });\n\n    return component.render(decoratedModel);\n  }\n\n  return Object.assign({}, component, { render });\n};\n\nexport default controllerDecorator;\n"
-  },
-  {
-    "__docId__": 54,
     "kind": "variable",
     "static": true,
     "variation": null,
-    "name": "controllerDecorator",
-    "memberof": "src/decorators/controller.js",
-    "longname": "src/decorators/controller.js~controllerDecorator",
+    "name": "dir",
+    "memberof": "src/decorators/debug.js",
+    "longname": "src/decorators/debug.js~dir",
     "access": null,
-    "export": true,
-    "importPath": "fux/src/decorators/controller.js",
-    "importStyle": "controllerDecorator",
+    "export": false,
+    "importPath": "fux/src/decorators/debug.js",
+    "importStyle": null,
     "description": null,
     "lineNumber": 4,
     "undocument": true,
@@ -1514,7 +1395,201 @@
     }
   },
   {
+    "__docId__": 54,
+    "kind": "variable",
+    "static": true,
+    "variation": null,
+    "name": "createHandler",
+    "memberof": "src/decorators/debug.js",
+    "longname": "src/decorators/debug.js~createHandler",
+    "access": null,
+    "export": false,
+    "importPath": "fux/src/decorators/debug.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 5,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
     "__docId__": 55,
+    "kind": "variable",
+    "static": true,
+    "variation": null,
+    "name": "spec",
+    "memberof": "src/decorators/debug.js",
+    "longname": "src/decorators/debug.js~spec",
+    "access": null,
+    "export": false,
+    "importPath": "fux/src/decorators/debug.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 16,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 56,
+    "kind": "file",
+    "static": true,
+    "variation": null,
+    "name": "src/decorators/dispatchChangeSets.js",
+    "memberof": null,
+    "longname": "src/decorators/dispatchChangeSets.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1,
+    "content": "import t from 'tcomb';\n\nimport patchUtil from './../utils/patch';\n\nimport { specDecorator } from './utils';\n\nconst ChangeSet = t.irreducible('ChangeSet', function(x) {\n  if(!t.Array.is(x) || x.length % 2 !== 0) return false;\n\n  const pairs = x.reduce(function(current, e, i) {\n    if(i % 2 === 0) current.push([]);\n    current[ current.length - 1 ].push(e);\n\n    return current;\n  }, []);\n\n  return t.list(t.tuple([t.String, t.Any])).is(pairs);\n});\n\nfunction toPairs(changeSet) {\n  return changeSet.reduce(function(current, e, i) {\n    if(i % 2 === 0) current.push([]);\n    current[ current.length - 1 ].push(e);\n\n    return current;\n  }, []);\n}\nconst dispatch = model => payload => {\n  model.dispatch(t.match(payload,\n    ChangeSet, changeSet => patchUtil(model.context, toPairs(changeSet)),\n    t.Any, x => x\n  ));\n};\n\nconst spec = {\n  deep:  false,\n  cache: null,\n  name:  'dispatchChangeSets',\n  model: (component, model) => {\n    const decorated = Object.assign({}, model, {\n      dispatch: pay => {\n        dispatch(model)(pay);\n      }\n    });\n\n    return decorated;\n  }\n};\n\nconst decorator = specDecorator(spec);\n\n/**\n * dispatch change sets\n *\n * ```javascript\n * dispatchChangeSets()(function({ dispatch }) {\n * \t\t// some code...\n * \t\tdispatch(['/count', v => v + 1])\n * })\n * ```\n *\n * @return {HOC}\n */\nexport default function dispatchChangeSets() {\n  return decorator;\n}\n"
+  },
+  {
+    "__docId__": 57,
+    "kind": "variable",
+    "static": true,
+    "variation": null,
+    "name": "ChangeSet",
+    "memberof": "src/decorators/dispatchChangeSets.js",
+    "longname": "src/decorators/dispatchChangeSets.js~ChangeSet",
+    "access": null,
+    "export": false,
+    "importPath": "fux/src/decorators/dispatchChangeSets.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 7,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 58,
+    "kind": "function",
+    "static": true,
+    "variation": null,
+    "name": "toPairs",
+    "memberof": "src/decorators/dispatchChangeSets.js",
+    "longname": "src/decorators/dispatchChangeSets.js~toPairs",
+    "access": null,
+    "export": false,
+    "importPath": "fux/src/decorators/dispatchChangeSets.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 20,
+    "undocument": true,
+    "params": [
+      {
+        "name": "changeSet",
+        "types": [
+          "*"
+        ]
+      }
+    ],
+    "return": {
+      "types": [
+        "*"
+      ]
+    },
+    "generator": false
+  },
+  {
+    "__docId__": 59,
+    "kind": "variable",
+    "static": true,
+    "variation": null,
+    "name": "dispatch",
+    "memberof": "src/decorators/dispatchChangeSets.js",
+    "longname": "src/decorators/dispatchChangeSets.js~dispatch",
+    "access": null,
+    "export": false,
+    "importPath": "fux/src/decorators/dispatchChangeSets.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 28,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 60,
+    "kind": "variable",
+    "static": true,
+    "variation": null,
+    "name": "spec",
+    "memberof": "src/decorators/dispatchChangeSets.js",
+    "longname": "src/decorators/dispatchChangeSets.js~spec",
+    "access": null,
+    "export": false,
+    "importPath": "fux/src/decorators/dispatchChangeSets.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 35,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 61,
+    "kind": "variable",
+    "static": true,
+    "variation": null,
+    "name": "decorator",
+    "memberof": "src/decorators/dispatchChangeSets.js",
+    "longname": "src/decorators/dispatchChangeSets.js~decorator",
+    "access": null,
+    "export": false,
+    "importPath": "fux/src/decorators/dispatchChangeSets.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 50,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 62,
+    "kind": "function",
+    "static": true,
+    "variation": null,
+    "name": "dispatchChangeSets",
+    "memberof": "src/decorators/dispatchChangeSets.js",
+    "longname": "src/decorators/dispatchChangeSets.js~dispatchChangeSets",
+    "access": null,
+    "export": true,
+    "importPath": "fux/src/decorators/dispatchChangeSets.js",
+    "importStyle": "dispatchChangeSets",
+    "description": "dispatch change sets\n\n```javascript\ndispatchChangeSets()(function({ dispatch }) {\n\t\t// some code...\n\t\tdispatch(['/count', v => v + 1])\n})\n```",
+    "lineNumber": 64,
+    "params": [],
+    "return": {
+      "nullable": null,
+      "types": [
+        "HOC"
+      ],
+      "spread": false,
+      "description": ""
+    },
+    "generator": false
+  },
+  {
+    "__docId__": 63,
     "kind": "file",
     "static": true,
     "variation": null,
@@ -1524,10 +1599,191 @@
     "access": null,
     "description": null,
     "lineNumber": 1,
-    "content": "import mount from './mount';\nimport controller from './controller';\nimport memoize from './memoize';\nimport styler from './styler';\nimport checkContextType from './checkContextType';\nimport component from './component';\n\nexport default {\n  component,\n  mount,\n  controller,\n  memoize,\n  styler,\n  checkContextType\n};\n"
+    "content": "import mount from './mount';\nimport controller from './controller';\nimport memoize from './memoize';\nimport styler from './styler';\nimport checkContextType from './checkContextType';\nimport component from './component';\nimport name from './name';\nimport dispatchChangeSets from './dispatchChangeSets';\nimport logLifecycle from './log';\n\n/**\n * Higher Order Component\n * @typedef {function(component: Component): Component} HOC\n */\n\nexport default {\n  name,\n  component,\n  mount,\n  controller,\n  memoize,\n  styler,\n  checkContextType,\n  dispatchChangeSets,\n  logLifecycle\n};\n"
   },
   {
-    "__docId__": 56,
+    "__docId__": 64,
+    "kind": "typedef",
+    "static": true,
+    "variation": null,
+    "name": "HOC",
+    "memberof": "src/decorators/index.js",
+    "longname": "src/decorators/index.js~HOC",
+    "access": null,
+    "description": "Higher Order Component",
+    "lineNumber": 16,
+    "type": {
+      "types": [
+        "function(component: Component): Component"
+      ],
+      "optional": false,
+      "name": "HOC"
+    }
+  },
+  {
+    "__docId__": 65,
+    "kind": "file",
+    "static": true,
+    "variation": null,
+    "name": "src/decorators/log.js",
+    "memberof": null,
+    "longname": "src/decorators/log.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1,
+    "content": "import pick from '@f/pick';\n\nimport { specDecorator } from './utils';\n\nconst nameCache = new WeakMap();\n\nfunction componentName(component) {\n  if(component.name) return component.name;\n  const cacheEntry = nameCache.get(component);\n\n  if(cacheEntry) return cacheEntry;\n  const body =  Object.keys(component)\n    .map(key => [key, `${component[ key ]}`])\n    .map(([key, value]) => `  ${key}: ${value.split('\\n')[ 0 ]}...`)\n    .join('\\n');\n  const name =  `Component#{\\n${body}\\n}`;\n\n  nameCache.set(component, name);\n  return name;\n}\n\nconst createHandler = name => (component, model) => {\n  const handler = component[ name.slice(2).toLowerCase() ];\n\n  return () => handler ? handler(model) : null;\n};\n\nconst targetHandler = {\n  render: function(component, model) {\n    console.log('render', componentName(component));\n    return component.render(model);\n  },\n  onUpdate: createHandler('onUpdate'),\n  onCreate: createHandler('onCreate'),\n  onRemove: createHandler('onRemove')\n};\n\nconst defaultTargets = ['render', 'onUpdate', 'onCreate', 'onRemove'];\n\n/**\n * log component lifecycle\n *\n * @return {HOC}\n */\n\nexport default function log(targets = defaultTargets) {\n  const opts = {\n    deep:  false,\n    name:  'log',\n    cache: new WeakMap()\n  };\n  const spec = Object.assign({}, pick(targets, targetHandler), opts);\n\n  return specDecorator(spec);\n}\n"
+  },
+  {
+    "__docId__": 66,
+    "kind": "variable",
+    "static": true,
+    "variation": null,
+    "name": "nameCache",
+    "memberof": "src/decorators/log.js",
+    "longname": "src/decorators/log.js~nameCache",
+    "access": null,
+    "export": false,
+    "importPath": "fux/src/decorators/log.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 5,
+    "undocument": true,
+    "type": {
+      "types": [
+        "WeakMap"
+      ]
+    }
+  },
+  {
+    "__docId__": 67,
+    "kind": "function",
+    "static": true,
+    "variation": null,
+    "name": "componentName",
+    "memberof": "src/decorators/log.js",
+    "longname": "src/decorators/log.js~componentName",
+    "access": null,
+    "export": false,
+    "importPath": "fux/src/decorators/log.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 7,
+    "undocument": true,
+    "params": [
+      {
+        "name": "component",
+        "types": [
+          "*"
+        ]
+      }
+    ],
+    "return": {
+      "types": [
+        "*"
+      ]
+    },
+    "generator": false
+  },
+  {
+    "__docId__": 68,
+    "kind": "variable",
+    "static": true,
+    "variation": null,
+    "name": "createHandler",
+    "memberof": "src/decorators/log.js",
+    "longname": "src/decorators/log.js~createHandler",
+    "access": null,
+    "export": false,
+    "importPath": "fux/src/decorators/log.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 22,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 69,
+    "kind": "variable",
+    "static": true,
+    "variation": null,
+    "name": "targetHandler",
+    "memberof": "src/decorators/log.js",
+    "longname": "src/decorators/log.js~targetHandler",
+    "access": null,
+    "export": false,
+    "importPath": "fux/src/decorators/log.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 28,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 70,
+    "kind": "variable",
+    "static": true,
+    "variation": null,
+    "name": "defaultTargets",
+    "memberof": "src/decorators/log.js",
+    "longname": "src/decorators/log.js~defaultTargets",
+    "access": null,
+    "export": false,
+    "importPath": "fux/src/decorators/log.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 38,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 71,
+    "kind": "function",
+    "static": true,
+    "variation": null,
+    "name": "log",
+    "memberof": "src/decorators/log.js",
+    "longname": "src/decorators/log.js~log",
+    "access": null,
+    "export": true,
+    "importPath": "fux/src/decorators/log.js",
+    "importStyle": "log",
+    "description": "log component lifecycle",
+    "lineNumber": 46,
+    "params": [
+      {
+        "name": "targets",
+        "optional": true,
+        "types": [
+          "*"
+        ],
+        "defaultRaw": "defaultTargets",
+        "defaultValue": "defaultTargets"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "HOC"
+      ],
+      "spread": false,
+      "description": ""
+    },
+    "generator": false
+  },
+  {
+    "__docId__": 72,
     "kind": "file",
     "static": true,
     "variation": null,
@@ -1537,10 +1793,10 @@
     "access": null,
     "description": null,
     "lineNumber": 1,
-    "content": "import dekuMemoize from 'deku-memoize';\n\nimport normalize from './../utils/normalizeComponent';\n\nfunction defaultShouldUpdate(prev, next) {\n  return next.context.changed(prev.context);\n}\n\nexport default (shouldUpdate = defaultShouldUpdate) => rawComponent => {\n  const component = normalize(rawComponent);\n  const decoratedComponent = Object.assign({}, component, { shouldUpdate });\n\n  return dekuMemoize(decoratedComponent);\n};\n"
+    "content": "import dekuMemoize from 'deku-memoize';\n\nimport { normalize } from './utils';\n\nfunction defaultShouldUpdate(prev, next) {\n  return next.context.changed(prev.context);\n}\n\n/**\n * memoize component\n *\n * @param  {function(nextModel: Model, prevModel: Model): boolean} shouldUpdate - list of component decorators (hocs)\n * @return {HOC}\n */\n\nexport default function(shouldUpdate = defaultShouldUpdate) {\n  return rawComponent => {\n    const component = normalize(rawComponent);\n    const decoratedComponent = Object.assign({}, component, { shouldUpdate });\n\n    return dekuMemoize(decoratedComponent);\n  };\n}\n"
   },
   {
-    "__docId__": 57,
+    "__docId__": 73,
     "kind": "function",
     "static": true,
     "variation": null,
@@ -1576,7 +1832,43 @@
     "generator": false
   },
   {
-    "__docId__": 58,
+    "__docId__": 74,
+    "kind": "function",
+    "static": true,
+    "variation": null,
+    "name": "memoize",
+    "memberof": "src/decorators/memoize.js",
+    "longname": "src/decorators/memoize.js~memoize",
+    "access": null,
+    "export": true,
+    "importPath": "fux/src/decorators/memoize.js",
+    "importStyle": "memoize",
+    "description": "memoize component",
+    "lineNumber": 16,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "function(nextModel: Model, prevModel: Model): boolean"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "shouldUpdate",
+        "description": "list of component decorators (hocs)"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "HOC"
+      ],
+      "spread": false,
+      "description": ""
+    },
+    "generator": false
+  },
+  {
+    "__docId__": 75,
     "kind": "file",
     "static": true,
     "variation": null,
@@ -1586,22 +1878,22 @@
     "access": null,
     "description": null,
     "lineNumber": 1,
-    "content": "import curry from './../utils/curry';\nimport normalize from './../utils/normalizeComponent';\nimport { vnode as element } from 'deku';\nimport Transform from './../Transform';\n\nconst { isThunk, isText, isEmpty }  = element;\n\nimport generateSpec from './../utils/generateSpec';\n\nfunction decorateHook(targets, targetComponent, hookName) {\n  if(!targetComponent[ hookName ]) return null;\n\n  return function(model) {\n    const context = model.context.sub(targets);\n    const decoratedModel = Object.assign({}, model, { context });\n\n    targetComponent[ hookName ](decoratedModel);\n  };\n}\n\nfunction decorateChildren(cache, targets, vnode) {\n  return (vnode.children || []).map(child => decorateNode(cache, child, targets));\n}\n\nfunction decorateNode(cache, vnode, targets) {\n  if(isText(vnode) || isEmpty(vnode)) return vnode;\n\n  const children = decorateChildren(cache, targets, vnode);\n  const decoratedVnode = Object.assign({}, vnode, { children });\n\n  if(!isThunk(vnode)) return decoratedVnode;\n\n  let cacheEntry = cache.get(vnode.component);\n\n  if(!cacheEntry) cacheEntry = mount(targets, vnode.component);\n  cache.set(vnode.component, cacheEntry);\n\n  return Object.assign({}, decoratedVnode, { component: cacheEntry });\n}\n\nfunction mount(targets, rawComponent) {\n  const component = normalize(rawComponent);\n  const cache = new WeakMap();\n  const transform = Transform.ofTargets(targets);\n\n  function render(model) {\n    const context = model.context.sub(transform);\n    const decoratedModel = Object.assign({}, model, { context });\n    const vnode = component.render(decoratedModel);\n\n    const output = decorateNode(cache, vnode, targets);\n\n    return output;\n  }\n\n  const decorator = curry(decorateHook)(targets, component);\n  const spec = generateSpec(decorator);\n\n  spec.render = render;\n  return Object.assign({}, component, spec);\n}\n\nexport default mount;\n"
+    "content": "import { specDecorator } from './utils';\nimport Transform from './../Transform';\nimport JSONPointer from './../JSONPointer';\nimport Immutable from 'immutable';\nimport { get } from './../state';\nimport Context from './../Context';\n\nconst parsePath = patch => Object.assign({}, patch, { path: JSONPointer.ofString(patch.path) });\nconst transformPath = transform => patch => Object.assign({}, patch, { path: transform.apply(patch.path) });\nconst stringifyPath = patch => Object.assign({}, patch, { path: patch.path.toRFC() });\n\nconst createDispatch = (transform, dispatch) => rawPatchSet => {\n  const patchSet = rawPatchSet\n    .map(parsePath)\n    .map(transformPath(transform))\n    .map(stringifyPath);\n\n  if(patchSet.length === 0) return;\n  dispatch(patchSet);\n};\n\nfunction applyTransform(transform, ctx) {\n  const state = Immutable.Map(transform.map)\n    .map(pointer => get(ctx.state, pointer));\n\n  return new Context({ state });\n}\n\n/**\n * transform ctx of component\n *\n * ```javascript\n * mount({\n * \tfoo: '/some/value'\n * \tbar: '/here/is/another/val'\n * })(component)\n * ```\n *\n * @param  {Map<string, string>} targets - transform description\n * @return {HOC}\n */\nexport default function(targets) {\n  const transform = Transform.ofTargets(targets);\n\n  const spec = {\n    deep:  true,\n    cache: new WeakMap(),\n    name:  'mount',\n    model: function(component, model) {\n      const context = applyTransform(transform, model.context);\n      const dispatch = createDispatch(transform, model.dispatch);\n\n      return Object.assign({}, model, { context, dispatch });\n    }\n  };\n\n  return specDecorator(spec);\n}\n"
   },
   {
-    "__docId__": 59,
+    "__docId__": 76,
     "kind": "variable",
     "static": true,
     "variation": null,
-    "name": "isThunk",
+    "name": "parsePath",
     "memberof": "src/decorators/mount.js",
-    "longname": "src/decorators/mount.js~isThunk",
+    "longname": "src/decorators/mount.js~parsePath",
     "access": null,
     "export": false,
     "importPath": "fux/src/decorators/mount.js",
     "importStyle": null,
     "description": null,
-    "lineNumber": 6,
+    "lineNumber": 8,
     "undocument": true,
     "type": {
       "types": [
@@ -1610,13 +1902,34 @@
     }
   },
   {
-    "__docId__": 60,
-    "kind": "function",
+    "__docId__": 77,
+    "kind": "variable",
     "static": true,
     "variation": null,
-    "name": "decorateHook",
+    "name": "transformPath",
     "memberof": "src/decorators/mount.js",
-    "longname": "src/decorators/mount.js~decorateHook",
+    "longname": "src/decorators/mount.js~transformPath",
+    "access": null,
+    "export": false,
+    "importPath": "fux/src/decorators/mount.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 9,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 78,
+    "kind": "variable",
+    "static": true,
+    "variation": null,
+    "name": "stringifyPath",
+    "memberof": "src/decorators/mount.js",
+    "longname": "src/decorators/mount.js~stringifyPath",
     "access": null,
     "export": false,
     "importPath": "fux/src/decorators/mount.js",
@@ -1624,105 +1937,57 @@
     "description": null,
     "lineNumber": 10,
     "undocument": true,
-    "params": [
-      {
-        "name": "targets",
-        "types": [
-          "*"
-        ]
-      },
-      {
-        "name": "targetComponent",
-        "types": [
-          "*"
-        ]
-      },
-      {
-        "name": "hookName",
-        "types": [
-          "*"
-        ]
-      }
-    ],
-    "return": {
+    "type": {
       "types": [
         "*"
       ]
-    },
-    "generator": false
+    }
   },
   {
-    "__docId__": 61,
-    "kind": "function",
+    "__docId__": 79,
+    "kind": "variable",
     "static": true,
     "variation": null,
-    "name": "decorateChildren",
+    "name": "createDispatch",
     "memberof": "src/decorators/mount.js",
-    "longname": "src/decorators/mount.js~decorateChildren",
+    "longname": "src/decorators/mount.js~createDispatch",
     "access": null,
     "export": false,
     "importPath": "fux/src/decorators/mount.js",
     "importStyle": null,
     "description": null,
-    "lineNumber": 21,
+    "lineNumber": 12,
     "undocument": true,
-    "params": [
-      {
-        "name": "cache",
-        "types": [
-          "*"
-        ]
-      },
-      {
-        "name": "targets",
-        "types": [
-          "*"
-        ]
-      },
-      {
-        "name": "vnode",
-        "types": [
-          "*"
-        ]
-      }
-    ],
-    "return": {
+    "type": {
       "types": [
         "*"
       ]
-    },
-    "generator": false
+    }
   },
   {
-    "__docId__": 62,
+    "__docId__": 80,
     "kind": "function",
     "static": true,
     "variation": null,
-    "name": "decorateNode",
+    "name": "applyTransform",
     "memberof": "src/decorators/mount.js",
-    "longname": "src/decorators/mount.js~decorateNode",
+    "longname": "src/decorators/mount.js~applyTransform",
     "access": null,
     "export": false,
     "importPath": "fux/src/decorators/mount.js",
     "importStyle": null,
     "description": null,
-    "lineNumber": 25,
+    "lineNumber": 22,
     "undocument": true,
     "params": [
       {
-        "name": "cache",
+        "name": "transform",
         "types": [
           "*"
         ]
       },
       {
-        "name": "vnode",
-        "types": [
-          "*"
-        ]
-      },
-      {
-        "name": "targets",
+        "name": "ctx",
         "types": [
           "*"
         ]
@@ -1736,7 +2001,7 @@
     "generator": false
   },
   {
-    "__docId__": 63,
+    "__docId__": 81,
     "kind": "function",
     "static": true,
     "variation": null,
@@ -1747,32 +2012,45 @@
     "export": true,
     "importPath": "fux/src/decorators/mount.js",
     "importStyle": "mount",
-    "description": null,
-    "lineNumber": 41,
-    "undocument": true,
+    "description": "transform ctx of component\n\n```javascript\nmount({\n\tfoo: '/some/value'\n\tbar: '/here/is/another/val'\n})(component)\n```",
+    "lineNumber": 42,
     "params": [
       {
+        "nullable": null,
+        "types": [
+          "Map<string, string>"
+        ],
+        "spread": false,
+        "optional": false,
         "name": "targets",
-        "types": [
-          "*"
-        ]
-      },
-      {
-        "name": "rawComponent",
-        "types": [
-          "*"
-        ]
+        "description": "transform description"
       }
     ],
     "return": {
+      "nullable": null,
       "types": [
-        "*"
-      ]
+        "HOC"
+      ],
+      "spread": false,
+      "description": ""
     },
     "generator": false
   },
   {
-    "__docId__": 64,
+    "__docId__": 82,
+    "kind": "file",
+    "static": true,
+    "variation": null,
+    "name": "src/decorators/name.js",
+    "memberof": null,
+    "longname": "src/decorators/name.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1,
+    "content": "import { normalize } from './utils';\n\n/**\n * add name to component - for debug messages\n *\n * @param  {string} name - component name\n * @return {HOC}\n */\nexport default name => function(rawComponent) {\n  const component = normalize(rawComponent);\n\n  return Object.assign({}, component, { name });\n};\n"
+  },
+  {
+    "__docId__": 83,
     "kind": "file",
     "static": true,
     "variation": null,
@@ -1782,10 +2060,10 @@
     "access": null,
     "description": null,
     "lineNumber": 1,
-    "content": "import inflection from 'inflection';\nimport { vnode as element } from 'deku';\n\nimport normalize from './../utils/normalizeComponent';\n\nconst { isText, isEmpty }  = element;\nconst toDash = x => inflection.underscore(x).split('_').join('-');\n\nfunction decorateChildren(vnode) {\n  if(isText(vnode) || isEmpty(vnode) || !vnode.children) return vnode;\n  const children = vnode.children.map(child => decorateVnode(child));\n\n  return Object.assign({}, vnode, { children });\n}\n\nfunction decorateVnode(vnode) {\n  if(isText(vnode) || isEmpty(vnode)) return vnode;\n\n  const decoratedNode = decorateChildren(vnode);\n\n  if(!vnode.attributes || !vnode.attributes.style)\n    return decoratedNode;\n\n  const rule = Object.keys(vnode.attributes.style)\n    .map(key => `${toDash(key)}:${vnode.attributes.style[ key ]};`)\n    .join('');\n\n  const attributes = Object.assign({}, decoratedNode.attributes, { style: rule });\n\n  return Object.assign({}, decoratedNode, { attributes });\n}\n\n\nconst styler = () => rawComponent => {\n  const component = normalize(rawComponent);\n\n  function render(model) {\n    const vnode = component.render(model);\n\n    return decorateVnode(vnode);\n  }\n\n  return Object.assign({}, component, { render });\n};\n\nexport default styler;\n"
+    "content": "import inflection from 'inflection';\nimport { vnode as element } from 'deku';\n\nimport { specDecorator } from './utils';\n\nconst { isText, isEmpty }  = element;\nconst toDash = x => inflection.underscore(x).split('_').join('-');\n\nfunction decorateChildren(vnode) {\n  if(isText(vnode) || isEmpty(vnode) || !vnode.children) return vnode;\n  const children = vnode.children.map(child => decorateVnode(child));\n\n  return Object.assign({}, vnode, { children });\n}\n\nfunction decorateVnode(vnode) {\n  if(isText(vnode) || isEmpty(vnode)) return vnode;\n\n  const decoratedNode = decorateChildren(vnode);\n\n  if(!vnode.attributes || !vnode.attributes.style)\n    return decoratedNode;\n\n  const rule = Object.keys(vnode.attributes.style)\n    .map(key => `${toDash(key)}:${vnode.attributes.style[ key ]};`)\n    .join('');\n\n  const attributes = Object.assign({}, decoratedNode.attributes, { style: rule });\n\n  return Object.assign({}, decoratedNode, { attributes });\n}\n\nconst spec = {\n  deep:   false,\n  cache:  null,\n  name:   'styler',\n  render: function(component, model) {\n    const vnode = component.render(model);\n\n    return decorateVnode(vnode);\n  }\n};\n\nconst decorator = specDecorator(spec);\n\n/**\n * add css styles as Object\n *\n * ```javascript\n * styler()(() => (<div style={{ color: 'green'}}>))\n * ```\n *\n * @return {HOC}\n */\n\nexport default function styler() {\n  return decorator;\n}\n"
   },
   {
-    "__docId__": 65,
+    "__docId__": 84,
     "kind": "variable",
     "static": true,
     "variation": null,
@@ -1806,7 +2084,7 @@
     }
   },
   {
-    "__docId__": 66,
+    "__docId__": 85,
     "kind": "variable",
     "static": true,
     "variation": null,
@@ -1827,7 +2105,7 @@
     }
   },
   {
-    "__docId__": 67,
+    "__docId__": 86,
     "kind": "function",
     "static": true,
     "variation": null,
@@ -1857,7 +2135,7 @@
     "generator": false
   },
   {
-    "__docId__": 68,
+    "__docId__": 87,
     "kind": "function",
     "static": true,
     "variation": null,
@@ -1887,8 +2165,50 @@
     "generator": false
   },
   {
-    "__docId__": 69,
+    "__docId__": 88,
     "kind": "variable",
+    "static": true,
+    "variation": null,
+    "name": "spec",
+    "memberof": "src/decorators/styler.js",
+    "longname": "src/decorators/styler.js~spec",
+    "access": null,
+    "export": false,
+    "importPath": "fux/src/decorators/styler.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 33,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 89,
+    "kind": "variable",
+    "static": true,
+    "variation": null,
+    "name": "decorator",
+    "memberof": "src/decorators/styler.js",
+    "longname": "src/decorators/styler.js~decorator",
+    "access": null,
+    "export": false,
+    "importPath": "fux/src/decorators/styler.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 44,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 90,
+    "kind": "function",
     "static": true,
     "variation": null,
     "name": "styler",
@@ -1898,8 +2218,46 @@
     "export": true,
     "importPath": "fux/src/decorators/styler.js",
     "importStyle": "styler",
+    "description": "add css styles as Object\n\n```javascript\nstyler()(() => (<div style={{ color: 'green'}}>))\n```",
+    "lineNumber": 56,
+    "params": [],
+    "return": {
+      "nullable": null,
+      "types": [
+        "HOC"
+      ],
+      "spread": false,
+      "description": ""
+    },
+    "generator": false
+  },
+  {
+    "__docId__": 91,
+    "kind": "file",
+    "static": true,
+    "variation": null,
+    "name": "src/decorators/utils.js",
+    "memberof": null,
+    "longname": "src/decorators/utils.js",
+    "access": null,
     "description": null,
-    "lineNumber": 34,
+    "lineNumber": 1,
+    "content": "import pick from '@f/pick';\nimport mapObj from '@f/map-obj';\nimport t from 'tcomb';\nimport { vnode as element } from 'deku';\n\nconst { isThunk, isText, isEmpty }  = element;\n\n\nexport function normalize(comp) {\n  const component = t.Function.is(comp) ? { render: comp } : comp;\n\n  if(!t.Object.is(component) && !t.Function.is(component.render))\n    throw new TypeError('component must be function or object with render function');\n\n  if(!component.name && component.render.name !== '') component.name = component.render.name;\n  return component;\n}\n\nexport function mapAttributes(node, f, deep = false) {\n  if(isText(node) || isEmpty(node)) return node;\n  const name = isThunk(node) ? 'props' : 'attributes';\n  const spec = {};\n\n  spec[ name ] = mapObj(f, node[ name ]);\n  if(deep) spec.children = node.children.map(child => mapAttributes(child, f, deep));\n\n  return Object.assign({}, node, spec);\n}\n\nexport const isHandler = name => (\n  name.length > 2 &&\n  name.slice(0, 2) === 'on' &&\n  name[ 2 ] === name[ 2 ].toUpperCase()\n);\n\nconst defaultOpts = {\n  deep:     false,\n  cache:    null,\n  model:    (component, model) => model,\n  render:   (component, model) => component.render(model),\n  onCreate: (component, model) => component.onCreate ? component.onCreate(model) : null,\n  onUpdate: (component, model) => component.onUpdate ? component.onUpdate(model) : null,\n  onRemove: (component, model) => component.onRemove ? component.onRemove(model) : null\n};\n\nfunction applySpec(spec, rawComponent) {\n  const cacheEntry = spec.cache ? spec.cache.get(rawComponent) : null;\n\n  if(cacheEntry) return cacheEntry;\n  const component = normalize(rawComponent);\n  const hooks = pick(['onCreate', 'onUpdate', 'onRemove'], spec);\n  const componentSpec = mapObj(hook => model => hook(component, spec.model(component, model)), hooks);\n\n  componentSpec.render = function(model) {\n    const decoratedModel = spec.model(component, model);\n    const node = spec.render(component, decoratedModel);\n\n    return spec.deep ? decorateNode(spec, node) : node;\n  };\n\n  const decorated =  Object.assign({}, component, componentSpec);\n\n  if(spec.cache) spec.cache.set(rawComponent, decorated);\n  return decorated;\n}\n\nfunction decorateNode(spec, node) {\n  const nodeSpec = {};\n\n  if(isThunk(node)) nodeSpec.component = applySpec(spec, node.component);\n  if(!t.Nil.is(node.children)) nodeSpec.children = node.children.map(child => decorateNode(spec, child));\n\n  return Object.assign({}, node, nodeSpec);\n}\n\nexport function specDecorator(options) {\n  const cache = options.deep && !options.cache ? new WeakMap() : options.cache;\n  const spec = Object.assign({}, defaultOpts, options, { cache });\n\n  return function(component) {\n    const decorated = applySpec(spec, component);\n\n    return decorated;\n  };\n}\n"
+  },
+  {
+    "__docId__": 92,
+    "kind": "variable",
+    "static": true,
+    "variation": null,
+    "name": "isThunk",
+    "memberof": "src/decorators/utils.js",
+    "longname": "src/decorators/utils.js~isThunk",
+    "access": null,
+    "export": false,
+    "importPath": "fux/src/decorators/utils.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 6,
     "undocument": true,
     "type": {
       "types": [
@@ -1908,7 +2266,226 @@
     }
   },
   {
-    "__docId__": 70,
+    "__docId__": 93,
+    "kind": "function",
+    "static": true,
+    "variation": null,
+    "name": "normalize",
+    "memberof": "src/decorators/utils.js",
+    "longname": "src/decorators/utils.js~normalize",
+    "access": null,
+    "export": true,
+    "importPath": "fux/src/decorators/utils.js",
+    "importStyle": "{normalize}",
+    "description": null,
+    "lineNumber": 9,
+    "undocument": true,
+    "params": [
+      {
+        "name": "comp",
+        "types": [
+          "*"
+        ]
+      }
+    ],
+    "return": {
+      "types": [
+        "*"
+      ]
+    },
+    "generator": false
+  },
+  {
+    "__docId__": 94,
+    "kind": "function",
+    "static": true,
+    "variation": null,
+    "name": "mapAttributes",
+    "memberof": "src/decorators/utils.js",
+    "longname": "src/decorators/utils.js~mapAttributes",
+    "access": null,
+    "export": true,
+    "importPath": "fux/src/decorators/utils.js",
+    "importStyle": "{mapAttributes}",
+    "description": null,
+    "lineNumber": 19,
+    "undocument": true,
+    "params": [
+      {
+        "name": "node",
+        "types": [
+          "*"
+        ]
+      },
+      {
+        "name": "f",
+        "types": [
+          "*"
+        ]
+      },
+      {
+        "name": "deep",
+        "optional": true,
+        "types": [
+          "boolean"
+        ],
+        "defaultRaw": false,
+        "defaultValue": "false"
+      }
+    ],
+    "return": {
+      "types": [
+        "*"
+      ]
+    },
+    "generator": false
+  },
+  {
+    "__docId__": 95,
+    "kind": "variable",
+    "static": true,
+    "variation": null,
+    "name": "isHandler",
+    "memberof": "src/decorators/utils.js",
+    "longname": "src/decorators/utils.js~isHandler",
+    "access": null,
+    "export": true,
+    "importPath": "fux/src/decorators/utils.js",
+    "importStyle": "{isHandler}",
+    "description": null,
+    "lineNumber": 30,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 96,
+    "kind": "variable",
+    "static": true,
+    "variation": null,
+    "name": "defaultOpts",
+    "memberof": "src/decorators/utils.js",
+    "longname": "src/decorators/utils.js~defaultOpts",
+    "access": null,
+    "export": false,
+    "importPath": "fux/src/decorators/utils.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 36,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 97,
+    "kind": "function",
+    "static": true,
+    "variation": null,
+    "name": "applySpec",
+    "memberof": "src/decorators/utils.js",
+    "longname": "src/decorators/utils.js~applySpec",
+    "access": null,
+    "export": false,
+    "importPath": "fux/src/decorators/utils.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 46,
+    "undocument": true,
+    "params": [
+      {
+        "name": "spec",
+        "types": [
+          "*"
+        ]
+      },
+      {
+        "name": "rawComponent",
+        "types": [
+          "*"
+        ]
+      }
+    ],
+    "return": {
+      "types": [
+        "*"
+      ]
+    },
+    "generator": false
+  },
+  {
+    "__docId__": 98,
+    "kind": "function",
+    "static": true,
+    "variation": null,
+    "name": "decorateNode",
+    "memberof": "src/decorators/utils.js",
+    "longname": "src/decorators/utils.js~decorateNode",
+    "access": null,
+    "export": false,
+    "importPath": "fux/src/decorators/utils.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 67,
+    "undocument": true,
+    "params": [
+      {
+        "name": "spec",
+        "types": [
+          "*"
+        ]
+      },
+      {
+        "name": "node",
+        "types": [
+          "*"
+        ]
+      }
+    ],
+    "return": {
+      "types": [
+        "*"
+      ]
+    },
+    "generator": false
+  },
+  {
+    "__docId__": 99,
+    "kind": "function",
+    "static": true,
+    "variation": null,
+    "name": "specDecorator",
+    "memberof": "src/decorators/utils.js",
+    "longname": "src/decorators/utils.js~specDecorator",
+    "access": null,
+    "export": true,
+    "importPath": "fux/src/decorators/utils.js",
+    "importStyle": "{specDecorator}",
+    "description": null,
+    "lineNumber": 76,
+    "undocument": true,
+    "params": [
+      {
+        "name": "options",
+        "types": [
+          "*"
+        ]
+      }
+    ],
+    "return": {
+      "types": [
+        "*"
+      ]
+    },
+    "generator": false
+  },
+  {
+    "__docId__": 100,
     "kind": "file",
     "static": true,
     "variation": null,
@@ -1918,31 +2495,10 @@
     "access": null,
     "description": null,
     "lineNumber": 1,
-    "content": "import { element } from 'deku';\nimport rawDecorators from './decorators';\nimport scopes from './scopes';\nimport curry from './utils/curry.js';\nimport { $rep, $add } from './Patch';\n\nimport createRenderSubject from './utils/createRenderSubject';\nimport decorateComponent from './utils/decorateComponent';\nimport choke from './utils/choke';\nimport cycle from './utils/cycle';\nimport patch from './utils/patch';\nimport mapObj from '@f/map-obj';\nimport dom from './views/dom';\n\n/**\n * @see http://dekujs.github.io/deku/docs/basics/components.html#model\n * @typedef {Object} model\n * @property {Map<string, any>} model.props\n * @property {string} model.path - unique path to the component\n * @property {Context} model.context\n * @property {Array<vnode>} model.children\n */\n\n/**\n * @see http://dekujs.github.io/deku/docs/basics/components.html\n * @typedef {Object} Component\n * @property {function(model: model): vnode} Component.render\n * @property {function(model: model)} Component.onCreate\n * @property {function(model: model)} Component.onUpdate\n * @property {function(model: model)} Component.onRemove\n */\n\n/**\n * @see http://dekujs.github.io/deku/docs/basics/elements.html\n * @typedef {Object} vnode\n * @property {string|Component} vnode.type\n * @property {Map<string, any>} vnode.attributes\n * @property {Array<vnode>} vnode.children\n */\n\n/**\n * @see https://github.com/Reactive-Extensions/RxJS/blob/master/doc/gettingstarted/subjects.md\n * @typedef {Object} Subject\n * @property {function} Subject.subscribe\n * @property {function(val: any)} Subject.onNext\n\n */\n\n/**\n * curried decorators\n * @private\n */\n\nconst decorators = mapObj(decorator => curry(decorator), rawDecorators);\n\n/**\n * curried decorateComponent\n * @private\n */\n\nconst decorate = decorateComponent;\n\n/**\n * exported helper\n * @private\n */\n\nconst helper = {\n  $rep,\n  $add,\n  choke,\n  cycle,\n  patch\n};\n\nconst views = {\n  dom\n};\n\n/**\n * jsx compatible element function.\n * @external {h} http://dekujs.github.io/deku/docs/api/element.html\n */\n\nconst h = element;\n\nexport {\n  scopes,\n  views,\n  decorators,\n  decorate,\n  helper,\n  createRenderSubject,\n  h\n};\n"
+    "content": "import { element } from 'deku';\n\nimport decorators from './decorators';\nimport scopes from './scopes';\nimport views from './views';\n\nimport cycle from './utils/cycle';\n\n/**\n * @see http://dekujs.github.io/deku/docs/basics/components.html#model\n * @typedef {Object} model\n * @property {Map<string, any>} model.props\n * @property {string} model.path - unique path to the component\n * @property {Context} model.context\n * @property {Array<vnode>} model.children\n */\n\n/**\n * @see http://dekujs.github.io/deku/docs/basics/components.html\n * @typedef {Object} Component\n * @property {function(model: model): vnode} Component.render\n * @property {function(model: model)} Component.onCreate\n * @property {function(model: model)} Component.onUpdate\n * @property {function(model: model)} Component.onRemove\n */\n\n/**\n * @see http://dekujs.github.io/deku/docs/basics/elements.html\n * @typedef {Object} vnode\n * @property {string|Component} vnode.type\n * @property {Map<string, any>} vnode.attributes\n * @property {Array<vnode>} vnode.children\n */\n\nconst helper = {\n  cycle\n};\n\n\n/**\n * jsx compatible element function.\n * @external {h} http://dekujs.github.io/deku/docs/api/element.html\n */\n\nconst h = element;\n\nexport {\n  scopes,\n  views,\n  decorators,\n  helper,\n  h\n};\n"
   },
   {
-    "__docId__": 71,
-    "kind": "variable",
-    "static": true,
-    "variation": null,
-    "name": "views",
-    "memberof": "src/index.js",
-    "longname": "src/index.js~views",
-    "access": null,
-    "export": true,
-    "importPath": "fux/src/index.js",
-    "importStyle": "{views}",
-    "description": null,
-    "lineNumber": 76,
-    "undocument": true,
-    "type": {
-      "types": [
-        "*"
-      ]
-    }
-  },
-  {
-    "__docId__": 72,
+    "__docId__": 101,
     "kind": "typedef",
     "static": true,
     "variation": null,
@@ -2005,7 +2561,7 @@
     }
   },
   {
-    "__docId__": 73,
+    "__docId__": 102,
     "kind": "typedef",
     "static": true,
     "variation": null,
@@ -2068,7 +2624,7 @@
     }
   },
   {
-    "__docId__": 74,
+    "__docId__": 103,
     "kind": "typedef",
     "static": true,
     "variation": null,
@@ -2080,6 +2636,7 @@
     "see": [
       "http://dekujs.github.io/deku/docs/basics/elements.html"
     ],
+    "lineNumber": 35,
     "properties": [
       {
         "nullable": null,
@@ -2122,110 +2679,7 @@
     }
   },
   {
-    "__docId__": 75,
-    "kind": "typedef",
-    "static": true,
-    "variation": null,
-    "name": "Subject",
-    "memberof": "src/index.js",
-    "longname": "src/index.js~Subject",
-    "access": null,
-    "description": "",
-    "see": [
-      "https://github.com/Reactive-Extensions/RxJS/blob/master/doc/gettingstarted/subjects.md"
-    ],
-    "properties": [
-      {
-        "nullable": null,
-        "types": [
-          "function"
-        ],
-        "spread": false,
-        "optional": false,
-        "name": "Subject.subscribe",
-        "description": ""
-      },
-      {
-        "nullable": null,
-        "types": [
-          "function(val: any)"
-        ],
-        "spread": false,
-        "optional": false,
-        "name": "Subject.onNext",
-        "description": ""
-      }
-    ],
-    "type": {
-      "types": [
-        "Object"
-      ],
-      "optional": false,
-      "name": "Subject"
-    }
-  },
-  {
-    "__docId__": 76,
-    "kind": "variable",
-    "static": true,
-    "variation": null,
-    "name": "decorators",
-    "memberof": "src/index.js",
-    "longname": "src/index.js~decorators",
-    "access": "private",
-    "export": true,
-    "importPath": "fux/src/index.js",
-    "importStyle": "{decorators}",
-    "description": "curried decorators",
-    "lineNumber": 54,
-    "type": {
-      "types": [
-        "*"
-      ]
-    }
-  },
-  {
-    "__docId__": 77,
-    "kind": "variable",
-    "static": true,
-    "variation": null,
-    "name": "decorate",
-    "memberof": "src/index.js",
-    "longname": "src/index.js~decorate",
-    "access": "private",
-    "export": true,
-    "importPath": "fux/src/index.js",
-    "importStyle": "{decorate}",
-    "description": "curried decorateComponent",
-    "lineNumber": 61,
-    "type": {
-      "types": [
-        "*"
-      ]
-    }
-  },
-  {
-    "__docId__": 78,
-    "kind": "variable",
-    "static": true,
-    "variation": null,
-    "name": "helper",
-    "memberof": "src/index.js",
-    "longname": "src/index.js~helper",
-    "access": "private",
-    "export": true,
-    "importPath": "fux/src/index.js",
-    "importStyle": "{helper}",
-    "description": "exported helper",
-    "lineNumber": 68,
-    "type": {
-      "types": [
-        "*"
-      ]
-    }
-  },
-  {
-    "__docId__": 79,
+    "__docId__": 104,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -2235,10 +2689,10 @@
     "longname": "src/index.js~h",
     "access": null,
     "description": "jsx compatible element function.",
-    "lineNumber": 85
+    "lineNumber": 45
   },
   {
-    "__docId__": 80,
+    "__docId__": 105,
     "kind": "file",
     "static": true,
     "variation": null,
@@ -2248,10 +2702,10 @@
     "access": null,
     "description": null,
     "lineNumber": 1,
-    "content": "import Immutable from 'immutable';\nimport t from 'tcomb';\nimport flyd from 'flyd';\n\nimport zipObj from '@f/zip-obj';\nimport curry from './../utils/curry';\n\nimport Context from './../Context';\nimport JSONPointer from './../JSONPointer';\n\nconst slicePath     = patch => Object.assign({}, patch, { path: patch.path.slice(1) });\nconst stringifyPath = patch => Object.assign({}, patch, { path: patch.path.toRFC() });\nconst parsePath     = patch => Object.assign({}, patch, { path: JSONPointer.ofString(patch.path) });\n\nconst filterPatchSet = curry((name, patchSet) => patchSet\n  .map(parsePath)\n  .filter(patch => patch.path.first() === name)\n  .map(slicePath)\n  .map(stringifyPath));\n\nfunction readCtx(names, stores) {\n  const values = stores.map(store => store());\n  const stateMap = zipObj(names, values.map(ctx => ctx.state));\n  const typeMap = zipObj(names, values.map(ctx => ctx.type));\n\n  return new Context({\n    state: Immutable.Map(stateMap),\n    type:  t.struct(typeMap)\n  });\n}\n\nfunction createCombine(keys) {\n  return function(...args) {\n    // args = [input0, input1, ...inputN, self, updated]\n    return readCtx(keys, args.slice(0, 2));\n  };\n}\n\n\n/**\n * combiner scope factory\n * represents map of (sub)scopes.\n * @param {Map<string, ScopeFactory'>} scopeMap - the routing map\n * @return {Scope}\n */\n\nexport default function combiner(scopeMap, input) {\n  const names     = Object.keys(scopeMap);\n  const factories = names.map(name => scopeMap[ name ]);\n  const inputs    = names.map(name => flyd.map(filterPatchSet(name), input));\n  const stores    = factories.map((f, i) => f(inputs[ i ]));\n  const combineStreams  = createCombine(names);\n\n  return flyd.combine(combineStreams, stores);\n}\n"
+    "content": "import Immutable from 'immutable';\nimport t from 'tcomb';\nimport flyd from 'flyd';\n\nimport zipObj from '@f/zip-obj';\nimport curry from './../utils/curry';\n\nimport Context from './../Context';\nimport JSONPointer from './../JSONPointer';\n\nconst slicePath     = patch => Object.assign({}, patch, { path: patch.path.slice(1) });\nconst stringifyPath = patch => Object.assign({}, patch, { path: patch.path.toRFC() });\nconst parsePath     = patch => Object.assign({}, patch, { path: JSONPointer.ofString(patch.path) });\n\nconst filterPatchSet = curry((name, patchSet) => patchSet\n  .map(parsePath)\n  .filter(patch => patch.path.first() === name)\n  .map(slicePath)\n  .map(stringifyPath));\n\nfunction readCtx(names, stores) {\n  const values = stores.map(store => store());\n  const stateMap = zipObj(names, values.map(ctx => ctx.state));\n  const typeMap = zipObj(names, values.map(ctx => ctx.type));\n\n  return new Context({\n    state: Immutable.Map(stateMap),\n    type:  t.struct(typeMap)\n  });\n}\n\nfunction createCombine(keys) {\n  return function(...args) {\n    return readCtx(keys, args.slice(0, 2));\n  };\n}\n\n\n/**\n * combiner scope factory\n * represents map of (sub)scopes.\n * @param {Map<string, ScopeFactory'>} scopeMap - the routing map\n * @param {Stream} input - input stream\n * @return {Scope}\n */\n\nexport default function combiner(scopeMap, input) {\n  const names = Object.keys(scopeMap);\n  const factories = names.map(name => scopeMap[ name ]);\n  const inputs = names.map(name => flyd.map(function(rawPatchSet) {\n    const patchSet = filterPatchSet(name, rawPatchSet);\n\n    return patchSet;\n  }, input));\n  const stores = factories.map((f, i) => f(inputs[ i ]));\n  const combineStreams = createCombine(names);\n\n  return flyd.combine(combineStreams, stores);\n}\n"
   },
   {
-    "__docId__": 81,
+    "__docId__": 106,
     "kind": "variable",
     "static": true,
     "variation": null,
@@ -2272,7 +2726,7 @@
     }
   },
   {
-    "__docId__": 82,
+    "__docId__": 107,
     "kind": "variable",
     "static": true,
     "variation": null,
@@ -2293,7 +2747,7 @@
     }
   },
   {
-    "__docId__": 83,
+    "__docId__": 108,
     "kind": "variable",
     "static": true,
     "variation": null,
@@ -2314,7 +2768,7 @@
     }
   },
   {
-    "__docId__": 84,
+    "__docId__": 109,
     "kind": "variable",
     "static": true,
     "variation": null,
@@ -2335,7 +2789,7 @@
     }
   },
   {
-    "__docId__": 85,
+    "__docId__": 110,
     "kind": "function",
     "static": true,
     "variation": null,
@@ -2371,7 +2825,7 @@
     "generator": false
   },
   {
-    "__docId__": 86,
+    "__docId__": 111,
     "kind": "function",
     "static": true,
     "variation": null,
@@ -2401,7 +2855,7 @@
     "generator": false
   },
   {
-    "__docId__": 87,
+    "__docId__": 112,
     "kind": "function",
     "static": true,
     "variation": null,
@@ -2424,6 +2878,16 @@
         "optional": false,
         "name": "scopeMap",
         "description": "the routing map"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Stream"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "input",
+        "description": "input stream"
       }
     ],
     "return": {
@@ -2437,7 +2901,7 @@
     "generator": false
   },
   {
-    "__docId__": 88,
+    "__docId__": 113,
     "kind": "file",
     "static": true,
     "variation": null,
@@ -2450,7 +2914,7 @@
     "content": "import flyd from 'flyd';\nimport filter from 'flyd/module/filter';\nimport Context from './../Context';\nimport value from './value';\n\nconst getFragment = () => location.hash.slice(1);\n\nfunction fragmentValue(input) {\n  const output = flyd.stream(getFragment());\n\n  window.addEventListener('hashchange', function() {\n    const current = getFragment();\n\n    if(output() === current) return;\n    output(current);\n  });\n\n  flyd.on(function(fragmentStr) {\n    if(output() === fragmentStr) return;\n    location.hash = '#'.concat(fragmentStr);\n    output(fragmentStr);\n  }, input);\n\n  return output;\n}\n\nconst createCtx = val => Context.ofState({ value: val });\n\n\n/**\n * fragment scope factory\n * represents value of fragment identifier.\n * Json structure:\n * \t{\n * \t\tvalue: String\n *  }\n * @param {Object} opts - not used\n * @param {Scope} input - input stream\n * @return {Scope}\n */\n\nfunction fragment(opts, input) {\n  const filteredInput = filter(patchSet => patchSet.length !== 0, input);\n  const valueStream = value({ value: getFragment() }, filteredInput);\n  const fragmentInput = flyd.map(ctx => ctx.get('/value'), valueStream);\n  const fragmentStream = fragmentValue(fragmentInput);\n  const output = flyd.map(fragmentStr => createCtx(fragmentStr), fragmentStream);\n\n  return output;\n}\n\nexport default fragment;\n"
   },
   {
-    "__docId__": 89,
+    "__docId__": 114,
     "kind": "variable",
     "static": true,
     "variation": null,
@@ -2471,7 +2935,7 @@
     }
   },
   {
-    "__docId__": 90,
+    "__docId__": 115,
     "kind": "function",
     "static": true,
     "variation": null,
@@ -2501,7 +2965,7 @@
     "generator": false
   },
   {
-    "__docId__": 91,
+    "__docId__": 116,
     "kind": "variable",
     "static": true,
     "variation": null,
@@ -2522,7 +2986,7 @@
     }
   },
   {
-    "__docId__": 92,
+    "__docId__": 117,
     "kind": "function",
     "static": true,
     "variation": null,
@@ -2568,7 +3032,7 @@
     "generator": false
   },
   {
-    "__docId__": 93,
+    "__docId__": 118,
     "kind": "file",
     "static": true,
     "variation": null,
@@ -2578,10 +3042,10 @@
     "access": null,
     "description": null,
     "lineNumber": 1,
-    "content": "import _value from './value';\nimport _fragment from './fragment';\nimport _combiner from './combiner';\nimport flyd from 'flyd';\n\nconst wrapFactory = f => opts => input => f(opts, input);\n\nconst value = wrapFactory(_value);\nconst fragment = wrapFactory(_fragment);\nconst combiner = wrapFactory(_combiner);\n\nwindow.flyd  = flyd;\n\n\n/**\n * scope stream\n * - stream representation of json data that (may) change\n * - depends on input stream\n * - inputs are PatchActions\n * - outputs are Contexts\n * - flyd stream\n * @see https://github.com/paldepind/flyd#flydstream\n * @typedef {function(patchAction: List<Patch>) } Scope\n */\n\n/**\n * scope factory\n * - creates scope, who listen on input\n * - curried: opts -> inputStream -> scope\n * @typedef {function(options: Object, input: Scope): Scope} ScopeFactory\n */\n\n /**\n  * scope factory with bound options\n  * @typedef {function(input: Scope): Scope} ScopeFactory'\n  */\n\nexport default {\n  value,\n  fragment,\n  combiner\n};\n"
+    "content": "import _value from './value';\nimport _fragment from './fragment';\nimport _combiner from './combiner';\nimport flyd from 'flyd';\n\nconst wrapFactory = f => opts => input => f(opts, input);\n\nconst value = wrapFactory(_value);\nconst fragment = wrapFactory(_fragment);\nconst combiner = wrapFactory(_combiner);\n\nwindow.flyd  = flyd;\n\n\n/**\n * scope\n * - stream representation of json data that (may) change\n´* - flyd stream\n * @see https://github.com/paldepind/flyd#flydstream\n * @listens {PatchSet}\n * @emits {Context}\n * @typedef {function(patchAction: PatchSet) } Scope\n */\n\n/**\n * scope factory\n * - creates scope, who listen on input\n * - curried: opts -> input -> scope\n * @typedef {function(...opts: any) : BoundScopeFactory} ScopeFactory\n */\n\n /**\n  * bound scope factory\n  * @typedef {function(input: any) : Context} BoundScopeFactory\n  */\n\nexport default {\n  value,\n  fragment,\n  combiner\n};\n"
   },
   {
-    "__docId__": 94,
+    "__docId__": 119,
     "kind": "variable",
     "static": true,
     "variation": null,
@@ -2602,7 +3066,7 @@
     }
   },
   {
-    "__docId__": 95,
+    "__docId__": 120,
     "kind": "variable",
     "static": true,
     "variation": null,
@@ -2623,7 +3087,7 @@
     }
   },
   {
-    "__docId__": 96,
+    "__docId__": 121,
     "kind": "variable",
     "static": true,
     "variation": null,
@@ -2644,7 +3108,7 @@
     }
   },
   {
-    "__docId__": 97,
+    "__docId__": 122,
     "kind": "variable",
     "static": true,
     "variation": null,
@@ -2665,7 +3129,7 @@
     }
   },
   {
-    "__docId__": 98,
+    "__docId__": 123,
     "kind": "typedef",
     "static": true,
     "variation": null,
@@ -2673,20 +3137,36 @@
     "memberof": "src/scopes/index.js",
     "longname": "src/scopes/index.js~Scope",
     "access": null,
-    "description": "scope stream\n- stream representation of json data that (may) change\n- depends on input stream\n- inputs are PatchActions\n- outputs are Contexts\n- flyd stream",
+    "description": "scope\n- stream representation of json data that (may) change\n´* - flyd stream",
     "see": [
       "https://github.com/paldepind/flyd#flydstream"
     ],
+    "emits": [
+      {
+        "types": [
+          "Context"
+        ],
+        "description": ""
+      }
+    ],
+    "listens": [
+      {
+        "types": [
+          "PatchSet"
+        ],
+        "description": ""
+      }
+    ],
     "type": {
       "types": [
-        "function(patchAction: List<Patch>) "
+        "function(patchAction: PatchSet) "
       ],
       "optional": false,
       "name": "Scope"
     }
   },
   {
-    "__docId__": 99,
+    "__docId__": 124,
     "kind": "typedef",
     "static": true,
     "variation": null,
@@ -2694,36 +3174,36 @@
     "memberof": "src/scopes/index.js",
     "longname": "src/scopes/index.js~ScopeFactory",
     "access": null,
-    "description": "scope factory\n- creates scope, who listen on input\n- curried: opts -> inputStream -> scope",
+    "description": "scope factory\n- creates scope, who listen on input\n- curried: opts -> input -> scope",
     "type": {
       "types": [
-        "function(options: Object, input: Scope): Scope"
+        "function(...opts: any) : BoundScopeFactory"
       ],
       "optional": false,
       "name": "ScopeFactory"
     }
   },
   {
-    "__docId__": 100,
+    "__docId__": 125,
     "kind": "typedef",
     "static": true,
     "variation": null,
-    "name": "ScopeFactory'",
+    "name": "BoundScopeFactory",
     "memberof": "src/scopes/index.js",
-    "longname": "src/scopes/index.js~ScopeFactory'",
+    "longname": "src/scopes/index.js~BoundScopeFactory",
     "access": null,
-    "description": "scope factory with bound options",
-    "lineNumber": 38,
+    "description": "bound scope factory",
+    "lineNumber": 37,
     "type": {
       "types": [
-        "function(input: Scope): Scope"
+        "function(input: any) : Context"
       ],
       "optional": false,
-      "name": "ScopeFactory'"
+      "name": "BoundScopeFactory"
     }
   },
   {
-    "__docId__": 101,
+    "__docId__": 126,
     "kind": "file",
     "static": true,
     "variation": null,
@@ -2736,7 +3216,7 @@
     "content": "import flyd from 'flyd';\n\nimport Context from './../Context';\n\n/**\n * value scope factory\n * Scope will update and emit value on every patch action.\n * @param {Object} init - init value as plain object\n * @param {stream} input - input flyd stream\n * @return {Scope}\n */\nfunction value(init, input) {\n  let current = Context.ofState(init);\n  const output = flyd.stream(current);\n\n  flyd.on(function(patchSet) {\n    if(patchSet.length === 0) return;\n    current = current.update(patchSet);\n    output(current);\n  }, input);\n\n  return output;\n}\nexport default value;\n"
   },
   {
-    "__docId__": 102,
+    "__docId__": 127,
     "kind": "function",
     "static": true,
     "variation": null,
@@ -2782,7 +3262,7 @@
     "generator": false
   },
   {
-    "__docId__": 103,
+    "__docId__": 128,
     "kind": "file",
     "static": true,
     "variation": null,
@@ -2795,7 +3275,7 @@
     "content": "import t from 'tcomb';\nimport Immutable from 'immutable';\n\nexport const is = {\n  Irreducible: x => t.String.is(x) || t.Number.is(x) || t.Boolean.is(x) || t.Nil.is(x),\n  Object:      x => t.Object.is(x),\n  Array:       x => t.Array.is(x),\n  Map:         x => Immutable.Map.isMap(x),\n  List:        x => Immutable.List.isList(x)\n};\n\nexport function box(val) {\n  if(is.Irreducible(val)) return val;\n  if(is.Array(val)) return Immutable.List(val).map(e => box(e));\n  if(is.Object(val)) return Immutable.Map(val).map(e => box(e));\n\n  throw new Error('Value is Function...');\n}\n\nexport function unbox(state) {\n  if(is.Map(state) || is.List(state)) return state.map(e => unbox(e)).toJS();\n  return state;\n}\n\nexport function get(state, pointer, notFound = null) {\n  if(pointer.size() === 0) return state;\n\n  if(is.Irreducible(state)) return notFound;\n\n  const nextState = state.get(pointer.first(), notFound);\n  const nextPointer = pointer.slice(1);\n\n  return get(nextState, nextPointer, notFound);\n}\n"
   },
   {
-    "__docId__": 104,
+    "__docId__": 129,
     "kind": "variable",
     "static": true,
     "variation": null,
@@ -2816,7 +3296,7 @@
     }
   },
   {
-    "__docId__": 105,
+    "__docId__": 130,
     "kind": "function",
     "static": true,
     "variation": null,
@@ -2846,7 +3326,7 @@
     "generator": false
   },
   {
-    "__docId__": 106,
+    "__docId__": 131,
     "kind": "function",
     "static": true,
     "variation": null,
@@ -2876,7 +3356,7 @@
     "generator": false
   },
   {
-    "__docId__": 107,
+    "__docId__": 132,
     "kind": "function",
     "static": true,
     "variation": null,
@@ -2921,7 +3401,7 @@
     "generator": false
   },
   {
-    "__docId__": 108,
+    "__docId__": 133,
     "kind": "file",
     "static": true,
     "variation": null,
@@ -2931,10 +3411,10 @@
     "access": null,
     "description": null,
     "lineNumber": 1,
-    "content": "import { expect } from 'chai';\n\nimport Context from './../Context';\nimport Transform from './../Transform';\n\ndescribe('Context', function() {\n  describe('#of', function() {\n    it('creates Context', function() {\n      const context = Context.ofState({\n        counter: 1,\n        label:   'huhu'\n      });\n\n      expect(context instanceof Context).to.equal(true);\n      expect(context.state.get('counter')).to.equal(1);\n      expect(context.state.get('label')).to.equal('huhu');\n    });\n  });\n\n  describe('#sub', function() {\n    it('creates subcontext', function() {\n      const root = Context.ofState({\n        counter: 1,\n        label:   'huhu'\n      });\n\n      const sub = root.sub({\n        foo: '/counter',\n        bar: '/label'\n      });\n\n      expect(sub.state.foo).to.equal(root.state.counter);\n      expect(sub.state.bar).to.equal(root.state.label);\n    });\n  });\n\n  describe('#get', function() {\n    it('returns value', function() {\n      const root = Context.ofState({\n        foo: { bar: 1 },\n        baz: 'huhu'\n      });\n\n      expect(root.get('/baz')).to.equal('huhu');\n      expect(root.get('/foo/bar')).to.equal(1);\n    });\n  });\n\n  describe('#changed', function() {\n    it('empty', function() {\n      const a = Context.ofState();\n      const b = Context.ofState();\n      const c = Context.ofState({ i: 4 });\n\n\n      expect(a.changed(b)).to.equal(false);\n      expect(a.changed(c)).to.equal(true);\n    });\n\n    it('changed state', function() {\n      const a = Context.ofState({ i: 4 });\n      const b = Context.ofState({ i: 5 });\n\n      expect(a.changed(b)).to.equal(true);\n    });\n\n    it('changed Transform', function() {\n      const a = Context\n        .ofState({ i: 4 })\n        .sub(Transform.ofTargets({ i: '/foo' }));\n      const b = Context\n        .ofState({ i: 5 })\n        .sub(Transform.ofTargets({ i: '/bar' }));\n\n      expect(a.changed(b)).to.equal(true);\n    });\n  });\n});\n"
+    "content": "import { expect } from 'chai';\n\nimport Context from './../Context';\n\ndescribe('Context', function() {\n  describe('#of', function() {\n    it('creates Context', function() {\n      const context = Context.ofState({\n        counter: 1,\n        label:   'huhu'\n      });\n\n      expect(context instanceof Context).to.equal(true);\n      expect(context.state.get('counter')).to.equal(1);\n      expect(context.state.get('label')).to.equal('huhu');\n    });\n  });\n\n  describe('#get', function() {\n    it('returns value', function() {\n      const root = Context.ofState({\n        foo: { bar: 1 },\n        baz: 'huhu'\n      });\n\n      expect(root.get('/baz')).to.equal('huhu');\n      expect(root.get('/foo/bar')).to.equal(1);\n    });\n  });\n\n  describe('#changed', function() {\n    it('empty', function() {\n      const a = Context.ofState();\n      const b = Context.ofState();\n      const c = Context.ofState({ i: 4 });\n\n\n      expect(a.changed(b)).to.equal(false);\n      expect(a.changed(c)).to.equal(true);\n    });\n\n    it('changed state', function() {\n      const a = Context.ofState({ i: 4 });\n      const b = Context.ofState({ i: 5 });\n\n      expect(a.changed(b)).to.equal(true);\n    });\n  });\n});\n"
   },
   {
-    "__docId__": 109,
+    "__docId__": 134,
     "kind": "file",
     "static": true,
     "variation": null,
@@ -2947,7 +3427,7 @@
     "content": "import { expect } from 'chai';\n\nimport Transform from './../Transform';\nimport JSONPointer from './../JSONPointer';\n\n// const createCheck = (T, value) => () => T(value);\n\ndescribe('Transform', function() {\n  describe('#create', function() {\n    it('creates Transform', function() {\n      const transform = Transform.ofTargets({ foo: '/bar' });\n\n      expect(transform instanceof Transform).to.equal(true);\n      expect(transform.isIdentity()).to.equal(false);\n    });\n\n    it('empty call creates identity', function() {\n      const transform = Transform.ofTargets();\n\n      expect(transform instanceof Transform).to.equal(true);\n      expect(transform.isIdentity()).to.equal(true);\n    });\n  });\n\n  describe('#sub', function() {\n    it('sub returns Transform', function() {\n      const rootTransform = Transform.ofTargets({\n        a: '/foo/aaa',\n        b: '/bar/bbb'\n      });\n\n      const subTransform = Transform.ofTargets({\n        foo: '/a',\n        bar: '/b/someVal'\n      });\n\n      const result = rootTransform.sub(subTransform);\n      const targets = result.toTargets();\n\n      expect(result instanceof Transform).to.equal(true);\n      expect(targets.foo).to.equal('/foo/aaa');\n      expect(targets.bar).to.equal('/bar/bbb/someVal');\n    });\n  });\n\n  describe('#equals', function() {\n    it('s', function() {\n      const map = {\n        foo: '/bar'\n      };\n      const a = Transform.ofTargets(map);\n      const b = Transform.ofTargets(map);\n      const c = Transform.ofTargets({\n        foo: '/someotherprop'\n      });\n\n      expect(a.equals(b)).to.equal(true);\n      expect(a.equals(c)).to.equal(false);\n    });\n  });\n\n  describe('#apply', function() {\n    it('applies transform on pointer', function() {\n      const transform = Transform.ofTargets({\n        foo: '/aaa/bbb',\n        bar: '/ccc'\n      });\n\n      const fooPointer = JSONPointer.ofString('/foo/xxx');\n      const barPointer = JSONPointer.ofString('/bar/yyy');\n\n      const fooTransformed = transform.apply(fooPointer).toRFC();\n      const barTransformed = transform.apply(barPointer).toRFC();\n\n      expect(fooTransformed).to.equal('/aaa/bbb/xxx');\n      expect(barTransformed).to.equal('/ccc/yyy');\n    });\n  });\n});\n"
   },
   {
-    "__docId__": 110,
+    "__docId__": 135,
     "kind": "file",
     "static": true,
     "variation": null,
@@ -2960,7 +3440,7 @@
     "content": "import { expect } from 'chai';\n\nimport { box, unbox, get } from './../state';\nimport JSONPointer from './../JSONPointer';\n\ndescribe('state', function() {\n  describe('box', function() {\n    it('boxes Objects', function() {\n      const value = { foo: { bar: 'baz' } };\n      const state = box(value);\n\n      expect(state.get('foo').get('bar')).to.equal('baz');\n    });\n\n    it('boxes Array', function() {\n      const value = [1, [10, 11]];\n      const state = box(value);\n\n      expect(state.get(0)).to.equal(1);\n      expect(state.get(1).get(0)).to.equal(10);\n    });\n  });\n\n  it('#unbox', function() {\n    const unboxed = {\n      dict: { foo: 1 },\n      list: [0, 1]\n    };\n    const state = box(unboxed);\n    const value = unbox(state);\n\n    expect(value.dict.foo).to.equal(1);\n    expect(value.list[ 0 ]).to.equal(0);\n  });\n\n\n  it('#get', function() {\n    const state = box({\n      dict: { foo: 1 },\n      list: [0, 1]\n    });\n    const pointerFoo = JSONPointer.ofString('/dict/foo');\n    const pointer = JSONPointer.ofString('/list/0');\n\n    expect(get(state, pointerFoo)).to.equal(1);\n    expect(get(state, pointer)).to.equal(0);\n  });\n});\n"
   },
   {
-    "__docId__": 111,
+    "__docId__": 136,
     "kind": "file",
     "static": true,
     "variation": null,
@@ -2973,7 +3453,7 @@
     "content": "import t from 'tcomb';\n\n/**\n * tcomb type\n * @external {Type} https://github.com/gcanti/tcomb/blob/master/docs/API.md\n */\n\nconst Type = t.irreducible('Type', t.isType);\n\n/**\n * 'booleanized' check function from tcomb\n * @type Function\n * @param  {Type} T - tcomb type\n * @param  {Any} x - value to check\n * @return {Boolean}\n */\n\nconst check = t.func([Type, t.Any], t.Bool).of(function(T, x) {\n  let result = null;\n\n  /* eslint space-after-keywords: 0 */\n  try {\n    T(x);\n    result = true;\n  } catch(e) {\n    result = false;\n  }\n  return result;\n});\n\nexport default check;\n"
   },
   {
-    "__docId__": 112,
+    "__docId__": 137,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -2986,7 +3466,7 @@
     "lineNumber": 8
   },
   {
-    "__docId__": 113,
+    "__docId__": 138,
     "kind": "variable",
     "static": true,
     "variation": null,
@@ -3039,7 +3519,7 @@
     }
   },
   {
-    "__docId__": 114,
+    "__docId__": 139,
     "kind": "file",
     "static": true,
     "variation": null,
@@ -3052,7 +3532,7 @@
     "content": "/**\n * creates a choke that throttle fuction calls\n *\n * The returned choke function will throttle calls with the same path argument\n * for delta milliseconds.\n *\n * @param  {Number} delta - the delta between calls [ms]\n * @return {function(path: String, f: Function)}\n */\n\nexport default function choke(delta) {\n  const cache = {};\n\n  function call(path, f) {\n    const lastTime = cache[ path ];\n    const currentTime = Date.now();\n\n    if(lastTime && currentTime - lastTime < delta) return;\n\n    cache[ path ] = Date.now();\n    f();\n  }\n\n  return call;\n}\n"
   },
   {
-    "__docId__": 115,
+    "__docId__": 140,
     "kind": "function",
     "static": true,
     "variation": null,
@@ -3088,20 +3568,7 @@
     "generator": false
   },
   {
-    "__docId__": 116,
-    "kind": "file",
-    "static": true,
-    "variation": null,
-    "name": "src/utils/createRenderSubject.js",
-    "memberof": null,
-    "longname": "src/utils/createRenderSubject.js",
-    "access": null,
-    "description": null,
-    "lineNumber": 1,
-    "content": "import flyd from 'flyd';\nimport curry from './curry';\n\nimport { createApp as createDekuApp, element } from 'deku';\n\n/**\n * This function is used to create the render part of your app.\n * The returned Rx.Subject listen to state events.\n * State is used as context when rendering component with deku inside container.\n * All actions dispatched inside component, will be emitted from subject.\n * @param  {DOMElement} container - container dom element\n * @param  {Component} component - deku component\n * @return {Subject}\n */\n\nexport default curry(function createRenderSubject(container, component, input) {\n  const dispatchStream = flyd.stream();\n  const dispatch = val => dispatchStream(val);\n  const render = createDekuApp(container, dispatch);\n\n  flyd.on(function(ctx) {\n    const el = element(component, { __ctx: ctx.get(true) });\n\n    render(el, ctx);\n  }, input);\n\n  return dispatchStream;\n});\n"
-  },
-  {
-    "__docId__": 117,
+    "__docId__": 141,
     "kind": "file",
     "static": true,
     "variation": null,
@@ -3114,7 +3581,7 @@
     "content": "export default function(f, arity) {\n  const length = Number.isInteger(arity) ? arity : f.length;\n\n  function call(...args) {\n    if(args.length >= length) return f.apply(this, args);\n    return (...newArgs) => call(...args.concat(newArgs));\n  }\n\n  return call;\n}\n"
   },
   {
-    "__docId__": 118,
+    "__docId__": 142,
     "kind": "function",
     "static": true,
     "variation": null,
@@ -3150,7 +3617,7 @@
     "generator": false
   },
   {
-    "__docId__": 119,
+    "__docId__": 143,
     "kind": "file",
     "static": true,
     "variation": null,
@@ -3160,10 +3627,10 @@
     "access": null,
     "description": null,
     "lineNumber": 1,
-    "content": "import flyd from 'flyd';\n\n/**\n * pipes a to b and b to a -> cycle a and b\n * @param  {Stream} a - flyd stream\n * @param  {Stream} b - flyd stream\n * @return {Stream} empty stream, use to end\n */\n\nexport default function cycle(a, b) {\n  const start = flyd.stream();\n  const streamA = a(start);\n  const streamB = b(streamA);\n\n  // flyd.on(val => console.log('a emitted:', val), streamA);\n  // flyd.on(val => console.log('b emitted:', val.get(true)), streamB);\n\n  return flyd.on(x => start(x), streamB);\n}\n"
+    "content": "import flyd from 'flyd';\n\n/**\n * pipes a to b and b to a -> cycle a and b\n * @param  {BoundViewFactory} viewF - view factory\n * @param  {BoundScopeFactory} scopeF - scope factory\n * @return {Stream} empty stream, use to end\n */\n\nexport default function cycle(viewF, scopeF) {\n  const start = flyd.stream();\n  const viewStream = viewF(start);\n  const scopeStream = scopeF(viewStream);\n\n  flyd.on(val => console.log('view emitted:', val), viewStream);\n  flyd.on(ctx => console.log('scope emitted:', ctx.get(true)), scopeStream);\n\n  return flyd.on(x => start(x), scopeStream);\n}\n"
   },
   {
-    "__docId__": 120,
+    "__docId__": 144,
     "kind": "function",
     "static": true,
     "variation": null,
@@ -3180,22 +3647,22 @@
       {
         "nullable": null,
         "types": [
-          "Stream"
+          "BoundViewFactory"
         ],
         "spread": false,
         "optional": false,
-        "name": "a",
-        "description": "flyd stream"
+        "name": "viewF",
+        "description": "view factory"
       },
       {
         "nullable": null,
         "types": [
-          "Stream"
+          "BoundScopeFactory"
         ],
         "spread": false,
         "optional": false,
-        "name": "b",
-        "description": "flyd stream"
+        "name": "scopeF",
+        "description": "scope factory"
       }
     ],
     "return": {
@@ -3209,203 +3676,42 @@
     "generator": false
   },
   {
-    "__docId__": 121,
+    "__docId__": 145,
     "kind": "file",
     "static": true,
     "variation": null,
-    "name": "src/utils/decorateComponent.js",
+    "name": "src/utils/patch.js",
     "memberof": null,
-    "longname": "src/utils/decorateComponent.js",
-    "access": null,
-    "description": null,
-    "lineNumber": 8,
-    "content": "/**\n * decorate component\n * @param  {Array} decoration - list of component decorators\n * @param {Component} component -  the target\n * @return {Component} decorated component\n */\n\nexport default function decorate(decoration, component) {\n  console.log(decoration);\n  return decoration\n    .slice()\n    .reverse()\n    .reduce((target, decorator) => decorator(target), component);\n}\n"
-  },
-  {
-    "__docId__": 122,
-    "kind": "function",
-    "static": true,
-    "variation": null,
-    "name": "decorate",
-    "memberof": "src/utils/decorateComponent.js",
-    "longname": "src/utils/decorateComponent.js~decorate",
-    "access": null,
-    "export": true,
-    "importPath": "fux/src/utils/decorateComponent.js",
-    "importStyle": "decorate",
-    "description": "decorate component",
-    "lineNumber": 8,
-    "params": [
-      {
-        "nullable": null,
-        "types": [
-          "Array"
-        ],
-        "spread": false,
-        "optional": false,
-        "name": "decoration",
-        "description": "list of component decorators"
-      },
-      {
-        "nullable": null,
-        "types": [
-          "Component"
-        ],
-        "spread": false,
-        "optional": false,
-        "name": "component",
-        "description": "the target"
-      }
-    ],
-    "return": {
-      "nullable": null,
-      "types": [
-        "Component"
-      ],
-      "spread": false,
-      "description": "decorated component"
-    },
-    "generator": false
-  },
-  {
-    "__docId__": 123,
-    "kind": "file",
-    "static": true,
-    "variation": null,
-    "name": "src/utils/deepFreeze.js",
-    "memberof": null,
-    "longname": "src/utils/deepFreeze.js",
-    "access": null,
-    "description": null,
-    "lineNumber": 7,
-    "content": "/**\n * deep freeze of Arrays and Objects\n * @param  {object} val - will be deeply freezed\n * @return {object} freezed val\n */\n\nexport default function deepFreeze(val) {\n  // Reminder: typeof [1,2] -> 'object'\n  if(typeof val !== 'object') return val;\n\n  const propNames = Object.getOwnPropertyNames(val);\n\n  propNames.forEach(name => deepFreeze(val[ name ]));\n\n  return Object.freeze(val);\n}\n"
-  },
-  {
-    "__docId__": 124,
-    "kind": "function",
-    "static": true,
-    "variation": null,
-    "name": "deepFreeze",
-    "memberof": "src/utils/deepFreeze.js",
-    "longname": "src/utils/deepFreeze.js~deepFreeze",
-    "access": null,
-    "export": true,
-    "importPath": "fux/src/utils/deepFreeze.js",
-    "importStyle": "deepFreeze",
-    "description": "deep freeze of Arrays and Objects",
-    "lineNumber": 7,
-    "params": [
-      {
-        "nullable": null,
-        "types": [
-          "object"
-        ],
-        "spread": false,
-        "optional": false,
-        "name": "val",
-        "description": "will be deeply freezed"
-      }
-    ],
-    "return": {
-      "nullable": null,
-      "types": [
-        "object"
-      ],
-      "spread": false,
-      "description": "freezed val"
-    },
-    "generator": false
-  },
-  {
-    "__docId__": 125,
-    "kind": "file",
-    "static": true,
-    "variation": null,
-    "name": "src/utils/generateSpec.js",
-    "memberof": null,
-    "longname": "src/utils/generateSpec.js",
+    "longname": "src/utils/patch.js",
     "access": null,
     "description": null,
     "lineNumber": 1,
-    "content": "import t from 'tcomb';\n\n/**\n * generate update spec for component hooks\n * @param  {function} decorator - decorator is applied on all targets\n * @param  {Array} targets - targets for decorator\n * @return {Component}\n */\n\nexport default function generateSpec(decorator, targets = ['onCreate', 'onUpdate', 'render', 'onRemove']) {\n  const spec = {};\n\n  targets.forEach(function(target) {\n    const result = decorator(target);\n\n    if(t.Nil.is(result)) return;\n\n    spec[ target ] = result;\n  });\n\n  return spec;\n}\n"
+    "content": "import t from 'tcomb';\n\nimport { box } from './../state';\nimport JSONPointer from './../JSONPointer';\n\nfunction toPatch(path, rawValue) {\n  const op = JSONPointer.ofString(path).last() === '-' ? 'add' : 'replace';\n  const value = box(rawValue);\n\n  return {\n    op,\n    path,\n    value\n  };\n}\n\nexport default function handler(context, pairs) {\n  return pairs.map(function([path, value]) {\n    if(!t.Function.is(value)) return toPatch(path, value);\n\n    const currentValue = context.get(path, true);\n    const nextValue = value(currentValue);\n\n    return toPatch(path, nextValue);\n  });\n}\n"
   },
   {
-    "__docId__": 126,
+    "__docId__": 146,
     "kind": "function",
     "static": true,
     "variation": null,
-    "name": "generateSpec",
-    "memberof": "src/utils/generateSpec.js",
-    "longname": "src/utils/generateSpec.js~generateSpec",
+    "name": "toPatch",
+    "memberof": "src/utils/patch.js",
+    "longname": "src/utils/patch.js~toPatch",
     "access": null,
-    "export": true,
-    "importPath": "fux/src/utils/generateSpec.js",
-    "importStyle": "generateSpec",
-    "description": "generate update spec for component hooks",
-    "lineNumber": 10,
-    "params": [
-      {
-        "nullable": null,
-        "types": [
-          "function"
-        ],
-        "spread": false,
-        "optional": false,
-        "name": "decorator",
-        "description": "decorator is applied on all targets"
-      },
-      {
-        "nullable": null,
-        "types": [
-          "Array"
-        ],
-        "spread": false,
-        "optional": false,
-        "name": "targets",
-        "description": "targets for decorator"
-      }
-    ],
-    "return": {
-      "nullable": null,
-      "types": [
-        "Component"
-      ],
-      "spread": false,
-      "description": ""
-    },
-    "generator": false
-  },
-  {
-    "__docId__": 127,
-    "kind": "file",
-    "static": true,
-    "variation": null,
-    "name": "src/utils/normalizeComponent.js",
-    "memberof": null,
-    "longname": "src/utils/normalizeComponent.js",
-    "access": null,
+    "export": false,
+    "importPath": "fux/src/utils/patch.js",
+    "importStyle": null,
     "description": null,
-    "lineNumber": 1,
-    "content": "import t from 'tcomb';\n\nexport default function normalize(component) {\n  if(t.Function.is(component)) return { render: component };\n\n  if(t.Object.is(component) && t.Function.is(component.render))\n    return component;\n\n  throw new TypeError('component must be function or object with render function');\n}\n"
-  },
-  {
-    "__docId__": 128,
-    "kind": "function",
-    "static": true,
-    "variation": null,
-    "name": "normalize",
-    "memberof": "src/utils/normalizeComponent.js",
-    "longname": "src/utils/normalizeComponent.js~normalize",
-    "access": null,
-    "export": true,
-    "importPath": "fux/src/utils/normalizeComponent.js",
-    "importStyle": "normalize",
-    "description": null,
-    "lineNumber": 3,
+    "lineNumber": 6,
     "undocument": true,
     "params": [
       {
-        "name": "component",
+        "name": "path",
+        "types": [
+          "*"
+        ]
+      },
+      {
+        "name": "rawValue",
         "types": [
           "*"
         ]
@@ -3419,72 +3725,7 @@
     "generator": false
   },
   {
-    "__docId__": 129,
-    "kind": "file",
-    "static": true,
-    "variation": null,
-    "name": "src/utils/patch.js",
-    "memberof": null,
-    "longname": "src/utils/patch.js",
-    "access": null,
-    "description": null,
-    "lineNumber": 1,
-    "content": "import t from 'tcomb';\n\nexport function patch(...args) {\n  if(args.length % 2 !== 0) throw new Error('length of arguments must be even');\n\n  const pairs = args.reduce(function(current, e, i) {\n    if(i % 2 === 0) current.push([]);\n    current[ current.length - 1 ].push(e);\n\n    return current;\n  }, []);\n\n  const patchSet = pairs.map(pair => ({\n    op:    'replace',\n    path:  pair[ 0 ],\n    value: pair[ 1 ]\n  }));\n\n  return patchSet;\n}\n\nconst toPatch = (path, value) => ({\n  op: 'replace',\n  path,\n  value\n});\n\nexport default function handler(...args) {\n  if(args.length % 2 !== 0) throw new Error('length of arguments must be even');\n\n  const pairs = args.reduce(function(current, e, i) {\n    if(i % 2 === 0) current.push([]);\n    current[ current.length - 1 ].push(e);\n\n    return current;\n  }, []);\n\n  return (_, { context }) => pairs.map(function([path, value]) {\n    if(!t.Function.is(value)) return toPatch(path, value);\n\n    const currentValue = context.get(path, true);\n    const nextValue = value(currentValue);\n\n    return toPatch(path, nextValue);\n  });\n}\n"
-  },
-  {
-    "__docId__": 130,
-    "kind": "function",
-    "static": true,
-    "variation": null,
-    "name": "patch",
-    "memberof": "src/utils/patch.js",
-    "longname": "src/utils/patch.js~patch",
-    "access": null,
-    "export": true,
-    "importPath": "fux/src/utils/patch.js",
-    "importStyle": "{patch}",
-    "description": null,
-    "lineNumber": 3,
-    "undocument": true,
-    "params": [
-      {
-        "name": "args",
-        "types": [
-          "...*"
-        ],
-        "spread": true
-      }
-    ],
-    "return": {
-      "types": [
-        "*"
-      ]
-    },
-    "generator": false
-  },
-  {
-    "__docId__": 131,
-    "kind": "variable",
-    "static": true,
-    "variation": null,
-    "name": "toPatch",
-    "memberof": "src/utils/patch.js",
-    "longname": "src/utils/patch.js~toPatch",
-    "access": null,
-    "export": false,
-    "importPath": "fux/src/utils/patch.js",
-    "importStyle": null,
-    "description": null,
-    "lineNumber": 22,
-    "undocument": true,
-    "type": {
-      "types": [
-        "*"
-      ]
-    }
-  },
-  {
-    "__docId__": 132,
+    "__docId__": 147,
     "kind": "function",
     "static": true,
     "variation": null,
@@ -3496,15 +3737,20 @@
     "importPath": "fux/src/utils/patch.js",
     "importStyle": "handler",
     "description": null,
-    "lineNumber": 28,
+    "lineNumber": 17,
     "undocument": true,
     "params": [
       {
-        "name": "args",
+        "name": "context",
         "types": [
-          "...*"
-        ],
-        "spread": true
+          "*"
+        ]
+      },
+      {
+        "name": "pairs",
+        "types": [
+          "*"
+        ]
       }
     ],
     "return": {
@@ -3515,7 +3761,7 @@
     "generator": false
   },
   {
-    "__docId__": 133,
+    "__docId__": 148,
     "kind": "file",
     "static": true,
     "variation": null,
@@ -3525,10 +3771,143 @@
     "access": null,
     "description": null,
     "lineNumber": 1,
-    "content": "import flyd from 'flyd';\nimport curry from './../utils/curry';\n\nimport { createApp as createDekuApp, element } from 'deku';\n\n/**\n * This function is used to create the render part of your app.\n * The returned Rx.Subject listen to state events.\n * State is used as context when rendering component with deku inside container.\n * All actions dispatched inside component, will be emitted from subject.\n * @param  {DOMElement} container - container dom element\n * @param  {Component} component - deku component\n * @return {Subject}\n */\n\nexport default curry(function(container, component, input) {\n  const dispatchStream = flyd.stream();\n  const dispatch = val => dispatchStream(val);\n  const render = createDekuApp(container, dispatch);\n\n  flyd.on(function(ctx) {\n    const el = element(component, { __ctx: ctx.get(true) });\n\n    render(el, ctx);\n  }, input);\n\n  return dispatchStream;\n});\n"
+    "content": "import flyd from 'flyd';\n\nimport { createApp as createDekuApp, element } from 'deku';\nimport debug from './../decorators/debug';\n\n/**\n * This function is used to create the render part of your app.\n * If the view receives a context object, it will pass the context through your component.\n * All actions dispatched inside component, will be emitted from the view.\n * @param  {DOMElement} container - container dom element\n * @param  {Component} component - deku component\n * @return {BoundViewFactory}\n */\n\nexport default function dom(container, rawComponent) {\n  return input => {\n    const dispatchStream = flyd.stream();\n    const dispatch = val => dispatchStream(val);\n    const render = createDekuApp(container, dispatch);\n    const component = debug()(rawComponent);\n\n    flyd.on(function(ctx) {\n      const el = element(component);\n\n      return render(el, ctx);\n    }, input);\n\n    return dispatchStream;\n  };\n}\n"
   },
   {
-    "__docId__": 135,
+    "__docId__": 149,
+    "kind": "function",
+    "static": true,
+    "variation": null,
+    "name": "dom",
+    "memberof": "src/views/dom.js",
+    "longname": "src/views/dom.js~dom",
+    "access": null,
+    "export": true,
+    "importPath": "fux/src/views/dom.js",
+    "importStyle": "dom",
+    "description": "This function is used to create the render part of your app.\nIf the view receives a context object, it will pass the context through your component.\nAll actions dispatched inside component, will be emitted from the view.",
+    "lineNumber": 15,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "DOMElement"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "container",
+        "description": "container dom element"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Component"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "component",
+        "description": "deku component"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "BoundViewFactory"
+      ],
+      "spread": false,
+      "description": ""
+    },
+    "generator": false
+  },
+  {
+    "__docId__": 150,
+    "kind": "file",
+    "static": true,
+    "variation": null,
+    "name": "src/views/index.js",
+    "memberof": null,
+    "longname": "src/views/index.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1,
+    "content": "import dom from './dom';\n\n/**\n * view\n * - view stream representation\n * - views listen on contexts and render them in some way (e.g. dom)\n * - a view can emit patchSets\n´* - flyd stream\n * @see https://github.com/paldepind/flyd#flydstream\n * @listens {Context}\n * @emits {PatchSet}\n * @typedef View\n */\n\n/**\n * view factory\n * - creates view, who listen on scops\n * - curried: opts -> input -> view\n * @typedef {function(...opts: any) : BoundViewFactory} ViewFactory\n */\n\n/**\n * bound view factory\n * @typedef {function(input: any) : View} BoundViewFactory\n */\n\nexport default {\n  dom\n};\n"
+  },
+  {
+    "__docId__": 151,
+    "kind": "typedef",
+    "static": true,
+    "variation": null,
+    "name": "View",
+    "memberof": "src/views/index.js",
+    "longname": "src/views/index.js~View",
+    "access": null,
+    "description": "view\n- view stream representation\n- views listen on contexts and render them in some way (e.g. dom)\n- a view can emit patchSets\n´* - flyd stream",
+    "see": [
+      "https://github.com/paldepind/flyd#flydstream"
+    ],
+    "emits": [
+      {
+        "types": [
+          "PatchSet"
+        ],
+        "description": ""
+      }
+    ],
+    "listens": [
+      {
+        "types": [
+          "Context"
+        ],
+        "description": ""
+      }
+    ],
+    "type": {
+      "types": [
+        "*"
+      ],
+      "optional": false,
+      "name": "View"
+    }
+  },
+  {
+    "__docId__": 152,
+    "kind": "typedef",
+    "static": true,
+    "variation": null,
+    "name": "ViewFactory",
+    "memberof": "src/views/index.js",
+    "longname": "src/views/index.js~ViewFactory",
+    "access": null,
+    "description": "view factory\n- creates view, who listen on scops\n- curried: opts -> input -> view",
+    "type": {
+      "types": [
+        "function(...opts: any) : BoundViewFactory"
+      ],
+      "optional": false,
+      "name": "ViewFactory"
+    }
+  },
+  {
+    "__docId__": 153,
+    "kind": "typedef",
+    "static": true,
+    "variation": null,
+    "name": "BoundViewFactory",
+    "memberof": "src/views/index.js",
+    "longname": "src/views/index.js~BoundViewFactory",
+    "access": null,
+    "description": "bound view factory",
+    "lineNumber": 27,
+    "type": {
+      "types": [
+        "function(input: any) : View"
+      ],
+      "optional": false,
+      "name": "BoundViewFactory"
+    }
+  },
+  {
+    "__docId__": 155,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -3541,7 +3920,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 136,
+    "__docId__": 156,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -3554,7 +3933,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 137,
+    "__docId__": 157,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -3567,7 +3946,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 138,
+    "__docId__": 158,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -3580,7 +3959,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 139,
+    "__docId__": 159,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -3593,7 +3972,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 140,
+    "__docId__": 160,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -3606,7 +3985,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 141,
+    "__docId__": 161,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -3619,7 +3998,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 142,
+    "__docId__": 162,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -3632,7 +4011,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 143,
+    "__docId__": 163,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -3645,7 +4024,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 144,
+    "__docId__": 164,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -3658,7 +4037,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 145,
+    "__docId__": 165,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -3671,7 +4050,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 146,
+    "__docId__": 166,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -3684,7 +4063,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 147,
+    "__docId__": 167,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -3697,7 +4076,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 148,
+    "__docId__": 168,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -3710,7 +4089,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 149,
+    "__docId__": 169,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -3723,7 +4102,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 150,
+    "__docId__": 170,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -3736,7 +4115,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 151,
+    "__docId__": 171,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -3749,7 +4128,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 152,
+    "__docId__": 172,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -3762,7 +4141,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 153,
+    "__docId__": 173,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -3775,7 +4154,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 154,
+    "__docId__": 174,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -3788,7 +4167,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 155,
+    "__docId__": 175,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -3801,7 +4180,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 156,
+    "__docId__": 176,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -3814,7 +4193,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 157,
+    "__docId__": 177,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -3827,7 +4206,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 158,
+    "__docId__": 178,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -3840,7 +4219,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 159,
+    "__docId__": 179,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -3853,7 +4232,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 160,
+    "__docId__": 180,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -3866,7 +4245,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 161,
+    "__docId__": 181,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -3879,7 +4258,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 162,
+    "__docId__": 182,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -3892,7 +4271,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 163,
+    "__docId__": 183,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -3905,7 +4284,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 164,
+    "__docId__": 184,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -3918,7 +4297,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 165,
+    "__docId__": 185,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -3931,7 +4310,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 166,
+    "__docId__": 186,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -3944,7 +4323,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 167,
+    "__docId__": 187,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -3957,7 +4336,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 168,
+    "__docId__": 188,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -3970,7 +4349,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 169,
+    "__docId__": 189,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -3983,7 +4362,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 170,
+    "__docId__": 190,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -3996,7 +4375,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 171,
+    "__docId__": 191,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -4009,7 +4388,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 172,
+    "__docId__": 192,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -4022,7 +4401,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 173,
+    "__docId__": 193,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -4035,7 +4414,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 174,
+    "__docId__": 194,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -4048,7 +4427,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 175,
+    "__docId__": 195,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -4061,7 +4440,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 176,
+    "__docId__": 196,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -4074,7 +4453,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 177,
+    "__docId__": 197,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -4087,7 +4466,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 178,
+    "__docId__": 198,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -4100,7 +4479,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 179,
+    "__docId__": 199,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -4113,7 +4492,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 180,
+    "__docId__": 200,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -4126,7 +4505,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 181,
+    "__docId__": 201,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -4139,7 +4518,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 183,
+    "__docId__": 203,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -4152,7 +4531,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 184,
+    "__docId__": 204,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -4165,7 +4544,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 185,
+    "__docId__": 205,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -4178,7 +4557,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 186,
+    "__docId__": 206,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -4191,7 +4570,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 187,
+    "__docId__": 207,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -4204,7 +4583,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 188,
+    "__docId__": 208,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -4217,7 +4596,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 189,
+    "__docId__": 209,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -4230,7 +4609,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 190,
+    "__docId__": 210,
     "kind": "external",
     "static": true,
     "variation": null,

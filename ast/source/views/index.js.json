@@ -1,0 +1,411 @@
+{
+  "type": "Program",
+  "body": [
+    {
+      "type": "ImportDeclaration",
+      "specifiers": [
+        {
+          "type": "ImportDefaultSpecifier",
+          "local": {
+            "type": "Identifier",
+            "name": "dom",
+            "range": [
+              7,
+              10
+            ],
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 7
+              },
+              "end": {
+                "line": 1,
+                "column": 10
+              }
+            }
+          },
+          "range": [
+            7,
+            10
+          ],
+          "loc": {
+            "start": {
+              "line": 1,
+              "column": 7
+            },
+            "end": {
+              "line": 1,
+              "column": 10
+            }
+          }
+        }
+      ],
+      "source": {
+        "type": "Literal",
+        "value": "./dom",
+        "raw": "'./dom'",
+        "range": [
+          16,
+          23
+        ],
+        "loc": {
+          "start": {
+            "line": 1,
+            "column": 16
+          },
+          "end": {
+            "line": 1,
+            "column": 23
+          }
+        }
+      },
+      "range": [
+        0,
+        24
+      ],
+      "loc": {
+        "start": {
+          "line": 1,
+          "column": 0
+        },
+        "end": {
+          "line": 1,
+          "column": 24
+        }
+      },
+      "trailingComments": [
+        {
+          "type": "Block",
+          "value": "*\n * view\n * - view stream representation\n * - views listen on contexts and render them in some way (e.g. dom)\n * - a view can emit patchSets\n´* - flyd stream\n * @see https://github.com/paldepind/flyd#flydstream\n * @listens {Context}\n * @emits {PatchSet}\n * @typedef View\n ",
+          "range": [
+            26,
+            303
+          ],
+          "loc": {
+            "start": {
+              "line": 3,
+              "column": 0
+            },
+            "end": {
+              "line": 13,
+              "column": 3
+            }
+          }
+        },
+        {
+          "type": "Block",
+          "value": "*\n * view factory\n * - creates view, who listen on scops\n * - curried: opts -> input -> view\n * @typedef {function(...opts: any) : BoundViewFactory} ViewFactory\n ",
+          "range": [
+            305,
+            471
+          ],
+          "loc": {
+            "start": {
+              "line": 15,
+              "column": 0
+            },
+            "end": {
+              "line": 20,
+              "column": 3
+            }
+          }
+        },
+        {
+          "type": "Block",
+          "value": "*\n * bound view factory\n * @typedef {function(input: any) : View} BoundViewFactory\n ",
+          "range": [
+            473,
+            561
+          ],
+          "loc": {
+            "start": {
+              "line": 22,
+              "column": 0
+            },
+            "end": {
+              "line": 25,
+              "column": 3
+            }
+          }
+        }
+      ]
+    },
+    {
+      "type": "ExportDefaultDeclaration",
+      "declaration": {
+        "type": "ObjectExpression",
+        "properties": [
+          {
+            "type": "Property",
+            "key": {
+              "type": "Identifier",
+              "name": "dom",
+              "range": [
+                582,
+                585
+              ],
+              "loc": {
+                "start": {
+                  "line": 28,
+                  "column": 2
+                },
+                "end": {
+                  "line": 28,
+                  "column": 5
+                }
+              }
+            },
+            "value": {
+              "type": "Identifier",
+              "name": "dom",
+              "range": [
+                582,
+                585
+              ],
+              "loc": {
+                "start": {
+                  "line": 28,
+                  "column": 2
+                },
+                "end": {
+                  "line": 28,
+                  "column": 5
+                }
+              }
+            },
+            "kind": "init",
+            "method": false,
+            "shorthand": true,
+            "computed": false,
+            "range": [
+              582,
+              585
+            ],
+            "loc": {
+              "start": {
+                "line": 28,
+                "column": 2
+              },
+              "end": {
+                "line": 28,
+                "column": 5
+              }
+            }
+          }
+        ],
+        "range": [
+          578,
+          587
+        ],
+        "loc": {
+          "start": {
+            "line": 27,
+            "column": 15
+          },
+          "end": {
+            "line": 29,
+            "column": 1
+          }
+        },
+        "leadingComments": [
+          {
+            "type": "Block",
+            "value": "*\n * view\n * - view stream representation\n * - views listen on contexts and render them in some way (e.g. dom)\n * - a view can emit patchSets\n´* - flyd stream\n * @see https://github.com/paldepind/flyd#flydstream\n * @listens {Context}\n * @emits {PatchSet}\n * @typedef View\n ",
+            "range": [
+              26,
+              303
+            ],
+            "loc": {
+              "start": {
+                "line": 3,
+                "column": 0
+              },
+              "end": {
+                "line": 13,
+                "column": 3
+              }
+            }
+          },
+          {
+            "type": "Block",
+            "value": "*\n * view factory\n * - creates view, who listen on scops\n * - curried: opts -> input -> view\n * @typedef {function(...opts: any) : BoundViewFactory} ViewFactory\n ",
+            "range": [
+              305,
+              471
+            ],
+            "loc": {
+              "start": {
+                "line": 15,
+                "column": 0
+              },
+              "end": {
+                "line": 20,
+                "column": 3
+              }
+            }
+          },
+          {
+            "type": "Block",
+            "value": "*\n * bound view factory\n * @typedef {function(input: any) : View} BoundViewFactory\n ",
+            "range": [
+              473,
+              561
+            ],
+            "loc": {
+              "start": {
+                "line": 22,
+                "column": 0
+              },
+              "end": {
+                "line": 25,
+                "column": 3
+              }
+            }
+          }
+        ],
+        "trailingComments": []
+      },
+      "range": [
+        563,
+        588
+      ],
+      "loc": {
+        "start": {
+          "line": 27,
+          "column": 0
+        },
+        "end": {
+          "line": 29,
+          "column": 2
+        }
+      },
+      "leadingComments": [
+        {
+          "type": "Block",
+          "value": "*\n * view\n * - view stream representation\n * - views listen on contexts and render them in some way (e.g. dom)\n * - a view can emit patchSets\n´* - flyd stream\n * @see https://github.com/paldepind/flyd#flydstream\n * @listens {Context}\n * @emits {PatchSet}\n * @typedef View\n ",
+          "range": [
+            26,
+            303
+          ],
+          "loc": {
+            "start": {
+              "line": 3,
+              "column": 0
+            },
+            "end": {
+              "line": 13,
+              "column": 3
+            }
+          }
+        },
+        {
+          "type": "Block",
+          "value": "*\n * view factory\n * - creates view, who listen on scops\n * - curried: opts -> input -> view\n * @typedef {function(...opts: any) : BoundViewFactory} ViewFactory\n ",
+          "range": [
+            305,
+            471
+          ],
+          "loc": {
+            "start": {
+              "line": 15,
+              "column": 0
+            },
+            "end": {
+              "line": 20,
+              "column": 3
+            }
+          }
+        },
+        {
+          "type": "Block",
+          "value": "*\n * bound view factory\n * @typedef {function(input: any) : View} BoundViewFactory\n ",
+          "range": [
+            473,
+            561
+          ],
+          "loc": {
+            "start": {
+              "line": 22,
+              "column": 0
+            },
+            "end": {
+              "line": 25,
+              "column": 3
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "sourceType": "module",
+  "range": [
+    0,
+    588
+  ],
+  "loc": {
+    "start": {
+      "line": 1,
+      "column": 0
+    },
+    "end": {
+      "line": 29,
+      "column": 2
+    }
+  },
+  "comments": [
+    {
+      "type": "Block",
+      "value": "*\n * view\n * - view stream representation\n * - views listen on contexts and render them in some way (e.g. dom)\n * - a view can emit patchSets\n´* - flyd stream\n * @see https://github.com/paldepind/flyd#flydstream\n * @listens {Context}\n * @emits {PatchSet}\n * @typedef View\n ",
+      "range": [
+        26,
+        303
+      ],
+      "loc": {
+        "start": {
+          "line": 3,
+          "column": 0
+        },
+        "end": {
+          "line": 13,
+          "column": 3
+        }
+      }
+    },
+    {
+      "type": "Block",
+      "value": "*\n * view factory\n * - creates view, who listen on scops\n * - curried: opts -> input -> view\n * @typedef {function(...opts: any) : BoundViewFactory} ViewFactory\n ",
+      "range": [
+        305,
+        471
+      ],
+      "loc": {
+        "start": {
+          "line": 15,
+          "column": 0
+        },
+        "end": {
+          "line": 20,
+          "column": 3
+        }
+      }
+    },
+    {
+      "type": "Block",
+      "value": "*\n * bound view factory\n * @typedef {function(input: any) : View} BoundViewFactory\n ",
+      "range": [
+        473,
+        561
+      ],
+      "loc": {
+        "start": {
+          "line": 22,
+          "column": 0
+        },
+        "end": {
+          "line": 25,
+          "column": 3
+        }
+      }
+    }
+  ]
+}
