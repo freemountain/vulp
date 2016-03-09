@@ -1,38 +1,34 @@
-import { h, helper, decorators } from './../../fux';
+import { h, decorators } from './../../fux';
 
-const { $rep, $add } = helper;
-const { controller, component } = decorators;
-const throttledCall = helper.choke(100);
+const { controller, component, dispatchChangeSets, name, memoize } = decorators;
 
-function key(e, model, dispatch) {
+function key({ event }) {
   // keyCode 27 => ESCAPE
-  if(e.keyCode === 27) {
-    dispatch([$rep('/draft', '')]);
-    return;
-  }
+  if(event.keyCode === 27) return ['/draft', ''];
 
   // keyCode 13 => Enter
-  if(e.keyCode === 13) {
-    const title = e.target.value;
+  if(event.keyCode === 13) {
+    const title = event.target.value;
 
-    e.target.value = '';
-    dispatch([
-      $add('/todos/-', { completed: false, title }),
-      $rep('/draft', '')
-    ]);
-    return;
+    event.target.value = '';
+    return [
+      '/draft', '',
+      '/todos/-', { completed: false, title }
+    ];
   }
-  const f = () => dispatch([$rep('/draft', e.target.value)]);
 
-  throttledCall(model.path, f);
+  return ['/draft', event.target.value];
 }
 
 export default component(
-  controller({ key })
-)(({ context, dispatch }) => (
+  memoize(),
+  dispatchChangeSets(),
+  controller({ key }),
+  name('Header')
+)(({ context }) => (
   <div>
     <input
-      onKeyUp = {dispatch('key')}
+      onKeyUp = 'key'
       value = {context.get('/draft')}
       type = 'text'
     />

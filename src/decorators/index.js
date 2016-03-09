@@ -5,6 +5,13 @@ import styler from './styler';
 import checkContextType from './checkContextType';
 import component from './component';
 import name from './name';
+import dispatchChangeSets from './dispatchChangeSets';
+import logLifecycle from './log';
+
+/**
+ * Higher Order Component
+ * @typedef {function(component: Component): Component} HOC
+ */
 
 export default {
   name,
@@ -13,5 +20,7 @@ export default {
   controller,
   memoize,
   styler,
-  checkContextType
+  checkContextType,
+  dispatchChangeSets,
+  logLifecycle
 };

@@ -1,63 +1,58 @@
-import curry from './../utils/curry';
-import { normalize } from './utils';
-import { vnode as element } from 'deku';
+import { specDecorator } from './utils';
 import Transform from './../Transform';
+import JSONPointer from './../JSONPointer';
+import Immutable from 'immutable';
+import { get } from './../state';
+import Context from './../Context';
 
-const { isThunk, isText, isEmpty }  = element;
+const parsePath = patch => Object.assign({}, patch, { path: JSONPointer.ofString(patch.path) });
+const transformPath = transform => patch => Object.assign({}, patch, { path: transform.apply(patch.path) });
+const stringifyPath = patch => Object.assign({}, patch, { path: patch.path.toRFC() });
 
-import generateSpec from './../utils/generateSpec';
+const createDispatch = (transform, dispatch) => rawPatchSet => {
+  const patchSet = rawPatchSet
+    .map(parsePath)
+    .map(transformPath(transform))
+    .map(stringifyPath);
 
-function decorateHook(targets, targetComponent, hookName) {
-  if(!targetComponent[ hookName ]) return null;
+  if(patchSet.length === 0) return;
+  dispatch(patchSet);
+};
 
-  return function(model) {
-    const context = model.context.sub(targets);
-    const decoratedModel = Object.assign({}, model, { context });
+function applyTransform(transform, ctx) {
+  const state = Immutable.Map(transform.map)
+    .map(pointer => get(ctx.state, pointer));
 
-    targetComponent[ hookName ](decoratedModel);
-  };
+  return new Context({ state });
 }
 
-function decorateChildren(cache, targets, vnode) {
-  return (vnode.children || []).map(child => decorateNode(cache, child, targets));
-}
-
-function decorateNode(cache, vnode, targets) {
-  if(isText(vnode) || isEmpty(vnode)) return vnode;
-
-  const children = decorateChildren(cache, targets, vnode);
-  const decoratedVnode = Object.assign({}, vnode, { children });
-
-  if(!isThunk(vnode)) return decoratedVnode;
-
-  let cacheEntry = cache.get(vnode.component);
-
-  if(!cacheEntry) cacheEntry = mount(targets, vnode.component);
-  cache.set(vnode.component, cacheEntry);
-
-  return Object.assign({}, decoratedVnode, { component: cacheEntry });
-}
-
-function mount(targets, rawComponent) {
-  const component = normalize(rawComponent);
-  const cache = new WeakMap();
+/**
+ * transform ctx of component
+ *
+ * ```javascript
+ * mount({
+ * 	foo: '/some/value'
+ * 	bar: '/here/is/another/val'
+ * })(component)
+ * ```
+ *
+ * @param  {Map<string, string>} targets - transform description
+ * @return {HOC}
+ */
+export default function(targets) {
   const transform = Transform.ofTargets(targets);
 
-  function render(model) {
-    const context = model.context.sub(transform);
-    const decoratedModel = Object.assign({}, model, { context });
-    const vnode = component.render(decoratedModel);
+  const spec = {
+    deep:  true,
+    cache: new WeakMap(),
+    name:  'mount',
+    model: function(component, model) {
+      const context = applyTransform(transform, model.context);
+      const dispatch = createDispatch(transform, model.dispatch);
 
-    const output = decorateNode(cache, vnode, targets);
+      return Object.assign({}, model, { context, dispatch });
+    }
+  };
 
-    return output;
-  }
-
-  const decorator = curry(decorateHook)(targets, component);
-  const spec = generateSpec(decorator);
-
-  spec.render = render;
-  return Object.assign({}, component, spec);
+  return specDecorator(spec);
 }
-
-export default mount;

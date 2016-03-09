@@ -1,19 +1,21 @@
 import { h, decorators } from './../../fux';
 
-const { memoize, controller, component} = decorators;
+const { memoize, controller, component, dispatchChangeSets, name } = decorators;
 
 export default component(
   memoize(),
+  dispatchChangeSets(),
   controller({
     uncheck: ['/checked', false],
     check:   ['/checked', true]
-  })
-)(({ context, dispatch }) => {
+  }),
+  name('Checkbox'),
+)(({ context }) => {
   const checked = context.get('/checked');
 
   return (<input
     type='checkbox'
     checked={checked}
-    onChange={dispatch(checked ? 'uncheck' : 'check')}
+    onChange={checked ? 'uncheck' : 'check'}
   />);
 });

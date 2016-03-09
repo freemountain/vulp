@@ -13,26 +13,25 @@ window.flyd  = flyd;
 
 
 /**
- * scope stream
+ * scope
  * - stream representation of json data that (may) change
- * - depends on input stream
- * - inputs are PatchActions
- * - outputs are Contexts
- * - flyd stream
+´* - flyd stream
  * @see https://github.com/paldepind/flyd#flydstream
- * @typedef {function(patchAction: List<Patch>) } Scope
+ * @listens {PatchSet}
+ * @emits {Context}
+ * @typedef {function(patchAction: PatchSet) } Scope
  */
 
 /**
  * scope factory
  * - creates scope, who listen on input
- * - curried: opts -> inputStream -> scope
- * @typedef {function(options: Object, input: Scope): Scope} ScopeFactory
+ * - curried: opts -> input -> scope
+ * @typedef {function(...opts: any) : BoundScopeFactory} ScopeFactory
  */
 
  /**
-  * scope factory with bound options
-  * @typedef {function(input: Scope): Scope} ScopeFactory'
+  * bound scope factory
+  * @typedef {function(input: any) : Context} BoundScopeFactory
   */
 
 export default {

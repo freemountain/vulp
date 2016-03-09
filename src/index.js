@@ -1,16 +1,10 @@
 import { element } from 'deku';
-import rawDecorators from './decorators';
-import scopes from './scopes';
-import curry from './utils/curry.js';
-import { $rep, $add } from './Patch';
 
-import createRenderSubject from './utils/createRenderSubject';
-import decorateComponent from './utils/decorateComponent';
-import choke from './utils/choke';
+import decorators from './decorators';
+import scopes from './scopes';
+import views from './views';
+
 import cycle from './utils/cycle';
-import patch from './utils/patch';
-import mapObj from '@f/map-obj';
-import dom from './views/dom';
 
 /**
  * @see http://dekujs.github.io/deku/docs/basics/components.html#model
@@ -38,44 +32,10 @@ import dom from './views/dom';
  * @property {Array<vnode>} vnode.children
  */
 
-/**
- * @see https://github.com/Reactive-Extensions/RxJS/blob/master/doc/gettingstarted/subjects.md
- * @typedef {Object} Subject
- * @property {function} Subject.subscribe
- * @property {function(val: any)} Subject.onNext
-
- */
-
-/**
- * curried decorators
- * @private
- */
-
-const decorators = mapObj(decorator => curry(decorator), rawDecorators);
-
-/**
- * curried decorateComponent
- * @private
- */
-
-const decorate = decorateComponent;
-
-/**
- * exported helper
- * @private
- */
-
 const helper = {
-  $rep,
-  $add,
-  choke,
-  cycle,
-  patch
+  cycle
 };
 
-const views = {
-  dom
-};
 
 /**
  * jsx compatible element function.
@@ -88,8 +48,6 @@ export {
   scopes,
   views,
   decorators,
-  decorate,
   helper,
-  createRenderSubject,
   h
 };

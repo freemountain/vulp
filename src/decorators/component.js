@@ -1,19 +1,26 @@
-import normalize from './../utils/normalizeComponent';
+import { normalize } from './utils/';
 
 /**
- * decorate component
- * @param  {Array} decoration - list of component decorators
- * @param {Component} component -  the target
- * @return {Component} decorated component
+ * apply multiple decorators on component
+ *
+ * ```javascript
+ * component(
+ * 	someDeoraotor(),
+ * 	someOther()
+ * )(model => { ... })
+ * ```
+ *
+ * @param  {...HOC} decoration - list of component decorators (hocs)
+ * @return {HOC}
  */
 
-const f = (...decoration) => rawComponent => {
-  const component = normalize(rawComponent);
+export default function component(...decoration) {
+  return rawComponent => {
+    const comp = normalize(rawComponent);
 
-  return decoration
-   .slice()
-   .reverse()
-   .reduce((target, decorator) => decorator(target), component);
-};
-
-export default f;
+    return decoration
+     .slice()
+     .reverse()
+     .reduce((target, decorator) => decorator(target), comp);
+  };
+}

@@ -2,7 +2,7 @@ import { h, decorators } from './../../fux';
 
 import _Todo from './Todo';
 
-const { memoize, component } = decorators;
+const { memoize, component, name } = decorators;
 
 const filters = {
   all:       () => true,
@@ -26,7 +26,7 @@ function render({ context }) {
         completed: `/todos/${index}/completed`
       })(_Todo);
 
-      return (<li><Todo /></li>);
+      return (<li><Todo key={index}/></li>);
     });
 
   return (
@@ -37,5 +37,6 @@ function render({ context }) {
 }
 
 export default component(
-  memoize()
+  memoize(),
+  name('List')
 )(render);

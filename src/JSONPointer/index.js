@@ -96,6 +96,16 @@ class JSONPointer {
   }
 
   /**
+   * get last token
+   *
+   * Return value is the last entry from token list.
+   * @returns {string}
+   */
+  last() {
+    return this.tokens[ this.tokens.length - 1 ] || null;
+  }
+
+  /**
    * return length of token array
    * @returns {number}
    */

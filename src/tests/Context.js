@@ -1,7 +1,6 @@
 import { expect } from 'chai';
 
 import Context from './../Context';
-import Transform from './../Transform';
 
 describe('Context', function() {
   describe('#of', function() {
@@ -14,23 +13,6 @@ describe('Context', function() {
       expect(context instanceof Context).to.equal(true);
       expect(context.state.get('counter')).to.equal(1);
       expect(context.state.get('label')).to.equal('huhu');
-    });
-  });
-
-  describe('#sub', function() {
-    it('creates subcontext', function() {
-      const root = Context.ofState({
-        counter: 1,
-        label:   'huhu'
-      });
-
-      const sub = root.sub({
-        foo: '/counter',
-        bar: '/label'
-      });
-
-      expect(sub.state.foo).to.equal(root.state.counter);
-      expect(sub.state.bar).to.equal(root.state.label);
     });
   });
 
@@ -60,17 +42,6 @@ describe('Context', function() {
     it('changed state', function() {
       const a = Context.ofState({ i: 4 });
       const b = Context.ofState({ i: 5 });
-
-      expect(a.changed(b)).to.equal(true);
-    });
-
-    it('changed Transform', function() {
-      const a = Context
-        .ofState({ i: 4 })
-        .sub(Transform.ofTargets({ i: '/foo' }));
-      const b = Context
-        .ofState({ i: 5 })
-        .sub(Transform.ofTargets({ i: '/bar' }));
 
       expect(a.changed(b)).to.equal(true);
     });

@@ -1,7 +1,6 @@
-import { h, helper, decorators } from './../../fux';
+import { h, decorators } from './../../fux';
 
-const { $rep } = helper;
-const { component, memoize, controller } = decorators;
+const { component, memoize, controller, dispatchChangeSets, name } = decorators;
 
 const createOption = (name, filter) => (
   <option value={ name } selected={ filter === name } >
@@ -9,12 +8,12 @@ const createOption = (name, filter) => (
   </option>
 );
 
-function render({ context, dispatch }) {
+function render({ context }) {
   const filter = context.get('/filter');
 
   return (
     <div>
-      <select onChange={dispatch('filterChange')}>
+      <select onChange='filterChange'>
         {[
           createOption('all', filter),
           createOption('active', filter),
@@ -32,7 +31,9 @@ function render({ context, dispatch }) {
 
 export default component(
   memoize(),
+  dispatchChangeSets(),
   controller({
     filterChange: ({ event }) => ['/filter', event.srcElement.value]
-  })
+  }),
+  name('Footer')
 )(render);

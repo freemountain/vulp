@@ -15,14 +15,16 @@ function componentName(component) {
     .join('\n');
   const name =  `Component#{\n${body}\n}`;
 
-  cacheEntry.set(component, name);
+  nameCache.set(component, name);
   return name;
 }
+
 const createHandler = name => (component, model) => {
   const handler = component[ name.slice(2).toLowerCase() ];
 
   return () => handler ? handler(model) : null;
 };
+
 const targetHandler = {
   render: function(component, model) {
     console.log('render', componentName(component));
@@ -33,10 +35,18 @@ const targetHandler = {
   onRemove: createHandler('onRemove')
 };
 
+const defaultTargets = ['render', 'onUpdate', 'onCreate', 'onRemove'];
 
-export default function(targets) {
+/**
+ * log component lifecycle
+ *
+ * @return {HOC}
+ */
+
+export default function log(targets = defaultTargets) {
   const opts = {
     deep:  false,
+    name:  'log',
     cache: new WeakMap()
   };
   const spec = Object.assign({}, pick(targets, targetHandler), opts);

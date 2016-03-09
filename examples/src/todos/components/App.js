@@ -7,7 +7,7 @@ import Header from './Header';
 import Footer from './Footer';
 import StateView from './StateView';
 
-const { component, checkContextType, memoize, styler } = decorators;
+const { component, checkContextType, styler, name } = decorators;
 
 const contextType = t.struct({
   todos: t.list(t.struct({
@@ -19,7 +19,7 @@ const contextType = t.struct({
 });
 
 
-function render() {
+function render({ context }) {
   const containerStyle = {
     display: 'flex'
   };
@@ -44,10 +44,24 @@ function render() {
       </div>
     </div>
   );
+/*
+  return (
+    <div style={containerStyle}>
+      <div style={leftStyle}>
+        <Header />
+        <List />
+        <Footer />
+      </div>
+      <div style={rightStyle}>
+        <StateView />
+      </div>
+    </div>
+  );
+  */
 }
 
 export default component(
   checkContextType(contextType),
-  memoize(),
-  styler()
+  styler(),
+  name('App')
 )(render);

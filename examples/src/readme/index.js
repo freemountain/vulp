@@ -1,25 +1,14 @@
 import { h, views, scopes, decorators, helper } from './../fux';
-import t from 'tcomb';
-const { component, controller, name, styler , checkContextType } = decorators;
-// const btnController = { inc: ['/count', v => v + 1] };
-const btnController = { inc: ['/count', v => v + 1] };
 
-const Label = component(
-  //name('Label'),
-  styler()
-
-)(() => (<div style={{backgroundColor: 'green'}}>hi</div>));
-
+const { component, controller, dispatchChangeSets } = decorators;
 const App = component(
-  name('Example App'),
-  checkContextType(t.struct({
-    count: t.Number
-  })),
-  // controller(btnController)
-)(function({ context, dispatch }) {
+  dispatchChangeSets(),
+  controller({
+    inc: ['/count', count => count + 1]
+  }),
+)(function({ context }) {
   return (<div>
-    <Label />
-    <input type='button' onClick={() => dispatch({ op: 'replace', path: '/count', value: context.get('/count') + 1 })}/>
+    <input type='button' onClick='inc'/>
     {context.get('/count')}
   </div>);
 });

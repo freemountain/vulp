@@ -31,7 +31,6 @@ function readCtx(names, stores) {
 
 function createCombine(keys) {
   return function(...args) {
-    // args = [input0, input1, ...inputN, self, updated]
     return readCtx(keys, args.slice(0, 2));
   };
 }
@@ -41,15 +40,20 @@ function createCombine(keys) {
  * combiner scope factory
  * represents map of (sub)scopes.
  * @param {Map<string, ScopeFactory'>} scopeMap - the routing map
+ * @param {Stream} input - input stream
  * @return {Scope}
  */
 
 export default function combiner(scopeMap, input) {
-  const names     = Object.keys(scopeMap);
+  const names = Object.keys(scopeMap);
   const factories = names.map(name => scopeMap[ name ]);
-  const inputs    = names.map(name => flyd.map(filterPatchSet(name), input));
-  const stores    = factories.map((f, i) => f(inputs[ i ]));
-  const combineStreams  = createCombine(names);
+  const inputs = names.map(name => flyd.map(function(rawPatchSet) {
+    const patchSet = filterPatchSet(name, rawPatchSet);
+
+    return patchSet;
+  }, input));
+  const stores = factories.map((f, i) => f(inputs[ i ]));
+  const combineStreams = createCombine(names);
 
   return flyd.combine(combineStreams, stores);
 }

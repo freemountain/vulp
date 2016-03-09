@@ -1,22 +1,12 @@
 import t from 'tcomb';
-import Immutable from 'immutable';
 import applyPatch from 'immpatch';
 
-import Transform from './Transform';
 import JSONPointer from './JSONPointer';
 import { get, unbox, box } from './state';
 
-function applyTransform(transform, state) {
-  const newState = Immutable.Map(transform.map)
-    .map(pointer => get(state, pointer));
-
-  return newState;
-}
-
 const emptyInstance = {
-  type:      t.Any,
-  state:     box({}),
-  transform: Transform.ofTargets({})
+  type:  t.Any,
+  state: box({})
 };
 
 /**
@@ -46,8 +36,7 @@ class Context {
 
   static ofState(state = {}) {
     return new Context({
-      state:     box(state),
-      transform: Transform.ofTargets({})
+      state: box(state)
     });
   }
 
@@ -66,18 +55,6 @@ class Context {
   }
 
   /**
-   * transform ctx with target sub
-   * @param  {Transform} sub [description]
-   * @return {Context}
-   */
-  sub(sub) {
-    const transform = this.transform.sub(sub);
-    const state = applyTransform(sub, this.state);
-
-    return new Context({ transform, state });
-  }
-
-  /**
    * check if ctx has  changed
    * @param  {Context} last - the last COntext
    * @return {boolean}
@@ -85,14 +62,10 @@ class Context {
   changed(last) {
     const keys = last.state.keySeq().toJS();
 
-    if(!this.transform.equals(last.transform)) return true;
     return keys.some(key => this.get(key) !== last.get(key));
   }
 
   update(patchSet) {
-    if(!this.transform.isIdentity())
-      console.log('WARNING: Context.update, this.transform should be identity');
-
     if(patchSet.length === 0) return this;
 
     const newState = applyPatch(this.state, patchSet);
@@ -103,9 +76,9 @@ class Context {
     this.type(rawState);
 
     return new Context({
-      type:      this.type,
-      transform: this.transform,
-      state:     newState
+      type:  this.type,
+      // transform: this.transform,
+      state: newState
     });
   }
 

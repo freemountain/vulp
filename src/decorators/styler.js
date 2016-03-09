@@ -33,6 +33,7 @@ function decorateVnode(vnode) {
 const spec = {
   deep:   false,
   cache:  null,
+  name:   'styler',
   render: function(component, model) {
     const vnode = component.render(model);
 
@@ -42,4 +43,16 @@ const spec = {
 
 const decorator = specDecorator(spec);
 
-export default () => decorator;
+/**
+ * add css styles as Object
+ *
+ * ```javascript
+ * styler()(() => (<div style={{ color: 'green'}}>))
+ * ```
+ *
+ * @return {HOC}
+ */
+
+export default function styler() {
+  return decorator;
+}

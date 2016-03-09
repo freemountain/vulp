@@ -1,19 +1,19 @@
 import t from 'tcomb';
-import { h, createRenderSubject, scopes, decorators, helper } from './../fux';
+import { h, views, scopes, decorators, helper } from './../fux';
 
-const { component, checkContextType, controller } = decorators;
+const { component, checkContextType, controller, dispatchChangeSets } = decorators;
 
 const contextType = t.struct({
   count: t.Number
 });
 
-const inc = (_, { context }) => [helper.$rep('/count', context.get('/count') + 1)];
-
 const IncBtn = component(
-  checkContextType(contextType),
-  controller({ inc })
-)(({ dispatch }) => (
-  <input type='button' onClick={dispatch('inc')}/>
+  dispatchChangeSets(),
+  controller({
+    inc: ['/count', count => count + 1]
+  })
+)(() => (
+  <input type='button' onClick='inc' />
 ));
 
 const App = component(
@@ -25,7 +25,7 @@ const App = component(
   </div>
 ));
 
-const renderSubject = createRenderSubject(document.body, App);
+const renderSubject = views.dom(document.body, App);
 const storeSubject = scopes.value({ count: 0 });
 
 export default () => helper.cycle(renderSubject, storeSubject);

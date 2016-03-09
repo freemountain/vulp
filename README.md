@@ -15,16 +15,19 @@ npm install --save-dev fux
 ```javascript
 import { h, views, scopes, decorators, helper } from 'fux';
 
-const { component, controller } = decorators;
-const btnController = { inc: helper.patch('/count', v => v + 1) };
-
+const { component, controller, dispatchChangeSets } = decorators;
 const App = component(
-  controller(btnController)
-)(function({ context, dispatch }) {
-  return (<div>
-    <input type='button' onClick={dispatch('inc')}/>
-    {context.get('/count')}
-  </div>);
+  dispatchChangeSets(),
+  controller({
+    inc: ['/count', count => count + 1]
+  }),
+)(function({ context }) {
+  return (
+    <div>
+      <input type='button' onClick='inc'/>
+      {context.get('/count')}
+    </div>
+  );
 });
 
 const view = views.dom(document.body, App);
