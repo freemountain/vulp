@@ -36,10 +36,7 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Transform.js~Transform.html">Transform</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-Patch">Patch</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-Map">Map</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-Component">Component</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-model">model</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-vnode">vnode</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="http://dekujs.github.io/deku/docs/api/element.html">h</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-element">element</a></span></span></li>
 <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">JSONPointer</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/JSONPointer/index.js~JSONPointer.html">JSONPointer</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-TokenList">TokenList</a></span></span></li>
 <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">decorators</div><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-checkContextType">checkContextType</a></span></span></li>
@@ -415,7 +412,7 @@ represents map of (sub)scopes.</p>
     <td>
       <div>
         <p>
-           <span data-ice="name"><span><a href="function/index.html#static-function-dom">dom</a></span></span><span data-ice="signature">(container: <span>DOMElement</span>, rawComponent: <span><a href="typedef/index.html#static-typedef-Component">Component</a></span>): <span><a href="typedef/index.html#static-typedef-BoundViewFactory">BoundViewFactory</a></span></span>
+           <span data-ice="name"><span><a href="function/index.html#static-function-dom">dom</a></span></span><span data-ice="signature">(container: <span>DOMElement</span>, rawComponent: <span>Component</span>): <span><a href="typedef/index.html#static-typedef-BoundViewFactory">BoundViewFactory</a></span></span>
         </p>
       </div>
       <div>
@@ -891,32 +888,7 @@ Scope will update and emit value on every patch action.</p>
     <td>
       <div>
         <p>
-           <span data-ice="name"><span><a href="typedef/index.html#static-typedef-Component">Component</a></span></span><span data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span></span>
-        </p>
-      </div>
-      <div>
-        
-        
-        
-      </div>
-    </td>
-    <td>
-      
-      
-    </td>
-  </tr>
-<tr data-ice="target">
-    <td>
-      <span class="access" data-ice="access">public</span>
-      
-      
-      
-      <span class="override" data-ice="override"></span>
-    </td>
-    <td>
-      <div>
-        <p>
-           <span data-ice="name"><span><a href="typedef/index.html#static-typedef-HOC">HOC</a></span></span><span data-ice="signature">: <span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span><span>(component: <span><a href="typedef/index.html#static-typedef-Component">Component</a></span>)</span>: <span><a href="typedef/index.html#static-typedef-Component">Component</a></span></span></span>
+           <span data-ice="name"><span><a href="typedef/index.html#static-typedef-HOC">HOC</a></span></span><span data-ice="signature">: <span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span><span>(component: <span>Component</span>)</span>: <span>Component</span></span></span>
         </p>
       </div>
       <div>
@@ -1141,38 +1113,14 @@ TokenList holds JSONPath tokens.</p>
     <td>
       <div>
         <p>
-           <span data-ice="name"><span><a href="typedef/index.html#static-typedef-model">model</a></span></span><span data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span></span>
+           <span data-ice="name"><span><a href="typedef/index.html#static-typedef-element">element</a></span></span><span data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span></span>
         </p>
       </div>
       <div>
         
         
-        
-      </div>
-    </td>
-    <td>
-      
-      
-    </td>
-  </tr>
-<tr data-ice="target">
-    <td>
-      <span class="access" data-ice="access">public</span>
-      
-      
-      
-      <span class="override" data-ice="override"></span>
-    </td>
-    <td>
-      <div>
-        <p>
-           <span data-ice="name"><span><a href="typedef/index.html#static-typedef-vnode">vnode</a></span></span><span data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span></span>
-        </p>
-      </div>
-      <div>
-        
-        
-        
+        <div data-ice="description"><p>jsx compatible element function.</p>
+</div>
       </div>
     </td>
     <td>
@@ -1205,32 +1153,6 @@ TokenList holds JSONPath tokens.</p>
         
         
         <div data-ice="description"><p>tcomb type</p>
-</div>
-      </div>
-    </td>
-    <td>
-      
-      
-    </td>
-  </tr>
-<tr data-ice="target">
-    <td>
-      <span class="access" data-ice="access">public</span>
-      
-      
-      
-      <span class="override" data-ice="override"></span>
-    </td>
-    <td>
-      <div>
-        <p>
-           <span data-ice="name"><span><a href="http://dekujs.github.io/deku/docs/api/element.html">h</a></span></span>
-        </p>
-      </div>
-      <div>
-        
-        
-        <div data-ice="description"><p>jsx compatible element function.</p>
 </div>
       </div>
     </td>

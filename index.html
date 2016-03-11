@@ -36,10 +36,7 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Transform.js~Transform.html">Transform</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-Patch">Patch</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-Map">Map</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-Component">Component</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-model">model</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-vnode">vnode</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="http://dekujs.github.io/deku/docs/api/element.html">h</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-element">element</a></span></span></li>
 <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">JSONPointer</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/JSONPointer/index.js~JSONPointer.html">JSONPointer</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-TokenList">TokenList</a></span></span></li>
 <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">decorators</div><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-checkContextType">checkContextType</a></span></span></li>
@@ -97,7 +94,7 @@
 <li>or use this as template for your own project</li>
 </ul>
 <h2 id="usage">Usage</h2>
-<pre><code class="lang-javascript"><code class="source-code prettyprint">import { h, views, scopes, decorators, helper } from &apos;fux&apos;;
+<pre><code class="lang-javascript"><code class="source-code prettyprint">import { element, cycle, views, scopes, decorators,  } from &apos;fux&apos;;
 
 const { component, controller, dispatchChangeSets } = decorators;
 const App = component(
@@ -117,12 +114,12 @@ const App = component(
 const view = views.dom(document.body, App);
 const scope = scopes.value({ count: 0 });
 
-helper.cycle(view, scope);</code>
+cycle(view, scope);</code>
 </code></pre>
 <h2 id="architecture">Architecture</h2>
 <p><img src="manual/asset/architecture.png" alt="overview"></p>
 <ul>
-<li>Context<ul>
+<li><a href="http://freemountain.github.io/fux/class/src/Context.js~Context.html">Context</a><ul>
 <li>immutable data structure (struct)</li>
 <li>holds application context</li>
 <li>emitted from scopes, when they have new data</li>
@@ -142,13 +139,17 @@ helper.cycle(view, scope);</code>
 <li>representation of data that may change over time (stream)</li>
 </ul>
 </li>
-<li>View<ul>
+<li><p>View</p>
+<ul>
 <li>passes context to <a href="http://dekujs.github.io/deku/">deku component</a></li>
 <li>render component to DOM</li>
 <li>component may dispatch PatchSet on user interaction</li>
+<li>available views</li>
+<li><a href="http://freemountain.github.io/fux/function/index.html#static-function-combiner">fux.views.dom</a></li>
 </ul>
 </li>
-<li>Component<ul>
+<li><p><a href="http://freemountain.github.io/fux/typedef/index.html#static-typedef-Component">Component</a></p>
+<ul>
 <li>stateless</li>
 <li>dispatches side effects to scopes</li>
 <li>additional functionality added through decorators</li>
@@ -156,7 +157,33 @@ helper.cycle(view, scope);</code>
 </li>
 </ul>
 <h2 id="api">Api</h2>
-<p>Visit <a href="http://freemountain.github.io/fux/">freemountain.github.io/fux</a></p>
+<h3 id="fux">fux</h3>
+<ul>
+<li><a href="http://freemountain.github.io/fux/function/index.html#static-function-cycle">cycle</a></li>
+<li><a href="http://freemountain.github.io/fux/function/index.html#static-function-element">element</a></li>
+</ul>
+<h4 id="fux-scopes">fux.scopes</h4>
+<ul>
+<li><a href="http://freemountain.github.io/fux/function/index.html#static-function-combiner">combiner</a></li>
+<li><a href="http://freemountain.github.io/fux/function/index.html#static-function-fragment">fragment</a></li>
+<li><a href="http://freemountain.github.io/fux/function/index.html#static-function-value">value</a></li>
+</ul>
+<h4 id="fux-views">fux.views</h4>
+<ul>
+<li><a href="http://freemountain.github.io/fux/function/index.html#static-function-dom">dom</a></li>
+</ul>
+<h4 id="fux-decorators">fux.decorators</h4>
+<ul>
+<li><a href="http://freemountain.github.io/fux/function/index.html#static-function-checkContextType">checkContextType</a></li>
+<li><a href="http://freemountain.github.io/fux/function/index.html#static-function-component">component</a></li>
+<li><a href="http://freemountain.github.io/fux/function/index.html#static-function-controller">controller</a></li>
+<li><a href="http://freemountain.github.io/fux/function/index.html#static-function-dispatchChangeSets">dispatchChangeSets</a></li>
+<li><a href="http://freemountain.github.io/fux/function/index.html#static-function-log">log</a></li>
+<li><a href="http://freemountain.github.io/fux/function/index.html#static-function-memoize">memoize</a></li>
+<li><a href="http://freemountain.github.io/fux/function/index.html#static-function-mount">mount</a></li>
+<li><a href="http://freemountain.github.io/fux/function/index.html#static-function-name">name</a></li>
+<li><a href="http://freemountain.github.io/fux/function/index.html#static-function-styler">styler</a></li>
+</ul>
 <h2 id="hack">Hack</h2>
 <pre><code class="lang-shell"><code class="source-code prettyprint">git clone https://github.com/freemountain/fux
 cd fux

@@ -36,10 +36,7 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Transform.js~Transform.html">Transform</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-Patch">Patch</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-Map">Map</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-Component">Component</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-model">model</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-vnode">vnode</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-external">E</span><span data-ice="name"><span><a href="http://dekujs.github.io/deku/docs/api/element.html">h</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-element">element</a></span></span></li>
 <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">JSONPointer</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/JSONPointer/index.js~JSONPointer.html">JSONPointer</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-TokenList">TokenList</a></span></span></li>
 <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">decorators</div><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-checkContextType">checkContextType</a></span></span></li>
@@ -80,7 +77,12 @@
 </nav>
 
 <div class="content" data-ice="content"><h1 data-ice="title">src/index.js</h1>
-<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import { element } from &apos;deku&apos;;
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">/**
+ * jsx compatible element function.
+ * @typedef {function} element
+ * @see http://dekujs.github.io/deku/docs/api/element.html
+ */
+import { element } from &apos;deku&apos;;
 
 import decorators from &apos;./decorators&apos;;
 import scopes from &apos;./scopes&apos;;
@@ -114,24 +116,13 @@ import cycle from &apos;./utils/cycle&apos;;
  * @property {Array&lt;vnode&gt;} vnode.children
  */
 
-const helper = {
-  cycle
-};
-
-
-/**
- * jsx compatible element function.
- * @external {h} http://dekujs.github.io/deku/docs/api/element.html
- */
-
-const h = element;
 
 export {
   scopes,
   views,
   decorators,
-  helper,
-  h
+  cycle,
+  element
 };
 </code></pre>
 

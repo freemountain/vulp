@@ -774,27 +774,9 @@ window.esdocSearchIndex = [
     "file"
   ],
   [
-    "src/index.js~component",
-    "typedef/index.html#static-typedef-Component",
-    "src/index.js~Component",
-    "typedef"
-  ],
-  [
-    "src/index.js~h",
-    "external/index.html",
-    "src/index.js~h",
-    "external"
-  ],
-  [
-    "src/index.js~model",
-    "typedef/index.html#static-typedef-model",
-    "src/index.js~model",
-    "typedef"
-  ],
-  [
-    "src/index.js~vnode",
-    "typedef/index.html#static-typedef-vnode",
-    "src/index.js~vnode",
+    "src/index.js~element",
+    "typedef/index.html#static-typedef-element",
+    "src/index.js~element",
     "typedef"
   ],
   [

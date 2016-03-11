@@ -10,16 +10,16 @@
             "type": "Identifier",
             "name": "element",
             "range": [
-              9,
-              16
+              143,
+              150
             ],
             "loc": {
               "start": {
-                "line": 1,
+                "line": 6,
                 "column": 9
               },
               "end": {
-                "line": 1,
+                "line": 6,
                 "column": 16
               }
             }
@@ -28,31 +28,31 @@
             "type": "Identifier",
             "name": "element",
             "range": [
-              9,
-              16
+              143,
+              150
             ],
             "loc": {
               "start": {
-                "line": 1,
+                "line": 6,
                 "column": 9
               },
               "end": {
-                "line": 1,
+                "line": 6,
                 "column": 16
               }
             }
           },
           "range": [
-            9,
-            16
+            143,
+            150
           ],
           "loc": {
             "start": {
-              "line": 1,
+              "line": 6,
               "column": 9
             },
             "end": {
-              "line": 1,
+              "line": 6,
               "column": 16
             }
           }
@@ -63,34 +63,54 @@
         "value": "deku",
         "raw": "'deku'",
         "range": [
-          24,
-          30
+          158,
+          164
         ],
         "loc": {
           "start": {
-            "line": 1,
+            "line": 6,
             "column": 24
           },
           "end": {
-            "line": 1,
+            "line": 6,
             "column": 30
           }
         }
       },
       "range": [
-        0,
-        31
+        134,
+        165
       ],
       "loc": {
         "start": {
-          "line": 1,
+          "line": 6,
           "column": 0
         },
         "end": {
-          "line": 1,
+          "line": 6,
           "column": 31
         }
-      }
+      },
+      "leadingComments": [
+        {
+          "type": "Block",
+          "value": "*\n * jsx compatible element function.\n * @typedef {function} element\n * @see http://dekujs.github.io/deku/docs/api/element.html\n ",
+          "range": [
+            0,
+            133
+          ],
+          "loc": {
+            "start": {
+              "line": 1,
+              "column": 0
+            },
+            "end": {
+              "line": 5,
+              "column": 3
+            }
+          }
+        }
+      ]
     },
     {
       "type": "ImportDeclaration",
@@ -101,31 +121,31 @@
             "type": "Identifier",
             "name": "decorators",
             "range": [
-              40,
-              50
+              174,
+              184
             ],
             "loc": {
               "start": {
-                "line": 3,
+                "line": 8,
                 "column": 7
               },
               "end": {
-                "line": 3,
+                "line": 8,
                 "column": 17
               }
             }
           },
           "range": [
-            40,
-            50
+            174,
+            184
           ],
           "loc": {
             "start": {
-              "line": 3,
+              "line": 8,
               "column": 7
             },
             "end": {
-              "line": 3,
+              "line": 8,
               "column": 17
             }
           }
@@ -136,31 +156,31 @@
         "value": "./decorators",
         "raw": "'./decorators'",
         "range": [
-          56,
-          70
+          190,
+          204
         ],
         "loc": {
           "start": {
-            "line": 3,
+            "line": 8,
             "column": 23
           },
           "end": {
-            "line": 3,
+            "line": 8,
             "column": 37
           }
         }
       },
       "range": [
-        33,
-        71
+        167,
+        205
       ],
       "loc": {
         "start": {
-          "line": 3,
+          "line": 8,
           "column": 0
         },
         "end": {
-          "line": 3,
+          "line": 8,
           "column": 38
         }
       }
@@ -174,31 +194,31 @@
             "type": "Identifier",
             "name": "scopes",
             "range": [
-              79,
-              85
+              213,
+              219
             ],
             "loc": {
               "start": {
-                "line": 4,
+                "line": 9,
                 "column": 7
               },
               "end": {
-                "line": 4,
+                "line": 9,
                 "column": 13
               }
             }
           },
           "range": [
-            79,
-            85
+            213,
+            219
           ],
           "loc": {
             "start": {
-              "line": 4,
+              "line": 9,
               "column": 7
             },
             "end": {
-              "line": 4,
+              "line": 9,
               "column": 13
             }
           }
@@ -209,31 +229,31 @@
         "value": "./scopes",
         "raw": "'./scopes'",
         "range": [
-          91,
-          101
+          225,
+          235
         ],
         "loc": {
           "start": {
-            "line": 4,
+            "line": 9,
             "column": 19
           },
           "end": {
-            "line": 4,
+            "line": 9,
             "column": 29
           }
         }
       },
       "range": [
-        72,
-        102
+        206,
+        236
       ],
       "loc": {
         "start": {
-          "line": 4,
+          "line": 9,
           "column": 0
         },
         "end": {
-          "line": 4,
+          "line": 9,
           "column": 30
         }
       }
@@ -247,31 +267,31 @@
             "type": "Identifier",
             "name": "views",
             "range": [
-              110,
-              115
+              244,
+              249
             ],
             "loc": {
               "start": {
-                "line": 5,
+                "line": 10,
                 "column": 7
               },
               "end": {
-                "line": 5,
+                "line": 10,
                 "column": 12
               }
             }
           },
           "range": [
-            110,
-            115
+            244,
+            249
           ],
           "loc": {
             "start": {
-              "line": 5,
+              "line": 10,
               "column": 7
             },
             "end": {
-              "line": 5,
+              "line": 10,
               "column": 12
             }
           }
@@ -282,31 +302,31 @@
         "value": "./views",
         "raw": "'./views'",
         "range": [
-          121,
-          130
+          255,
+          264
         ],
         "loc": {
           "start": {
-            "line": 5,
+            "line": 10,
             "column": 18
           },
           "end": {
-            "line": 5,
+            "line": 10,
             "column": 27
           }
         }
       },
       "range": [
-        103,
-        131
+        237,
+        265
       ],
       "loc": {
         "start": {
-          "line": 5,
+          "line": 10,
           "column": 0
         },
         "end": {
-          "line": 5,
+          "line": 10,
           "column": 28
         }
       }
@@ -320,31 +340,31 @@
             "type": "Identifier",
             "name": "cycle",
             "range": [
-              140,
-              145
+              274,
+              279
             ],
             "loc": {
               "start": {
-                "line": 7,
+                "line": 12,
                 "column": 7
               },
               "end": {
-                "line": 7,
+                "line": 12,
                 "column": 12
               }
             }
           },
           "range": [
-            140,
-            145
+            274,
+            279
           ],
           "loc": {
             "start": {
-              "line": 7,
+              "line": 12,
               "column": 7
             },
             "end": {
-              "line": 7,
+              "line": 12,
               "column": 12
             }
           }
@@ -355,31 +375,31 @@
         "value": "./utils/cycle",
         "raw": "'./utils/cycle'",
         "range": [
-          151,
-          166
+          285,
+          300
         ],
         "loc": {
           "start": {
-            "line": 7,
+            "line": 12,
             "column": 18
           },
           "end": {
-            "line": 7,
+            "line": 12,
             "column": 33
           }
         }
       },
       "range": [
-        133,
-        167
+        267,
+        301
       ],
       "loc": {
         "start": {
-          "line": 7,
+          "line": 12,
           "column": 0
         },
         "end": {
-          "line": 7,
+          "line": 12,
           "column": 34
         }
       },
@@ -388,16 +408,16 @@
           "type": "Block",
           "value": "*\n * @see http://dekujs.github.io/deku/docs/basics/components.html#model\n * @typedef {Object} model\n * @property {Map<string, any>} model.props\n * @property {string} model.path - unique path to the component\n * @property {Context} model.context\n * @property {Array<vnode>} model.children\n ",
           "range": [
-            169,
-            462
+            303,
+            596
           ],
           "loc": {
             "start": {
-              "line": 9,
+              "line": 14,
               "column": 0
             },
             "end": {
-              "line": 16,
+              "line": 21,
               "column": 3
             }
           }
@@ -406,16 +426,16 @@
           "type": "Block",
           "value": "*\n * @see http://dekujs.github.io/deku/docs/basics/components.html\n * @typedef {Object} Component\n * @property {function(model: model): vnode} Component.render\n * @property {function(model: model)} Component.onCreate\n * @property {function(model: model)} Component.onUpdate\n * @property {function(model: model)} Component.onRemove\n ",
           "range": [
-            464,
-            800
+            598,
+            934
           ],
           "loc": {
             "start": {
-              "line": 18,
+              "line": 23,
               "column": 0
             },
             "end": {
-              "line": 25,
+              "line": 30,
               "column": 3
             }
           }
@@ -424,231 +444,21 @@
           "type": "Block",
           "value": "*\n * @see http://dekujs.github.io/deku/docs/basics/elements.html\n * @typedef {Object} vnode\n * @property {string|Component} vnode.type\n * @property {Map<string, any>} vnode.attributes\n * @property {Array<vnode>} vnode.children\n ",
           "range": [
-            802,
-            1034
+            936,
+            1168
           ],
           "loc": {
             "start": {
-              "line": 27,
+              "line": 32,
               "column": 0
             },
             "end": {
-              "line": 33,
+              "line": 38,
               "column": 3
             }
           }
         }
       ]
-    },
-    {
-      "type": "Identifier",
-      "declarations": [
-        {
-          "type": "VariableDeclarator",
-          "id": {
-            "type": "Identifier",
-            "name": "helper",
-            "range": [
-              1042,
-              1048
-            ],
-            "loc": {
-              "start": {
-                "line": 35,
-                "column": 6
-              },
-              "end": {
-                "line": 35,
-                "column": 12
-              }
-            }
-          },
-          "init": {
-            "type": "ObjectExpression",
-            "properties": [
-              {
-                "type": "Property",
-                "key": {
-                  "type": "Identifier",
-                  "name": "cycle",
-                  "range": [
-                    1055,
-                    1060
-                  ],
-                  "loc": {
-                    "start": {
-                      "line": 36,
-                      "column": 2
-                    },
-                    "end": {
-                      "line": 36,
-                      "column": 7
-                    }
-                  }
-                },
-                "value": {
-                  "type": "Identifier",
-                  "name": "cycle",
-                  "range": [
-                    1055,
-                    1060
-                  ],
-                  "loc": {
-                    "start": {
-                      "line": 36,
-                      "column": 2
-                    },
-                    "end": {
-                      "line": 36,
-                      "column": 7
-                    }
-                  }
-                },
-                "kind": "init",
-                "method": false,
-                "shorthand": true,
-                "computed": false,
-                "range": [
-                  1055,
-                  1060
-                ],
-                "loc": {
-                  "start": {
-                    "line": 36,
-                    "column": 2
-                  },
-                  "end": {
-                    "line": 36,
-                    "column": 7
-                  }
-                }
-              }
-            ],
-            "range": [
-              1051,
-              1062
-            ],
-            "loc": {
-              "start": {
-                "line": 35,
-                "column": 15
-              },
-              "end": {
-                "line": 37,
-                "column": 1
-              }
-            }
-          },
-          "range": [
-            1042,
-            1062
-          ],
-          "loc": {
-            "start": {
-              "line": 35,
-              "column": 6
-            },
-            "end": {
-              "line": 37,
-              "column": 1
-            }
-          }
-        }
-      ],
-      "kind": "const",
-      "range": [
-        1036,
-        1063
-      ],
-      "loc": {
-        "start": {
-          "line": 35,
-          "column": 0
-        },
-        "end": {
-          "line": 37,
-          "column": 2
-        }
-      },
-      "leadingComments": [],
-      "trailingComments": [],
-      "name": "_"
-    },
-    {
-      "type": "Identifier",
-      "declarations": [
-        {
-          "type": "VariableDeclarator",
-          "id": {
-            "type": "Identifier",
-            "name": "h",
-            "range": [
-              1185,
-              1186
-            ],
-            "loc": {
-              "start": {
-                "line": 45,
-                "column": 6
-              },
-              "end": {
-                "line": 45,
-                "column": 7
-              }
-            }
-          },
-          "init": {
-            "type": "Identifier",
-            "name": "element",
-            "range": [
-              1189,
-              1196
-            ],
-            "loc": {
-              "start": {
-                "line": 45,
-                "column": 10
-              },
-              "end": {
-                "line": 45,
-                "column": 17
-              }
-            }
-          },
-          "range": [
-            1185,
-            1196
-          ],
-          "loc": {
-            "start": {
-              "line": 45,
-              "column": 6
-            },
-            "end": {
-              "line": 45,
-              "column": 17
-            }
-          }
-        }
-      ],
-      "kind": "const",
-      "range": [
-        1179,
-        1197
-      ],
-      "loc": {
-        "start": {
-          "line": 45,
-          "column": 0
-        },
-        "end": {
-          "line": 45,
-          "column": 18
-        }
-      },
-      "leadingComments": [],
-      "name": "_",
-      "trailingComments": []
     },
     {
       "type": "ExportNamedDeclaration",
@@ -660,16 +470,16 @@
             "type": "Identifier",
             "name": "scopes",
             "range": [
-              1210,
-              1216
+              1182,
+              1188
             ],
             "loc": {
               "start": {
-                "line": 48,
+                "line": 42,
                 "column": 2
               },
               "end": {
-                "line": 48,
+                "line": 42,
                 "column": 8
               }
             }
@@ -678,31 +488,31 @@
             "type": "Identifier",
             "name": "scopes",
             "range": [
-              1210,
-              1216
+              1182,
+              1188
             ],
             "loc": {
               "start": {
-                "line": 48,
+                "line": 42,
                 "column": 2
               },
               "end": {
-                "line": 48,
+                "line": 42,
                 "column": 8
               }
             }
           },
           "range": [
-            1210,
-            1216
+            1182,
+            1188
           ],
           "loc": {
             "start": {
-              "line": 48,
+              "line": 42,
               "column": 2
             },
             "end": {
-              "line": 48,
+              "line": 42,
               "column": 8
             }
           }
@@ -713,16 +523,16 @@
             "type": "Identifier",
             "name": "views",
             "range": [
-              1220,
-              1225
+              1192,
+              1197
             ],
             "loc": {
               "start": {
-                "line": 49,
+                "line": 43,
                 "column": 2
               },
               "end": {
-                "line": 49,
+                "line": 43,
                 "column": 7
               }
             }
@@ -731,31 +541,31 @@
             "type": "Identifier",
             "name": "views",
             "range": [
-              1220,
-              1225
+              1192,
+              1197
             ],
             "loc": {
               "start": {
-                "line": 49,
+                "line": 43,
                 "column": 2
               },
               "end": {
-                "line": 49,
+                "line": 43,
                 "column": 7
               }
             }
           },
           "range": [
-            1220,
-            1225
+            1192,
+            1197
           ],
           "loc": {
             "start": {
-              "line": 49,
+              "line": 43,
               "column": 2
             },
             "end": {
-              "line": 49,
+              "line": 43,
               "column": 7
             }
           }
@@ -766,16 +576,16 @@
             "type": "Identifier",
             "name": "decorators",
             "range": [
-              1229,
-              1239
+              1201,
+              1211
             ],
             "loc": {
               "start": {
-                "line": 50,
+                "line": 44,
                 "column": 2
               },
               "end": {
-                "line": 50,
+                "line": 44,
                 "column": 12
               }
             }
@@ -784,31 +594,31 @@
             "type": "Identifier",
             "name": "decorators",
             "range": [
-              1229,
-              1239
+              1201,
+              1211
             ],
             "loc": {
               "start": {
-                "line": 50,
+                "line": 44,
                 "column": 2
               },
               "end": {
-                "line": 50,
+                "line": 44,
                 "column": 12
               }
             }
           },
           "range": [
-            1229,
-            1239
+            1201,
+            1211
           ],
           "loc": {
             "start": {
-              "line": 50,
+              "line": 44,
               "column": 2
             },
             "end": {
-              "line": 50,
+              "line": 44,
               "column": 12
             }
           }
@@ -817,52 +627,52 @@
           "type": "ExportSpecifier",
           "exported": {
             "type": "Identifier",
-            "name": "helper",
+            "name": "cycle",
             "range": [
-              1243,
-              1249
+              1215,
+              1220
             ],
             "loc": {
               "start": {
-                "line": 51,
+                "line": 45,
                 "column": 2
               },
               "end": {
-                "line": 51,
-                "column": 8
+                "line": 45,
+                "column": 7
               }
             }
           },
           "local": {
             "type": "Identifier",
-            "name": "helper",
+            "name": "cycle",
             "range": [
-              1243,
-              1249
+              1215,
+              1220
             ],
             "loc": {
               "start": {
-                "line": 51,
+                "line": 45,
                 "column": 2
               },
               "end": {
-                "line": 51,
-                "column": 8
+                "line": 45,
+                "column": 7
               }
             }
           },
           "range": [
-            1243,
-            1249
+            1215,
+            1220
           ],
           "loc": {
             "start": {
-              "line": 51,
+              "line": 45,
               "column": 2
             },
             "end": {
-              "line": 51,
-              "column": 8
+              "line": 45,
+              "column": 7
             }
           }
         },
@@ -870,444 +680,177 @@
           "type": "ExportSpecifier",
           "exported": {
             "type": "Identifier",
-            "name": "h",
+            "name": "element",
             "range": [
-              1253,
-              1254
+              1224,
+              1231
             ],
             "loc": {
               "start": {
-                "line": 52,
+                "line": 46,
                 "column": 2
               },
               "end": {
-                "line": 52,
-                "column": 3
+                "line": 46,
+                "column": 9
               }
             }
           },
           "local": {
             "type": "Identifier",
-            "name": "h",
+            "name": "element",
             "range": [
-              1253,
-              1254
+              1224,
+              1231
             ],
             "loc": {
               "start": {
-                "line": 52,
+                "line": 46,
                 "column": 2
               },
               "end": {
-                "line": 52,
-                "column": 3
+                "line": 46,
+                "column": 9
               }
             }
           },
           "range": [
-            1253,
-            1254
+            1224,
+            1231
           ],
           "loc": {
             "start": {
-              "line": 52,
+              "line": 46,
               "column": 2
             },
             "end": {
-              "line": 52,
+              "line": 46,
+              "column": 9
+            }
+          }
+        }
+      ],
+      "source": null,
+      "range": [
+        1171,
+        1234
+      ],
+      "loc": {
+        "start": {
+          "line": 41,
+          "column": 0
+        },
+        "end": {
+          "line": 47,
+          "column": 2
+        }
+      },
+      "leadingComments": [
+        {
+          "type": "Block",
+          "value": "*\n * @see http://dekujs.github.io/deku/docs/basics/components.html#model\n * @typedef {Object} model\n * @property {Map<string, any>} model.props\n * @property {string} model.path - unique path to the component\n * @property {Context} model.context\n * @property {Array<vnode>} model.children\n ",
+          "range": [
+            303,
+            596
+          ],
+          "loc": {
+            "start": {
+              "line": 14,
+              "column": 0
+            },
+            "end": {
+              "line": 21,
+              "column": 3
+            }
+          }
+        },
+        {
+          "type": "Block",
+          "value": "*\n * @see http://dekujs.github.io/deku/docs/basics/components.html\n * @typedef {Object} Component\n * @property {function(model: model): vnode} Component.render\n * @property {function(model: model)} Component.onCreate\n * @property {function(model: model)} Component.onUpdate\n * @property {function(model: model)} Component.onRemove\n ",
+          "range": [
+            598,
+            934
+          ],
+          "loc": {
+            "start": {
+              "line": 23,
+              "column": 0
+            },
+            "end": {
+              "line": 30,
+              "column": 3
+            }
+          }
+        },
+        {
+          "type": "Block",
+          "value": "*\n * @see http://dekujs.github.io/deku/docs/basics/elements.html\n * @typedef {Object} vnode\n * @property {string|Component} vnode.type\n * @property {Map<string, any>} vnode.attributes\n * @property {Array<vnode>} vnode.children\n ",
+          "range": [
+            936,
+            1168
+          ],
+          "loc": {
+            "start": {
+              "line": 32,
+              "column": 0
+            },
+            "end": {
+              "line": 38,
               "column": 3
             }
           }
         }
-      ],
-      "source": null,
-      "range": [
-        1199,
-        1257
-      ],
-      "loc": {
-        "start": {
-          "line": 47,
-          "column": 0
-        },
-        "end": {
-          "line": 53,
-          "column": 2
-        }
-      }
-    },
-    {
-      "type": "ExportNamedDeclaration",
-      "declaration": {
-        "type": "VariableDeclaration",
-        "declarations": [
-          {
-            "type": "VariableDeclarator",
-            "id": {
-              "type": "Identifier",
-              "name": "helper",
-              "range": [
-                1042,
-                1048
-              ],
-              "loc": {
-                "start": {
-                  "line": 35,
-                  "column": 6
-                },
-                "end": {
-                  "line": 35,
-                  "column": 12
-                }
-              }
-            },
-            "init": {
-              "type": "ObjectExpression",
-              "properties": [
-                {
-                  "type": "Property",
-                  "key": {
-                    "type": "Identifier",
-                    "name": "cycle",
-                    "range": [
-                      1055,
-                      1060
-                    ],
-                    "loc": {
-                      "start": {
-                        "line": 36,
-                        "column": 2
-                      },
-                      "end": {
-                        "line": 36,
-                        "column": 7
-                      }
-                    }
-                  },
-                  "value": {
-                    "type": "Identifier",
-                    "name": "cycle",
-                    "range": [
-                      1055,
-                      1060
-                    ],
-                    "loc": {
-                      "start": {
-                        "line": 36,
-                        "column": 2
-                      },
-                      "end": {
-                        "line": 36,
-                        "column": 7
-                      }
-                    }
-                  },
-                  "kind": "init",
-                  "method": false,
-                  "shorthand": true,
-                  "computed": false,
-                  "range": [
-                    1055,
-                    1060
-                  ],
-                  "loc": {
-                    "start": {
-                      "line": 36,
-                      "column": 2
-                    },
-                    "end": {
-                      "line": 36,
-                      "column": 7
-                    }
-                  }
-                }
-              ],
-              "range": [
-                1051,
-                1062
-              ],
-              "loc": {
-                "start": {
-                  "line": 35,
-                  "column": 15
-                },
-                "end": {
-                  "line": 37,
-                  "column": 1
-                }
-              }
-            },
-            "range": [
-              1042,
-              1062
-            ],
-            "loc": {
-              "start": {
-                "line": 35,
-                "column": 6
-              },
-              "end": {
-                "line": 37,
-                "column": 1
-              }
-            }
-          }
-        ],
-        "kind": "const",
-        "range": [
-          1036,
-          1063
-        ],
-        "loc": {
-          "start": {
-            "line": 35,
-            "column": 0
-          },
-          "end": {
-            "line": 37,
-            "column": 2
-          }
-        },
-        "leadingComments": [
-          {
-            "type": "Block",
-            "value": "*\n * @see http://dekujs.github.io/deku/docs/basics/components.html#model\n * @typedef {Object} model\n * @property {Map<string, any>} model.props\n * @property {string} model.path - unique path to the component\n * @property {Context} model.context\n * @property {Array<vnode>} model.children\n ",
-            "range": [
-              169,
-              462
-            ],
-            "loc": {
-              "start": {
-                "line": 9,
-                "column": 0
-              },
-              "end": {
-                "line": 16,
-                "column": 3
-              }
-            }
-          },
-          {
-            "type": "Block",
-            "value": "*\n * @see http://dekujs.github.io/deku/docs/basics/components.html\n * @typedef {Object} Component\n * @property {function(model: model): vnode} Component.render\n * @property {function(model: model)} Component.onCreate\n * @property {function(model: model)} Component.onUpdate\n * @property {function(model: model)} Component.onRemove\n ",
-            "range": [
-              464,
-              800
-            ],
-            "loc": {
-              "start": {
-                "line": 18,
-                "column": 0
-              },
-              "end": {
-                "line": 25,
-                "column": 3
-              }
-            }
-          },
-          {
-            "type": "Block",
-            "value": "*\n * @see http://dekujs.github.io/deku/docs/basics/elements.html\n * @typedef {Object} vnode\n * @property {string|Component} vnode.type\n * @property {Map<string, any>} vnode.attributes\n * @property {Array<vnode>} vnode.children\n ",
-            "range": [
-              802,
-              1034
-            ],
-            "loc": {
-              "start": {
-                "line": 27,
-                "column": 0
-              },
-              "end": {
-                "line": 33,
-                "column": 3
-              }
-            }
-          }
-        ],
-        "trailingComments": [
-          {
-            "type": "Block",
-            "value": "*\n * jsx compatible element function.\n * @external {h} http://dekujs.github.io/deku/docs/api/element.html\n ",
-            "range": [
-              1066,
-              1177
-            ],
-            "loc": {
-              "start": {
-                "line": 40,
-                "column": 0
-              },
-              "end": {
-                "line": 43,
-                "column": 3
-              }
-            }
-          }
-        ]
-      },
-      "specifiers": null,
-      "source": null,
-      "range": [
-        1199,
-        1257
-      ],
-      "loc": {
-        "start": {
-          "line": 47,
-          "column": 0
-        },
-        "end": {
-          "line": 53,
-          "column": 2
-        }
-      },
-      "leadingComments": null
-    },
-    {
-      "type": "ExportNamedDeclaration",
-      "declaration": {
-        "type": "VariableDeclaration",
-        "declarations": [
-          {
-            "type": "VariableDeclarator",
-            "id": {
-              "type": "Identifier",
-              "name": "h",
-              "range": [
-                1185,
-                1186
-              ],
-              "loc": {
-                "start": {
-                  "line": 45,
-                  "column": 6
-                },
-                "end": {
-                  "line": 45,
-                  "column": 7
-                }
-              }
-            },
-            "init": {
-              "type": "Identifier",
-              "name": "element",
-              "range": [
-                1189,
-                1196
-              ],
-              "loc": {
-                "start": {
-                  "line": 45,
-                  "column": 10
-                },
-                "end": {
-                  "line": 45,
-                  "column": 17
-                }
-              }
-            },
-            "range": [
-              1185,
-              1196
-            ],
-            "loc": {
-              "start": {
-                "line": 45,
-                "column": 6
-              },
-              "end": {
-                "line": 45,
-                "column": 17
-              }
-            }
-          }
-        ],
-        "kind": "const",
-        "range": [
-          1179,
-          1197
-        ],
-        "loc": {
-          "start": {
-            "line": 45,
-            "column": 0
-          },
-          "end": {
-            "line": 45,
-            "column": 18
-          }
-        },
-        "leadingComments": [
-          {
-            "type": "Block",
-            "value": "*\n * jsx compatible element function.\n * @external {h} http://dekujs.github.io/deku/docs/api/element.html\n ",
-            "range": [
-              1066,
-              1177
-            ],
-            "loc": {
-              "start": {
-                "line": 40,
-                "column": 0
-              },
-              "end": {
-                "line": 43,
-                "column": 3
-              }
-            }
-          }
-        ],
-        "trailingComments": []
-      },
-      "specifiers": null,
-      "source": null,
-      "range": [
-        1199,
-        1257
-      ],
-      "loc": {
-        "start": {
-          "line": 47,
-          "column": 0
-        },
-        "end": {
-          "line": 53,
-          "column": 2
-        }
-      },
-      "leadingComments": null
+      ]
     }
   ],
   "sourceType": "module",
   "range": [
-    0,
-    1257
+    134,
+    1234
   ],
   "loc": {
     "start": {
-      "line": 1,
+      "line": 6,
       "column": 0
     },
     "end": {
-      "line": 53,
+      "line": 47,
       "column": 2
     }
   },
   "comments": [
     {
       "type": "Block",
-      "value": "*\n * @see http://dekujs.github.io/deku/docs/basics/components.html#model\n * @typedef {Object} model\n * @property {Map<string, any>} model.props\n * @property {string} model.path - unique path to the component\n * @property {Context} model.context\n * @property {Array<vnode>} model.children\n ",
+      "value": "*\n * jsx compatible element function.\n * @typedef {function} element\n * @see http://dekujs.github.io/deku/docs/api/element.html\n ",
       "range": [
-        169,
-        462
+        0,
+        133
       ],
       "loc": {
         "start": {
-          "line": 9,
+          "line": 1,
           "column": 0
         },
         "end": {
-          "line": 16,
+          "line": 5,
+          "column": 3
+        }
+      }
+    },
+    {
+      "type": "Block",
+      "value": "*\n * @see http://dekujs.github.io/deku/docs/basics/components.html#model\n * @typedef {Object} model\n * @property {Map<string, any>} model.props\n * @property {string} model.path - unique path to the component\n * @property {Context} model.context\n * @property {Array<vnode>} model.children\n ",
+      "range": [
+        303,
+        596
+      ],
+      "loc": {
+        "start": {
+          "line": 14,
+          "column": 0
+        },
+        "end": {
+          "line": 21,
           "column": 3
         }
       }
@@ -1316,16 +859,16 @@
       "type": "Block",
       "value": "*\n * @see http://dekujs.github.io/deku/docs/basics/components.html\n * @typedef {Object} Component\n * @property {function(model: model): vnode} Component.render\n * @property {function(model: model)} Component.onCreate\n * @property {function(model: model)} Component.onUpdate\n * @property {function(model: model)} Component.onRemove\n ",
       "range": [
-        464,
-        800
+        598,
+        934
       ],
       "loc": {
         "start": {
-          "line": 18,
+          "line": 23,
           "column": 0
         },
         "end": {
-          "line": 25,
+          "line": 30,
           "column": 3
         }
       }
@@ -1334,34 +877,16 @@
       "type": "Block",
       "value": "*\n * @see http://dekujs.github.io/deku/docs/basics/elements.html\n * @typedef {Object} vnode\n * @property {string|Component} vnode.type\n * @property {Map<string, any>} vnode.attributes\n * @property {Array<vnode>} vnode.children\n ",
       "range": [
-        802,
-        1034
+        936,
+        1168
       ],
       "loc": {
         "start": {
-          "line": 27,
+          "line": 32,
           "column": 0
         },
         "end": {
-          "line": 33,
-          "column": 3
-        }
-      }
-    },
-    {
-      "type": "Block",
-      "value": "*\n * jsx compatible element function.\n * @external {h} http://dekujs.github.io/deku/docs/api/element.html\n ",
-      "range": [
-        1066,
-        1177
-      ],
-      "loc": {
-        "start": {
-          "line": 40,
-          "column": 0
-        },
-        "end": {
-          "line": 43,
+          "line": 38,
           "column": 3
         }
       }

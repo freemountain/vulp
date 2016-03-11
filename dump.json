@@ -2494,205 +2494,33 @@
     "longname": "src/index.js",
     "access": null,
     "description": null,
-    "lineNumber": 1,
-    "content": "import { element } from 'deku';\n\nimport decorators from './decorators';\nimport scopes from './scopes';\nimport views from './views';\n\nimport cycle from './utils/cycle';\n\n/**\n * @see http://dekujs.github.io/deku/docs/basics/components.html#model\n * @typedef {Object} model\n * @property {Map<string, any>} model.props\n * @property {string} model.path - unique path to the component\n * @property {Context} model.context\n * @property {Array<vnode>} model.children\n */\n\n/**\n * @see http://dekujs.github.io/deku/docs/basics/components.html\n * @typedef {Object} Component\n * @property {function(model: model): vnode} Component.render\n * @property {function(model: model)} Component.onCreate\n * @property {function(model: model)} Component.onUpdate\n * @property {function(model: model)} Component.onRemove\n */\n\n/**\n * @see http://dekujs.github.io/deku/docs/basics/elements.html\n * @typedef {Object} vnode\n * @property {string|Component} vnode.type\n * @property {Map<string, any>} vnode.attributes\n * @property {Array<vnode>} vnode.children\n */\n\nconst helper = {\n  cycle\n};\n\n\n/**\n * jsx compatible element function.\n * @external {h} http://dekujs.github.io/deku/docs/api/element.html\n */\n\nconst h = element;\n\nexport {\n  scopes,\n  views,\n  decorators,\n  helper,\n  h\n};\n"
+    "lineNumber": 6,
+    "content": "/**\n * jsx compatible element function.\n * @typedef {function} element\n * @see http://dekujs.github.io/deku/docs/api/element.html\n */\nimport { element } from 'deku';\n\nimport decorators from './decorators';\nimport scopes from './scopes';\nimport views from './views';\n\nimport cycle from './utils/cycle';\n\n/**\n * @see http://dekujs.github.io/deku/docs/basics/components.html#model\n * @typedef {Object} model\n * @property {Map<string, any>} model.props\n * @property {string} model.path - unique path to the component\n * @property {Context} model.context\n * @property {Array<vnode>} model.children\n */\n\n/**\n * @see http://dekujs.github.io/deku/docs/basics/components.html\n * @typedef {Object} Component\n * @property {function(model: model): vnode} Component.render\n * @property {function(model: model)} Component.onCreate\n * @property {function(model: model)} Component.onUpdate\n * @property {function(model: model)} Component.onRemove\n */\n\n/**\n * @see http://dekujs.github.io/deku/docs/basics/elements.html\n * @typedef {Object} vnode\n * @property {string|Component} vnode.type\n * @property {Map<string, any>} vnode.attributes\n * @property {Array<vnode>} vnode.children\n */\n\n\nexport {\n  scopes,\n  views,\n  decorators,\n  cycle,\n  element\n};\n"
   },
   {
     "__docId__": 101,
     "kind": "typedef",
     "static": true,
     "variation": null,
-    "name": "model",
+    "name": "element",
     "memberof": "src/index.js",
-    "longname": "src/index.js~model",
+    "longname": "src/index.js~element",
     "access": null,
-    "description": "",
+    "description": "jsx compatible element function.",
     "see": [
-      "http://dekujs.github.io/deku/docs/basics/components.html#model"
+      "http://dekujs.github.io/deku/docs/api/element.html"
     ],
-    "properties": [
-      {
-        "nullable": null,
-        "types": [
-          "Map<string, any>"
-        ],
-        "spread": false,
-        "optional": false,
-        "name": "model.props",
-        "description": ""
-      },
-      {
-        "nullable": null,
-        "types": [
-          "string"
-        ],
-        "spread": false,
-        "optional": false,
-        "name": "model.path",
-        "description": "unique path to the component"
-      },
-      {
-        "nullable": null,
-        "types": [
-          "Context"
-        ],
-        "spread": false,
-        "optional": false,
-        "name": "model.context",
-        "description": ""
-      },
-      {
-        "nullable": null,
-        "types": [
-          "Array<vnode>"
-        ],
-        "spread": false,
-        "optional": false,
-        "name": "model.children",
-        "description": ""
-      }
-    ],
+    "lineNumber": 6,
     "type": {
       "types": [
-        "Object"
+        "function"
       ],
       "optional": false,
-      "name": "model"
+      "name": "element"
     }
   },
   {
     "__docId__": 102,
-    "kind": "typedef",
-    "static": true,
-    "variation": null,
-    "name": "Component",
-    "memberof": "src/index.js",
-    "longname": "src/index.js~Component",
-    "access": null,
-    "description": "",
-    "see": [
-      "http://dekujs.github.io/deku/docs/basics/components.html"
-    ],
-    "properties": [
-      {
-        "nullable": null,
-        "types": [
-          "function(model: model): vnode"
-        ],
-        "spread": false,
-        "optional": false,
-        "name": "Component.render",
-        "description": ""
-      },
-      {
-        "nullable": null,
-        "types": [
-          "function(model: model)"
-        ],
-        "spread": false,
-        "optional": false,
-        "name": "Component.onCreate",
-        "description": ""
-      },
-      {
-        "nullable": null,
-        "types": [
-          "function(model: model)"
-        ],
-        "spread": false,
-        "optional": false,
-        "name": "Component.onUpdate",
-        "description": ""
-      },
-      {
-        "nullable": null,
-        "types": [
-          "function(model: model)"
-        ],
-        "spread": false,
-        "optional": false,
-        "name": "Component.onRemove",
-        "description": ""
-      }
-    ],
-    "type": {
-      "types": [
-        "Object"
-      ],
-      "optional": false,
-      "name": "Component"
-    }
-  },
-  {
-    "__docId__": 103,
-    "kind": "typedef",
-    "static": true,
-    "variation": null,
-    "name": "vnode",
-    "memberof": "src/index.js",
-    "longname": "src/index.js~vnode",
-    "access": null,
-    "description": "",
-    "see": [
-      "http://dekujs.github.io/deku/docs/basics/elements.html"
-    ],
-    "lineNumber": 35,
-    "properties": [
-      {
-        "nullable": null,
-        "types": [
-          "string",
-          "Component"
-        ],
-        "spread": false,
-        "optional": false,
-        "name": "vnode.type",
-        "description": ""
-      },
-      {
-        "nullable": null,
-        "types": [
-          "Map<string, any>"
-        ],
-        "spread": false,
-        "optional": false,
-        "name": "vnode.attributes",
-        "description": ""
-      },
-      {
-        "nullable": null,
-        "types": [
-          "Array<vnode>"
-        ],
-        "spread": false,
-        "optional": false,
-        "name": "vnode.children",
-        "description": ""
-      }
-    ],
-    "type": {
-      "types": [
-        "Object"
-      ],
-      "optional": false,
-      "name": "vnode"
-    }
-  },
-  {
-    "__docId__": 104,
-    "kind": "external",
-    "static": true,
-    "variation": null,
-    "name": "h",
-    "externalLink": "http://dekujs.github.io/deku/docs/api/element.html",
-    "memberof": "src/index.js",
-    "longname": "src/index.js~h",
-    "access": null,
-    "description": "jsx compatible element function.",
-    "lineNumber": 45
-  },
-  {
-    "__docId__": 105,
     "kind": "file",
     "static": true,
     "variation": null,
@@ -2705,7 +2533,7 @@
     "content": "import Immutable from 'immutable';\nimport t from 'tcomb';\nimport flyd from 'flyd';\n\nimport zipObj from '@f/zip-obj';\nimport curry from './../utils/curry';\n\nimport Context from './../Context';\nimport JSONPointer from './../JSONPointer';\n\nconst slicePath     = patch => Object.assign({}, patch, { path: patch.path.slice(1) });\nconst stringifyPath = patch => Object.assign({}, patch, { path: patch.path.toRFC() });\nconst parsePath     = patch => Object.assign({}, patch, { path: JSONPointer.ofString(patch.path) });\n\nconst filterPatchSet = curry((name, patchSet) => patchSet\n  .map(parsePath)\n  .filter(patch => patch.path.first() === name)\n  .map(slicePath)\n  .map(stringifyPath));\n\nfunction readCtx(names, stores) {\n  const values = stores.map(store => store());\n  const stateMap = zipObj(names, values.map(ctx => ctx.state));\n  const typeMap = zipObj(names, values.map(ctx => ctx.type));\n\n  return new Context({\n    state: Immutable.Map(stateMap),\n    type:  t.struct(typeMap)\n  });\n}\n\nfunction createCombine(keys) {\n  return function(...args) {\n    return readCtx(keys, args.slice(0, 2));\n  };\n}\n\n\n/**\n * combiner scope factory\n * represents map of (sub)scopes.\n * @param {Map<string, ScopeFactory'>} scopeMap - the routing map\n * @param {Stream} input - input stream\n * @return {Scope}\n */\n\nexport default function combiner(scopeMap, input) {\n  const names = Object.keys(scopeMap);\n  const factories = names.map(name => scopeMap[ name ]);\n  const inputs = names.map(name => flyd.map(function(rawPatchSet) {\n    const patchSet = filterPatchSet(name, rawPatchSet);\n\n    return patchSet;\n  }, input));\n  const stores = factories.map((f, i) => f(inputs[ i ]));\n  const combineStreams = createCombine(names);\n\n  return flyd.combine(combineStreams, stores);\n}\n"
   },
   {
-    "__docId__": 106,
+    "__docId__": 103,
     "kind": "variable",
     "static": true,
     "variation": null,
@@ -2726,7 +2554,7 @@
     }
   },
   {
-    "__docId__": 107,
+    "__docId__": 104,
     "kind": "variable",
     "static": true,
     "variation": null,
@@ -2747,7 +2575,7 @@
     }
   },
   {
-    "__docId__": 108,
+    "__docId__": 105,
     "kind": "variable",
     "static": true,
     "variation": null,
@@ -2768,7 +2596,7 @@
     }
   },
   {
-    "__docId__": 109,
+    "__docId__": 106,
     "kind": "variable",
     "static": true,
     "variation": null,
@@ -2789,7 +2617,7 @@
     }
   },
   {
-    "__docId__": 110,
+    "__docId__": 107,
     "kind": "function",
     "static": true,
     "variation": null,
@@ -2825,7 +2653,7 @@
     "generator": false
   },
   {
-    "__docId__": 111,
+    "__docId__": 108,
     "kind": "function",
     "static": true,
     "variation": null,
@@ -2855,7 +2683,7 @@
     "generator": false
   },
   {
-    "__docId__": 112,
+    "__docId__": 109,
     "kind": "function",
     "static": true,
     "variation": null,
@@ -2901,7 +2729,7 @@
     "generator": false
   },
   {
-    "__docId__": 113,
+    "__docId__": 110,
     "kind": "file",
     "static": true,
     "variation": null,
@@ -2914,7 +2742,7 @@
     "content": "import flyd from 'flyd';\nimport filter from 'flyd/module/filter';\nimport Context from './../Context';\nimport value from './value';\n\nconst getFragment = () => location.hash.slice(1);\n\nfunction fragmentValue(input) {\n  const output = flyd.stream(getFragment());\n\n  window.addEventListener('hashchange', function() {\n    const current = getFragment();\n\n    if(output() === current) return;\n    output(current);\n  });\n\n  flyd.on(function(fragmentStr) {\n    if(output() === fragmentStr) return;\n    location.hash = '#'.concat(fragmentStr);\n    output(fragmentStr);\n  }, input);\n\n  return output;\n}\n\nconst createCtx = val => Context.ofState({ value: val });\n\n\n/**\n * fragment scope factory\n * represents value of fragment identifier.\n * Json structure:\n * \t{\n * \t\tvalue: String\n *  }\n * @param {Object} opts - not used\n * @param {Scope} input - input stream\n * @return {Scope}\n */\n\nfunction fragment(opts, input) {\n  const filteredInput = filter(patchSet => patchSet.length !== 0, input);\n  const valueStream = value({ value: getFragment() }, filteredInput);\n  const fragmentInput = flyd.map(ctx => ctx.get('/value'), valueStream);\n  const fragmentStream = fragmentValue(fragmentInput);\n  const output = flyd.map(fragmentStr => createCtx(fragmentStr), fragmentStream);\n\n  return output;\n}\n\nexport default fragment;\n"
   },
   {
-    "__docId__": 114,
+    "__docId__": 111,
     "kind": "variable",
     "static": true,
     "variation": null,
@@ -2935,7 +2763,7 @@
     }
   },
   {
-    "__docId__": 115,
+    "__docId__": 112,
     "kind": "function",
     "static": true,
     "variation": null,
@@ -2965,7 +2793,7 @@
     "generator": false
   },
   {
-    "__docId__": 116,
+    "__docId__": 113,
     "kind": "variable",
     "static": true,
     "variation": null,
@@ -2986,7 +2814,7 @@
     }
   },
   {
-    "__docId__": 117,
+    "__docId__": 114,
     "kind": "function",
     "static": true,
     "variation": null,
@@ -3032,7 +2860,7 @@
     "generator": false
   },
   {
-    "__docId__": 118,
+    "__docId__": 115,
     "kind": "file",
     "static": true,
     "variation": null,
@@ -3045,7 +2873,7 @@
     "content": "import _value from './value';\nimport _fragment from './fragment';\nimport _combiner from './combiner';\nimport flyd from 'flyd';\n\nconst wrapFactory = f => opts => input => f(opts, input);\n\nconst value = wrapFactory(_value);\nconst fragment = wrapFactory(_fragment);\nconst combiner = wrapFactory(_combiner);\n\nwindow.flyd  = flyd;\n\n\n/**\n * scope\n * - stream representation of json data that (may) change\n´* - flyd stream\n * @see https://github.com/paldepind/flyd#flydstream\n * @listens {PatchSet}\n * @emits {Context}\n * @typedef {function(patchAction: PatchSet) } Scope\n */\n\n/**\n * scope factory\n * - creates scope, who listen on input\n * - curried: opts -> input -> scope\n * @typedef {function(...opts: any) : BoundScopeFactory} ScopeFactory\n */\n\n /**\n  * bound scope factory\n  * @typedef {function(input: any) : Context} BoundScopeFactory\n  */\n\nexport default {\n  value,\n  fragment,\n  combiner\n};\n"
   },
   {
-    "__docId__": 119,
+    "__docId__": 116,
     "kind": "variable",
     "static": true,
     "variation": null,
@@ -3066,7 +2894,7 @@
     }
   },
   {
-    "__docId__": 120,
+    "__docId__": 117,
     "kind": "variable",
     "static": true,
     "variation": null,
@@ -3087,7 +2915,7 @@
     }
   },
   {
-    "__docId__": 121,
+    "__docId__": 118,
     "kind": "variable",
     "static": true,
     "variation": null,
@@ -3108,7 +2936,7 @@
     }
   },
   {
-    "__docId__": 122,
+    "__docId__": 119,
     "kind": "variable",
     "static": true,
     "variation": null,
@@ -3129,7 +2957,7 @@
     }
   },
   {
-    "__docId__": 123,
+    "__docId__": 120,
     "kind": "typedef",
     "static": true,
     "variation": null,
@@ -3166,7 +2994,7 @@
     }
   },
   {
-    "__docId__": 124,
+    "__docId__": 121,
     "kind": "typedef",
     "static": true,
     "variation": null,
@@ -3184,7 +3012,7 @@
     }
   },
   {
-    "__docId__": 125,
+    "__docId__": 122,
     "kind": "typedef",
     "static": true,
     "variation": null,
@@ -3203,7 +3031,7 @@
     }
   },
   {
-    "__docId__": 126,
+    "__docId__": 123,
     "kind": "file",
     "static": true,
     "variation": null,
@@ -3216,7 +3044,7 @@
     "content": "import flyd from 'flyd';\n\nimport Context from './../Context';\n\n/**\n * value scope factory\n * Scope will update and emit value on every patch action.\n * @param {Object} init - init value as plain object\n * @param {stream} input - input flyd stream\n * @return {Scope}\n */\nfunction value(init, input) {\n  let current = Context.ofState(init);\n  const output = flyd.stream(current);\n\n  flyd.on(function(patchSet) {\n    if(patchSet.length === 0) return;\n    current = current.update(patchSet);\n    output(current);\n  }, input);\n\n  return output;\n}\nexport default value;\n"
   },
   {
-    "__docId__": 127,
+    "__docId__": 124,
     "kind": "function",
     "static": true,
     "variation": null,
@@ -3262,7 +3090,7 @@
     "generator": false
   },
   {
-    "__docId__": 128,
+    "__docId__": 125,
     "kind": "file",
     "static": true,
     "variation": null,
@@ -3275,7 +3103,7 @@
     "content": "import t from 'tcomb';\nimport Immutable from 'immutable';\n\nexport const is = {\n  Irreducible: x => t.String.is(x) || t.Number.is(x) || t.Boolean.is(x) || t.Nil.is(x),\n  Object:      x => t.Object.is(x),\n  Array:       x => t.Array.is(x),\n  Map:         x => Immutable.Map.isMap(x),\n  List:        x => Immutable.List.isList(x)\n};\n\nexport function box(val) {\n  if(is.Irreducible(val)) return val;\n  if(is.Array(val)) return Immutable.List(val).map(e => box(e));\n  if(is.Object(val)) return Immutable.Map(val).map(e => box(e));\n\n  throw new Error('Value is Function...');\n}\n\nexport function unbox(state) {\n  if(is.Map(state) || is.List(state)) return state.map(e => unbox(e)).toJS();\n  return state;\n}\n\nexport function get(state, pointer, notFound = null) {\n  if(pointer.size() === 0) return state;\n\n  if(is.Irreducible(state)) return notFound;\n\n  const nextState = state.get(pointer.first(), notFound);\n  const nextPointer = pointer.slice(1);\n\n  return get(nextState, nextPointer, notFound);\n}\n"
   },
   {
-    "__docId__": 129,
+    "__docId__": 126,
     "kind": "variable",
     "static": true,
     "variation": null,
@@ -3296,7 +3124,7 @@
     }
   },
   {
-    "__docId__": 130,
+    "__docId__": 127,
     "kind": "function",
     "static": true,
     "variation": null,
@@ -3326,7 +3154,7 @@
     "generator": false
   },
   {
-    "__docId__": 131,
+    "__docId__": 128,
     "kind": "function",
     "static": true,
     "variation": null,
@@ -3356,7 +3184,7 @@
     "generator": false
   },
   {
-    "__docId__": 132,
+    "__docId__": 129,
     "kind": "function",
     "static": true,
     "variation": null,
@@ -3401,7 +3229,7 @@
     "generator": false
   },
   {
-    "__docId__": 133,
+    "__docId__": 130,
     "kind": "file",
     "static": true,
     "variation": null,
@@ -3414,7 +3242,7 @@
     "content": "import { expect } from 'chai';\n\nimport Context from './../Context';\n\ndescribe('Context', function() {\n  describe('#of', function() {\n    it('creates Context', function() {\n      const context = Context.ofState({\n        counter: 1,\n        label:   'huhu'\n      });\n\n      expect(context instanceof Context).to.equal(true);\n      expect(context.state.get('counter')).to.equal(1);\n      expect(context.state.get('label')).to.equal('huhu');\n    });\n  });\n\n  describe('#get', function() {\n    it('returns value', function() {\n      const root = Context.ofState({\n        foo: { bar: 1 },\n        baz: 'huhu'\n      });\n\n      expect(root.get('/baz')).to.equal('huhu');\n      expect(root.get('/foo/bar')).to.equal(1);\n    });\n  });\n\n  describe('#changed', function() {\n    it('empty', function() {\n      const a = Context.ofState();\n      const b = Context.ofState();\n      const c = Context.ofState({ i: 4 });\n\n\n      expect(a.changed(b)).to.equal(false);\n      expect(a.changed(c)).to.equal(true);\n    });\n\n    it('changed state', function() {\n      const a = Context.ofState({ i: 4 });\n      const b = Context.ofState({ i: 5 });\n\n      expect(a.changed(b)).to.equal(true);\n    });\n  });\n});\n"
   },
   {
-    "__docId__": 134,
+    "__docId__": 131,
     "kind": "file",
     "static": true,
     "variation": null,
@@ -3427,7 +3255,7 @@
     "content": "import { expect } from 'chai';\n\nimport Transform from './../Transform';\nimport JSONPointer from './../JSONPointer';\n\n// const createCheck = (T, value) => () => T(value);\n\ndescribe('Transform', function() {\n  describe('#create', function() {\n    it('creates Transform', function() {\n      const transform = Transform.ofTargets({ foo: '/bar' });\n\n      expect(transform instanceof Transform).to.equal(true);\n      expect(transform.isIdentity()).to.equal(false);\n    });\n\n    it('empty call creates identity', function() {\n      const transform = Transform.ofTargets();\n\n      expect(transform instanceof Transform).to.equal(true);\n      expect(transform.isIdentity()).to.equal(true);\n    });\n  });\n\n  describe('#sub', function() {\n    it('sub returns Transform', function() {\n      const rootTransform = Transform.ofTargets({\n        a: '/foo/aaa',\n        b: '/bar/bbb'\n      });\n\n      const subTransform = Transform.ofTargets({\n        foo: '/a',\n        bar: '/b/someVal'\n      });\n\n      const result = rootTransform.sub(subTransform);\n      const targets = result.toTargets();\n\n      expect(result instanceof Transform).to.equal(true);\n      expect(targets.foo).to.equal('/foo/aaa');\n      expect(targets.bar).to.equal('/bar/bbb/someVal');\n    });\n  });\n\n  describe('#equals', function() {\n    it('s', function() {\n      const map = {\n        foo: '/bar'\n      };\n      const a = Transform.ofTargets(map);\n      const b = Transform.ofTargets(map);\n      const c = Transform.ofTargets({\n        foo: '/someotherprop'\n      });\n\n      expect(a.equals(b)).to.equal(true);\n      expect(a.equals(c)).to.equal(false);\n    });\n  });\n\n  describe('#apply', function() {\n    it('applies transform on pointer', function() {\n      const transform = Transform.ofTargets({\n        foo: '/aaa/bbb',\n        bar: '/ccc'\n      });\n\n      const fooPointer = JSONPointer.ofString('/foo/xxx');\n      const barPointer = JSONPointer.ofString('/bar/yyy');\n\n      const fooTransformed = transform.apply(fooPointer).toRFC();\n      const barTransformed = transform.apply(barPointer).toRFC();\n\n      expect(fooTransformed).to.equal('/aaa/bbb/xxx');\n      expect(barTransformed).to.equal('/ccc/yyy');\n    });\n  });\n});\n"
   },
   {
-    "__docId__": 135,
+    "__docId__": 132,
     "kind": "file",
     "static": true,
     "variation": null,
@@ -3440,7 +3268,7 @@
     "content": "import { expect } from 'chai';\n\nimport { box, unbox, get } from './../state';\nimport JSONPointer from './../JSONPointer';\n\ndescribe('state', function() {\n  describe('box', function() {\n    it('boxes Objects', function() {\n      const value = { foo: { bar: 'baz' } };\n      const state = box(value);\n\n      expect(state.get('foo').get('bar')).to.equal('baz');\n    });\n\n    it('boxes Array', function() {\n      const value = [1, [10, 11]];\n      const state = box(value);\n\n      expect(state.get(0)).to.equal(1);\n      expect(state.get(1).get(0)).to.equal(10);\n    });\n  });\n\n  it('#unbox', function() {\n    const unboxed = {\n      dict: { foo: 1 },\n      list: [0, 1]\n    };\n    const state = box(unboxed);\n    const value = unbox(state);\n\n    expect(value.dict.foo).to.equal(1);\n    expect(value.list[ 0 ]).to.equal(0);\n  });\n\n\n  it('#get', function() {\n    const state = box({\n      dict: { foo: 1 },\n      list: [0, 1]\n    });\n    const pointerFoo = JSONPointer.ofString('/dict/foo');\n    const pointer = JSONPointer.ofString('/list/0');\n\n    expect(get(state, pointerFoo)).to.equal(1);\n    expect(get(state, pointer)).to.equal(0);\n  });\n});\n"
   },
   {
-    "__docId__": 136,
+    "__docId__": 133,
     "kind": "file",
     "static": true,
     "variation": null,
@@ -3453,7 +3281,7 @@
     "content": "import t from 'tcomb';\n\n/**\n * tcomb type\n * @external {Type} https://github.com/gcanti/tcomb/blob/master/docs/API.md\n */\n\nconst Type = t.irreducible('Type', t.isType);\n\n/**\n * 'booleanized' check function from tcomb\n * @type Function\n * @param  {Type} T - tcomb type\n * @param  {Any} x - value to check\n * @return {Boolean}\n */\n\nconst check = t.func([Type, t.Any], t.Bool).of(function(T, x) {\n  let result = null;\n\n  /* eslint space-after-keywords: 0 */\n  try {\n    T(x);\n    result = true;\n  } catch(e) {\n    result = false;\n  }\n  return result;\n});\n\nexport default check;\n"
   },
   {
-    "__docId__": 137,
+    "__docId__": 134,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -3466,7 +3294,7 @@
     "lineNumber": 8
   },
   {
-    "__docId__": 138,
+    "__docId__": 135,
     "kind": "variable",
     "static": true,
     "variation": null,
@@ -3519,7 +3347,7 @@
     }
   },
   {
-    "__docId__": 139,
+    "__docId__": 136,
     "kind": "file",
     "static": true,
     "variation": null,
@@ -3532,7 +3360,7 @@
     "content": "/**\n * creates a choke that throttle fuction calls\n *\n * The returned choke function will throttle calls with the same path argument\n * for delta milliseconds.\n *\n * @param  {Number} delta - the delta between calls [ms]\n * @return {function(path: String, f: Function)}\n */\n\nexport default function choke(delta) {\n  const cache = {};\n\n  function call(path, f) {\n    const lastTime = cache[ path ];\n    const currentTime = Date.now();\n\n    if(lastTime && currentTime - lastTime < delta) return;\n\n    cache[ path ] = Date.now();\n    f();\n  }\n\n  return call;\n}\n"
   },
   {
-    "__docId__": 140,
+    "__docId__": 137,
     "kind": "function",
     "static": true,
     "variation": null,
@@ -3568,7 +3396,7 @@
     "generator": false
   },
   {
-    "__docId__": 141,
+    "__docId__": 138,
     "kind": "file",
     "static": true,
     "variation": null,
@@ -3581,7 +3409,7 @@
     "content": "export default function(f, arity) {\n  const length = Number.isInteger(arity) ? arity : f.length;\n\n  function call(...args) {\n    if(args.length >= length) return f.apply(this, args);\n    return (...newArgs) => call(...args.concat(newArgs));\n  }\n\n  return call;\n}\n"
   },
   {
-    "__docId__": 142,
+    "__docId__": 139,
     "kind": "function",
     "static": true,
     "variation": null,
@@ -3617,7 +3445,7 @@
     "generator": false
   },
   {
-    "__docId__": 143,
+    "__docId__": 140,
     "kind": "file",
     "static": true,
     "variation": null,
@@ -3630,7 +3458,7 @@
     "content": "import flyd from 'flyd';\n\n/**\n * pipes a to b and b to a -> cycle a and b\n * @param  {BoundViewFactory} viewF - view factory\n * @param  {BoundScopeFactory} scopeF - scope factory\n * @return {Stream} empty stream, use to end\n */\n\nexport default function cycle(viewF, scopeF) {\n  const start = flyd.stream();\n  const viewStream = viewF(start);\n  const scopeStream = scopeF(viewStream);\n\n  flyd.on(val => console.log('view emitted:', val), viewStream);\n  flyd.on(ctx => console.log('scope emitted:', ctx.get(true)), scopeStream);\n\n  return flyd.on(x => start(x), scopeStream);\n}\n"
   },
   {
-    "__docId__": 144,
+    "__docId__": 141,
     "kind": "function",
     "static": true,
     "variation": null,
@@ -3676,7 +3504,7 @@
     "generator": false
   },
   {
-    "__docId__": 145,
+    "__docId__": 142,
     "kind": "file",
     "static": true,
     "variation": null,
@@ -3689,7 +3517,7 @@
     "content": "import t from 'tcomb';\n\nimport { box } from './../state';\nimport JSONPointer from './../JSONPointer';\n\nfunction toPatch(path, rawValue) {\n  const op = JSONPointer.ofString(path).last() === '-' ? 'add' : 'replace';\n  const value = box(rawValue);\n\n  return {\n    op,\n    path,\n    value\n  };\n}\n\nexport default function handler(context, pairs) {\n  return pairs.map(function([path, value]) {\n    if(!t.Function.is(value)) return toPatch(path, value);\n\n    const currentValue = context.get(path, true);\n    const nextValue = value(currentValue);\n\n    return toPatch(path, nextValue);\n  });\n}\n"
   },
   {
-    "__docId__": 146,
+    "__docId__": 143,
     "kind": "function",
     "static": true,
     "variation": null,
@@ -3725,7 +3553,7 @@
     "generator": false
   },
   {
-    "__docId__": 147,
+    "__docId__": 144,
     "kind": "function",
     "static": true,
     "variation": null,
@@ -3761,7 +3589,7 @@
     "generator": false
   },
   {
-    "__docId__": 148,
+    "__docId__": 145,
     "kind": "file",
     "static": true,
     "variation": null,
@@ -3774,7 +3602,7 @@
     "content": "import flyd from 'flyd';\n\nimport { createApp as createDekuApp, element } from 'deku';\nimport debug from './../decorators/debug';\n\n/**\n * This function is used to create the render part of your app.\n * If the view receives a context object, it will pass the context through your component.\n * All actions dispatched inside component, will be emitted from the view.\n * @param  {DOMElement} container - container dom element\n * @param  {Component} rawComponent - deku component\n * @return {BoundViewFactory}\n */\n\nexport default function dom(container, rawComponent) {\n  return input => {\n    const dispatchStream = flyd.stream();\n    const dispatch = val => dispatchStream(val);\n    const render = createDekuApp(container, dispatch);\n    const component = debug()(rawComponent);\n\n    flyd.on(function(ctx) {\n      const el = element(component);\n\n      return render(el, ctx);\n    }, input);\n\n    return dispatchStream;\n  };\n}\n"
   },
   {
-    "__docId__": 149,
+    "__docId__": 146,
     "kind": "function",
     "static": true,
     "variation": null,
@@ -3820,7 +3648,7 @@
     "generator": false
   },
   {
-    "__docId__": 150,
+    "__docId__": 147,
     "kind": "file",
     "static": true,
     "variation": null,
@@ -3833,7 +3661,7 @@
     "content": "import dom from './dom';\n\n/**\n * view\n * - view stream representation\n * - views listen on contexts and render them in some way (e.g. dom)\n * - a view can emit patchSets\n´* - flyd stream\n * @see https://github.com/paldepind/flyd#flydstream\n * @listens {Context}\n * @emits {PatchSet}\n * @typedef View\n */\n\n/**\n * view factory\n * - creates view, who listen on scops\n * - curried: opts -> input -> view\n * @typedef {function(...opts: any) : BoundViewFactory} ViewFactory\n */\n\n/**\n * bound view factory\n * @typedef {function(input: any) : View} BoundViewFactory\n */\n\nexport default {\n  dom\n};\n"
   },
   {
-    "__docId__": 151,
+    "__docId__": 148,
     "kind": "typedef",
     "static": true,
     "variation": null,
@@ -3870,7 +3698,7 @@
     }
   },
   {
-    "__docId__": 152,
+    "__docId__": 149,
     "kind": "typedef",
     "static": true,
     "variation": null,
@@ -3888,7 +3716,7 @@
     }
   },
   {
-    "__docId__": 153,
+    "__docId__": 150,
     "kind": "typedef",
     "static": true,
     "variation": null,
@@ -3907,7 +3735,7 @@
     }
   },
   {
-    "__docId__": 155,
+    "__docId__": 152,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -3920,7 +3748,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 156,
+    "__docId__": 153,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -3933,7 +3761,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 157,
+    "__docId__": 154,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -3946,7 +3774,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 158,
+    "__docId__": 155,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -3959,7 +3787,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 159,
+    "__docId__": 156,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -3972,7 +3800,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 160,
+    "__docId__": 157,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -3985,7 +3813,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 161,
+    "__docId__": 158,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -3998,7 +3826,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 162,
+    "__docId__": 159,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -4011,7 +3839,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 163,
+    "__docId__": 160,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -4024,7 +3852,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 164,
+    "__docId__": 161,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -4037,7 +3865,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 165,
+    "__docId__": 162,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -4050,7 +3878,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 166,
+    "__docId__": 163,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -4063,7 +3891,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 167,
+    "__docId__": 164,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -4076,7 +3904,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 168,
+    "__docId__": 165,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -4089,7 +3917,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 169,
+    "__docId__": 166,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -4102,7 +3930,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 170,
+    "__docId__": 167,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -4115,7 +3943,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 171,
+    "__docId__": 168,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -4128,7 +3956,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 172,
+    "__docId__": 169,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -4141,7 +3969,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 173,
+    "__docId__": 170,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -4154,7 +3982,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 174,
+    "__docId__": 171,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -4167,7 +3995,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 175,
+    "__docId__": 172,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -4180,7 +4008,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 176,
+    "__docId__": 173,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -4193,7 +4021,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 177,
+    "__docId__": 174,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -4206,7 +4034,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 178,
+    "__docId__": 175,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -4219,7 +4047,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 179,
+    "__docId__": 176,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -4232,7 +4060,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 180,
+    "__docId__": 177,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -4245,7 +4073,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 181,
+    "__docId__": 178,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -4258,7 +4086,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 182,
+    "__docId__": 179,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -4271,7 +4099,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 183,
+    "__docId__": 180,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -4284,7 +4112,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 184,
+    "__docId__": 181,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -4297,7 +4125,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 185,
+    "__docId__": 182,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -4310,7 +4138,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 186,
+    "__docId__": 183,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -4323,7 +4151,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 187,
+    "__docId__": 184,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -4336,7 +4164,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 188,
+    "__docId__": 185,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -4349,7 +4177,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 189,
+    "__docId__": 186,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -4362,7 +4190,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 190,
+    "__docId__": 187,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -4375,7 +4203,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 191,
+    "__docId__": 188,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -4388,7 +4216,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 192,
+    "__docId__": 189,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -4401,7 +4229,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 193,
+    "__docId__": 190,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -4414,7 +4242,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 194,
+    "__docId__": 191,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -4427,7 +4255,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 195,
+    "__docId__": 192,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -4440,7 +4268,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 196,
+    "__docId__": 193,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -4453,7 +4281,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 197,
+    "__docId__": 194,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -4466,7 +4294,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 198,
+    "__docId__": 195,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -4479,7 +4307,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 199,
+    "__docId__": 196,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -4492,7 +4320,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 200,
+    "__docId__": 197,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -4505,7 +4333,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 201,
+    "__docId__": 198,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -4518,7 +4346,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 203,
+    "__docId__": 200,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -4531,7 +4359,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 204,
+    "__docId__": 201,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -4544,7 +4372,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 205,
+    "__docId__": 202,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -4557,7 +4385,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 206,
+    "__docId__": 203,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -4570,7 +4398,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 207,
+    "__docId__": 204,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -4583,7 +4411,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 208,
+    "__docId__": 205,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -4596,7 +4424,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 209,
+    "__docId__": 206,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -4609,7 +4437,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 210,
+    "__docId__": 207,
     "kind": "external",
     "static": true,
     "variation": null,
