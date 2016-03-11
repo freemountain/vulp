@@ -1,4 +1,4 @@
-import { element, cycle, views, scopes, decorators } from './../fux';
+import { element, cycle, views, scopes, decorators } from './../vulp';
 
 const { component, controller, dispatchChangeSets } = decorators;
 const App = component(

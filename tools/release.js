@@ -17,7 +17,7 @@ function getPkgJson(x) {
 function getEnv() {
   const result = {};
   result.gh_token = process.env.GITHUB_TOKEN;
-  result.repo = 'fux';
+  result.repo = 'vulp';
   result.owner = 'freemountain';
 
   return result;
@@ -72,9 +72,9 @@ function bumbVersionAndTag(delta) {
   return newVersion;
 }
 
-function bumpExamples(fuxVersion) {
+function bumpExamples(vulpVersion) {
   const pkgJson = getPkgJson('./examples/package.json');
-  pkgJson.dependencies.fux = fuxVersion;
+  pkgJson.dependencies.vulp = vulpVersion;
   JSON.stringify(pkgJson, null, '  ').to('./examples/package.json');
 
   run('git add examples/package.json');
@@ -87,7 +87,7 @@ function uploadDocs() {
   mkdir(tmpDir);
   process.chdir(tmpDir);
   run('git init');
-  run('git remote add origin https://github.com/freemountain/fux.git');
+  run('git remote add origin https://github.com/freemountain/vulp.git');
   run('git checkout --track -b origin/gh-pages');
   run('git pull origin gh-pages');
   run('git rm -rf .');

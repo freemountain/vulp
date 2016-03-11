@@ -1,4 +1,4 @@
-import { element, decorators } from './../../fux';
+import { element, decorators } from './../../vulp';
 
 const { component, memoize, controller, dispatchChangeSets, name } = decorators;
 

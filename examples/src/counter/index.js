@@ -1,5 +1,5 @@
 import t from 'tcomb';
-import { element, cycle, views, scopes, decorators } from './../fux';
+import { element, cycle, views, scopes, decorators } from './../vulp';
 
 const { component, checkContextType, controller, dispatchChangeSets } = decorators;
 

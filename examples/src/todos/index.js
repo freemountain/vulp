@@ -1,5 +1,5 @@
 import App from './components/App';
-import { views, scopes, decorators, cycle } from './../fux';
+import { views, scopes, decorators, cycle } from './../vulp';
 
 const initialValue = {
   todos: [

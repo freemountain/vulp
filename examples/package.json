@@ -1,5 +1,5 @@
 {
-  "name": "fux-starter",
+  "name": "vulp-starter",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -9,7 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "fux": "0.7.0",
+    "vulp": "0.7.0",
     "tcomb": "^2.7.0"
   },
   "devDependencies": {

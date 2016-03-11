@@ -1,5 +1,5 @@
-const regxp = /from \'\.\/(\.\.\/)*fux\'/;
-const subst = 'from \'fux\'';
+const regxp = /from \'\.\/(\.\.\/)*vulp\'/;
+const subst = 'from \'vulp\'';
 
 function replace(input) {
   return input.replace(regxp, subst);

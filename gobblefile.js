@@ -25,7 +25,7 @@ const pkg = gobble([
 ]).moveTo('pkg');
 
 const starter = gobble('examples')
-  .exclude(['node_modules', 'dist', 'src/fux.js', '.DS_Store'])
+  .exclude(['node_modules', 'dist', 'src/vulp.js', '.DS_Store'])
   .transform(replace, {})
   .moveTo('examples')
   .transform('zip', {

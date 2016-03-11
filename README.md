@@ -1,17 +1,17 @@
-<p align="center"><img width="100" src="manual/asset/fux.png"></p>
+<p align="center"><img width="100" src="manual/asset/vulp.png"></p>
 
-# fux
-Fux is a user interface library with uni-directional dataflow.
+# vulp
+vulp is a user interface library with uni-directional dataflow.
 
 ## Install
 
 ### NPM
 ```shell
-npm install --save-dev fux
+npm install --save-dev vulp
 ```
 
 ### Starter Project
- - download example.zip from [Github](https://github.com/freemountain/fux/releases)
+ - download example.zip from [Github](https://github.com/freemountain/vulp/releases)
  - extract and run `npm install && npm run dev`
  - this starts a minimal build process with preconfigured babel and browserify
  - point your browser to [localhost:8080](http://localhost:8080/dist) to view the examples
@@ -19,7 +19,7 @@ npm install --save-dev fux
 
 ## Usage
 ```javascript
-import { element, cycle, views, scopes, decorators } from 'fux';
+import { element, cycle, views, scopes, decorators } from 'vulp';
 
 const { component, controller, dispatchChangeSets } = decorators;
 const App = component(
@@ -45,7 +45,7 @@ cycle(view, scope);
 ## Architecture
 ![overview](manual/asset/architecture.png)
 
-- [Context](http://freemountain.github.io/fux/class/src/Context.js~Context.html)
+- [Context](http://freemountain.github.io/vulp/class/src/Context.js~Context.html)
   - immutable data structure (struct)
   - holds application context
   - emitted from scopes, when they have new data
@@ -64,41 +64,41 @@ cycle(view, scope);
   - render component to DOM
   - component may dispatch PatchSet on user interaction
   - available views
-  - [fux.views.dom](http://freemountain.github.io/fux/function/index.html#static-function-combiner)
+  - [vulp.views.dom](http://freemountain.github.io/vulp/function/index.html#static-function-combiner)
 
-- [Component](http://freemountain.github.io/fux/typedef/index.html#static-typedef-Component)
+- [Component](http://freemountain.github.io/vulp/typedef/index.html#static-typedef-Component)
   - stateless
   - dispatches side effects to scopes
   - additional functionality added through decorators
 
 ## Api
-### fux
-- [cycle](http://freemountain.github.io/fux/function/index.html#static-function-cycle)
-- [element](http://freemountain.github.io/fux/typedef/index.html#static-typedef-element)
+### vulp
+- [cycle](http://freemountain.github.io/vulp/function/index.html#static-function-cycle)
+- [element](http://freemountain.github.io/vulp/typedef/index.html#static-typedef-element)
 
-#### fux.scopes
-- [combiner](http://freemountain.github.io/fux/function/index.html#static-function-combiner)
-- [fragment](http://freemountain.github.io/fux/function/index.html#static-function-fragment)
-- [value](http://freemountain.github.io/fux/function/index.html#static-function-value)
+#### vulp.scopes
+- [combiner](http://freemountain.github.io/vulp/function/index.html#static-function-combiner)
+- [fragment](http://freemountain.github.io/vulp/function/index.html#static-function-fragment)
+- [value](http://freemountain.github.io/vulp/function/index.html#static-function-value)
 
-#### fux.views
-- [dom](http://freemountain.github.io/fux/function/index.html#static-function-dom)
+#### vulp.views
+- [dom](http://freemountain.github.io/vulp/function/index.html#static-function-dom)
 
-#### fux.decorators
-- [checkContextType](http://freemountain.github.io/fux/function/index.html#static-function-checkContextType)
-- [component](http://freemountain.github.io/fux/function/index.html#static-function-component)
-- [controller](http://freemountain.github.io/fux/function/index.html#static-function-controller)
-- [dispatchChangeSets](http://freemountain.github.io/fux/function/index.html#static-function-dispatchChangeSets)
-- [log](http://freemountain.github.io/fux/function/index.html#static-function-log)
-- [memoize](http://freemountain.github.io/fux/function/index.html#static-function-memoize)
-- [mount](http://freemountain.github.io/fux/function/index.html#static-function-mount)
-- [name](http://freemountain.github.io/fux/function/index.html#static-function-name)
-- [styler](http://freemountain.github.io/fux/function/index.html#static-function-styler)
+#### vulp.decorators
+- [checkContextType](http://freemountain.github.io/vulp/function/index.html#static-function-checkContextType)
+- [component](http://freemountain.github.io/vulp/function/index.html#static-function-component)
+- [controller](http://freemountain.github.io/vulp/function/index.html#static-function-controller)
+- [dispatchChangeSets](http://freemountain.github.io/vulp/function/index.html#static-function-dispatchChangeSets)
+- [log](http://freemountain.github.io/vulp/function/index.html#static-function-log)
+- [memoize](http://freemountain.github.io/vulp/function/index.html#static-function-memoize)
+- [mount](http://freemountain.github.io/vulp/function/index.html#static-function-mount)
+- [name](http://freemountain.github.io/vulp/function/index.html#static-function-name)
+- [styler](http://freemountain.github.io/vulp/function/index.html#static-function-styler)
 
 ## Hack
 ```shell
-git clone https://github.com/freemountain/fux
-cd fux
+git clone https://github.com/freemountain/vulp
+cd vulp
 npm install
 npm run dev
 ```
