@@ -4,12 +4,18 @@
 Fux is a user interface library with uni-directional dataflow.
 
 ## Install
+
 ### NPM
 ```shell
 npm install --save-dev fux
 ```
-### Starter Project
 
+### Starter Project
+ - download example.zip from [Github](https://github.com/freemountain/fux/releases)
+ - extract and run `npm run dev`
+ - this starts a minimal build process with preconfigured babel and browserify
+ - point your browser to [localhost:8080](http://localhost:8080) to view the examples
+ - or use this as template for your own project
 
 ## Usage
 ```javascript
@@ -61,6 +67,9 @@ helper.cycle(view, scope);
   - stateless
   - dispatches side effects to scopes
   - additional functionality added through decorators
+
+## Api
+Visit [freemountain.github.io/fux](http://freemountain.github.io/fux/)
 
 ## Hack
 ```shell

@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "cp -R src/ dist && find dist  -name '*.js' -delete && http-server & watchify -d src/index.js -t [ babelify ] -s examples --outfile dist/examples.js"
+    "dev": "cp -R src/ dist && find dist -name '*.js' -delete && http-server & watchify src/index.js -d -t [ babelify ] -s examples --outfile dist/examples.js"
   },
   "author": "",
   "license": "ISC",
@@ -16,7 +16,7 @@
     "babel-plugin-transform-react-jsx": "^6.5.2",
     "babel-preset-es2015": "^6.5.0",
     "babel-preset-stage-2": "^6.5.0",
-    "babelify": "^7.2.0",
+    "babelify": "^6.3.0",
     "http-server": "^0.9.0",
     "watchify": "^3.7.0"
   }

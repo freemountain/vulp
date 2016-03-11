@@ -44,20 +44,6 @@ function render({ context }) {
       </div>
     </div>
   );
-/*
-  return (
-    <div style={containerStyle}>
-      <div style={leftStyle}>
-        <Header />
-        <List />
-        <Footer />
-      </div>
-      <div style={rightStyle}>
-        <StateView />
-      </div>
-    </div>
-  );
-  */
 }
 
 export default component(

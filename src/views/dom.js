@@ -8,7 +8,7 @@ import debug from './../decorators/debug';
  * If the view receives a context object, it will pass the context through your component.
  * All actions dispatched inside component, will be emitted from the view.
  * @param  {DOMElement} container - container dom element
- * @param  {Component} component - deku component
+ * @param  {Component} rawComponent - deku component
  * @return {BoundViewFactory}
  */
 
