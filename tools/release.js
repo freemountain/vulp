@@ -67,6 +67,8 @@ function bumbVersionAndTag(delta) {
   console.log('Bump version from', currentVersion, 'to', newVersion);
   JSON.stringify(pkgJson, null, '  ').to('./package.json');
 
+  run('git add package.json');
+
   return newVersion;
 }
 
@@ -74,6 +76,8 @@ function bumpExamples(fuxVersion) {
   const pkgJson = getPkgJson('./examples/package.json');
   pkgJson.dependencies.fux = fuxVersion;
   JSON.stringify(pkgJson, null, '  ').to('./examples/package.json');
+
+  run('git add examples/package.json');
 }
 
 function uploadDocs() {
@@ -103,10 +107,8 @@ if(['patch', 'minor', 'major'].indexOf(delta) === -1)
 assertCleanWorkingDir();
 asserMasterBranch();
 const version = bumbVersionAndTag(delta);
-
 bumpExamples(version);
 
-run('git add package.json');
 run('git commit -m "Bump version to ' + version + '"');
 run('git push');
 run('git tag -a "v' + version + '" -m "Release ' + version + '"');
