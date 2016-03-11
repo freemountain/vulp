@@ -1,170 +1,170 @@
 window.esdocSearchIndex = [
   [
-    "fux/src/context.js~context",
+    "vulp/src/context.js~context",
     "class/src/Context.js~Context.html",
-    "<span>Context</span> <span class=\"search-result-import-path\">fux/src/Context.js</span>",
+    "<span>Context</span> <span class=\"search-result-import-path\">vulp/src/Context.js</span>",
     "class"
   ],
   [
-    "fux/src/jsonpointer/index.js~jsonpointer",
+    "vulp/src/jsonpointer/index.js~jsonpointer",
     "class/src/JSONPointer/index.js~JSONPointer.html",
-    "<span>JSONPointer</span> <span class=\"search-result-import-path\">fux/src/JSONPointer/index.js</span>",
+    "<span>JSONPointer</span> <span class=\"search-result-import-path\">vulp/src/JSONPointer/index.js</span>",
     "class"
   ],
   [
-    "fux/src/transform.js~transform",
+    "vulp/src/transform.js~transform",
     "class/src/Transform.js~Transform.html",
-    "<span>Transform</span> <span class=\"search-result-import-path\">fux/src/Transform.js</span>",
+    "<span>Transform</span> <span class=\"search-result-import-path\">vulp/src/Transform.js</span>",
     "class"
   ],
   [
-    "fux/src/state/index.js~box",
+    "vulp/src/state/index.js~box",
     "function/index.html#static-function-box",
-    "<span>box</span> <span class=\"search-result-import-path\">fux/src/state/index.js</span>",
+    "<span>box</span> <span class=\"search-result-import-path\">vulp/src/state/index.js</span>",
     "function"
   ],
   [
-    "fux/src/utils/checktype.js~check",
+    "vulp/src/utils/checktype.js~check",
     "variable/index.html#static-variable-check",
-    "<span>check</span> <span class=\"search-result-import-path\">fux/src/utils/checkType.js</span>",
+    "<span>check</span> <span class=\"search-result-import-path\">vulp/src/utils/checkType.js</span>",
     "variable"
   ],
   [
-    "fux/src/decorators/checkcontexttype.js~checkcontexttype",
+    "vulp/src/decorators/checkcontexttype.js~checkcontexttype",
     "function/index.html#static-function-checkContextType",
-    "<span>checkContextType</span> <span class=\"search-result-import-path\">fux/src/decorators/checkContextType.js</span>",
+    "<span>checkContextType</span> <span class=\"search-result-import-path\">vulp/src/decorators/checkContextType.js</span>",
     "function"
   ],
   [
-    "fux/src/utils/choke.js~choke",
+    "vulp/src/utils/choke.js~choke",
     "function/index.html#static-function-choke",
-    "<span>choke</span> <span class=\"search-result-import-path\">fux/src/utils/choke.js</span>",
+    "<span>choke</span> <span class=\"search-result-import-path\">vulp/src/utils/choke.js</span>",
     "function"
   ],
   [
-    "fux/src/scopes/combiner.js~combiner",
+    "vulp/src/scopes/combiner.js~combiner",
     "function/index.html#static-function-combiner",
-    "<span>combiner</span> <span class=\"search-result-import-path\">fux/src/scopes/combiner.js</span>",
+    "<span>combiner</span> <span class=\"search-result-import-path\">vulp/src/scopes/combiner.js</span>",
     "function"
   ],
   [
-    "fux/src/decorators/component.js~component",
+    "vulp/src/decorators/component.js~component",
     "function/index.html#static-function-component",
-    "<span>component</span> <span class=\"search-result-import-path\">fux/src/decorators/component.js</span>",
+    "<span>component</span> <span class=\"search-result-import-path\">vulp/src/decorators/component.js</span>",
     "function"
   ],
   [
-    "fux/src/decorators/controller.js~controller",
+    "vulp/src/decorators/controller.js~controller",
     "function/index.html#static-function-controller",
-    "<span>controller</span> <span class=\"search-result-import-path\">fux/src/decorators/controller.js</span>",
+    "<span>controller</span> <span class=\"search-result-import-path\">vulp/src/decorators/controller.js</span>",
     "function"
   ],
   [
-    "fux/src/utils/curry.js~curry",
+    "vulp/src/utils/curry.js~curry",
     "function/index.html#static-function-curry",
-    "<span>curry</span> <span class=\"search-result-import-path\">fux/src/utils/curry.js</span>",
+    "<span>curry</span> <span class=\"search-result-import-path\">vulp/src/utils/curry.js</span>",
     "function"
   ],
   [
-    "fux/src/utils/cycle.js~cycle",
+    "vulp/src/utils/cycle.js~cycle",
     "function/index.html#static-function-cycle",
-    "<span>cycle</span> <span class=\"search-result-import-path\">fux/src/utils/cycle.js</span>",
+    "<span>cycle</span> <span class=\"search-result-import-path\">vulp/src/utils/cycle.js</span>",
     "function"
   ],
   [
-    "fux/src/decorators/dispatchchangesets.js~dispatchchangesets",
+    "vulp/src/decorators/dispatchchangesets.js~dispatchchangesets",
     "function/index.html#static-function-dispatchChangeSets",
-    "<span>dispatchChangeSets</span> <span class=\"search-result-import-path\">fux/src/decorators/dispatchChangeSets.js</span>",
+    "<span>dispatchChangeSets</span> <span class=\"search-result-import-path\">vulp/src/decorators/dispatchChangeSets.js</span>",
     "function"
   ],
   [
-    "fux/src/views/dom.js~dom",
+    "vulp/src/views/dom.js~dom",
     "function/index.html#static-function-dom",
-    "<span>dom</span> <span class=\"search-result-import-path\">fux/src/views/dom.js</span>",
+    "<span>dom</span> <span class=\"search-result-import-path\">vulp/src/views/dom.js</span>",
     "function"
   ],
   [
-    "fux/src/scopes/fragment.js~fragment",
+    "vulp/src/scopes/fragment.js~fragment",
     "function/index.html#static-function-fragment",
-    "<span>fragment</span> <span class=\"search-result-import-path\">fux/src/scopes/fragment.js</span>",
+    "<span>fragment</span> <span class=\"search-result-import-path\">vulp/src/scopes/fragment.js</span>",
     "function"
   ],
   [
-    "fux/src/state/index.js~get",
+    "vulp/src/state/index.js~get",
     "function/index.html#static-function-get",
-    "<span>get</span> <span class=\"search-result-import-path\">fux/src/state/index.js</span>",
+    "<span>get</span> <span class=\"search-result-import-path\">vulp/src/state/index.js</span>",
     "function"
   ],
   [
-    "fux/src/utils/patch.js~handler",
+    "vulp/src/utils/patch.js~handler",
     "function/index.html#static-function-handler",
-    "<span>handler</span> <span class=\"search-result-import-path\">fux/src/utils/patch.js</span>",
+    "<span>handler</span> <span class=\"search-result-import-path\">vulp/src/utils/patch.js</span>",
     "function"
   ],
   [
-    "fux/src/state/index.js~is",
+    "vulp/src/state/index.js~is",
     "variable/index.html#static-variable-is",
-    "<span>is</span> <span class=\"search-result-import-path\">fux/src/state/index.js</span>",
+    "<span>is</span> <span class=\"search-result-import-path\">vulp/src/state/index.js</span>",
     "variable"
   ],
   [
-    "fux/src/decorators/utils.js~ishandler",
+    "vulp/src/decorators/utils.js~ishandler",
     "variable/index.html#static-variable-isHandler",
-    "<span>isHandler</span> <span class=\"search-result-import-path\">fux/src/decorators/utils.js</span>",
+    "<span>isHandler</span> <span class=\"search-result-import-path\">vulp/src/decorators/utils.js</span>",
     "variable"
   ],
   [
-    "fux/src/decorators/log.js~log",
+    "vulp/src/decorators/log.js~log",
     "function/index.html#static-function-log",
-    "<span>log</span> <span class=\"search-result-import-path\">fux/src/decorators/log.js</span>",
+    "<span>log</span> <span class=\"search-result-import-path\">vulp/src/decorators/log.js</span>",
     "function"
   ],
   [
-    "fux/src/decorators/utils.js~mapattributes",
+    "vulp/src/decorators/utils.js~mapattributes",
     "function/index.html#static-function-mapAttributes",
-    "<span>mapAttributes</span> <span class=\"search-result-import-path\">fux/src/decorators/utils.js</span>",
+    "<span>mapAttributes</span> <span class=\"search-result-import-path\">vulp/src/decorators/utils.js</span>",
     "function"
   ],
   [
-    "fux/src/decorators/memoize.js~memoize",
+    "vulp/src/decorators/memoize.js~memoize",
     "function/index.html#static-function-memoize",
-    "<span>memoize</span> <span class=\"search-result-import-path\">fux/src/decorators/memoize.js</span>",
+    "<span>memoize</span> <span class=\"search-result-import-path\">vulp/src/decorators/memoize.js</span>",
     "function"
   ],
   [
-    "fux/src/decorators/mount.js~mount",
+    "vulp/src/decorators/mount.js~mount",
     "function/index.html#static-function-mount",
-    "<span>mount</span> <span class=\"search-result-import-path\">fux/src/decorators/mount.js</span>",
+    "<span>mount</span> <span class=\"search-result-import-path\">vulp/src/decorators/mount.js</span>",
     "function"
   ],
   [
-    "fux/src/decorators/utils.js~normalize",
+    "vulp/src/decorators/utils.js~normalize",
     "function/index.html#static-function-normalize",
-    "<span>normalize</span> <span class=\"search-result-import-path\">fux/src/decorators/utils.js</span>",
+    "<span>normalize</span> <span class=\"search-result-import-path\">vulp/src/decorators/utils.js</span>",
     "function"
   ],
   [
-    "fux/src/decorators/utils.js~specdecorator",
+    "vulp/src/decorators/utils.js~specdecorator",
     "function/index.html#static-function-specDecorator",
-    "<span>specDecorator</span> <span class=\"search-result-import-path\">fux/src/decorators/utils.js</span>",
+    "<span>specDecorator</span> <span class=\"search-result-import-path\">vulp/src/decorators/utils.js</span>",
     "function"
   ],
   [
-    "fux/src/decorators/styler.js~styler",
+    "vulp/src/decorators/styler.js~styler",
     "function/index.html#static-function-styler",
-    "<span>styler</span> <span class=\"search-result-import-path\">fux/src/decorators/styler.js</span>",
+    "<span>styler</span> <span class=\"search-result-import-path\">vulp/src/decorators/styler.js</span>",
     "function"
   ],
   [
-    "fux/src/state/index.js~unbox",
+    "vulp/src/state/index.js~unbox",
     "function/index.html#static-function-unbox",
-    "<span>unbox</span> <span class=\"search-result-import-path\">fux/src/state/index.js</span>",
+    "<span>unbox</span> <span class=\"search-result-import-path\">vulp/src/state/index.js</span>",
     "function"
   ],
   [
-    "fux/src/scopes/value.js~value",
+    "vulp/src/scopes/value.js~value",
     "function/index.html#static-function-value",
-    "<span>value</span> <span class=\"search-result-import-path\">fux/src/scopes/value.js</span>",
+    "<span>value</span> <span class=\"search-result-import-path\">vulp/src/scopes/value.js</span>",
     "function"
   ],
   [
