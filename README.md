@@ -14,12 +14,12 @@ npm install --save-dev fux
  - download example.zip from [Github](https://github.com/freemountain/fux/releases)
  - extract and run `npm run dev`
  - this starts a minimal build process with preconfigured babel and browserify
- - point your browser to [localhost:8080](http://localhost:8080) to view the examples
+ - point your browser to [localhost:8080](http://localhost:8080/dist) to view the examples
  - or use this as template for your own project
 
 ## Usage
 ```javascript
-import { element, cycle, views, scopes, decorators,  } from 'fux';
+import { element, cycle, views, scopes, decorators } from 'fux';
 
 const { component, controller, dispatchChangeSets } = decorators;
 const App = component(
@@ -74,7 +74,7 @@ cycle(view, scope);
 ## Api
 ### fux
 - [cycle](http://freemountain.github.io/fux/function/index.html#static-function-cycle)
-- [element](http://freemountain.github.io/fux/function/index.html#static-function-element)
+- [element](http://freemountain.github.io/fux/typedef/index.html#static-typedef-element)
 
 #### fux.scopes
 - [combiner](http://freemountain.github.io/fux/function/index.html#static-function-combiner)
