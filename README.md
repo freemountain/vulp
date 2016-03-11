@@ -12,7 +12,7 @@ npm install --save-dev fux
 
 ### Starter Project
  - download example.zip from [Github](https://github.com/freemountain/fux/releases)
- - extract and run `npm run dev`
+ - extract and run `npm install && npm run dev`
  - this starts a minimal build process with preconfigured babel and browserify
  - point your browser to [localhost:8080](http://localhost:8080/dist) to view the examples
  - or use this as template for your own project
