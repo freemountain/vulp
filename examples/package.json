@@ -9,7 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "vulp": "0.7.1",
+    "vulp": "0.7.2",
     "tcomb": "^2.7.0"
   },
   "devDependencies": {
