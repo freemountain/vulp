@@ -1,4 +1,4 @@
-<p align="center"><img width="100" src="manual/asset/vulp.png"></p>
+<p align="center"><img width="100" src="manual/asset/logo.png"></p>
 
 # vulp
 vulp is a user interface library with uni-directional dataflow.
