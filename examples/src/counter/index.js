@@ -1,5 +1,5 @@
 import t from 'tcomb';
-import { h, views, scopes, decorators, helper } from './../fux';
+import { element, cycle, views, scopes, decorators } from './../fux';
 
 const { component, checkContextType, controller, dispatchChangeSets } = decorators;
 
@@ -28,4 +28,4 @@ const App = component(
 const renderSubject = views.dom(document.body, App);
 const storeSubject = scopes.value({ count: 0 });
 
-export default () => helper.cycle(renderSubject, storeSubject);
+export default () => cycle(renderSubject, storeSubject);

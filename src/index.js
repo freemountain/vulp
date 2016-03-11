@@ -1,3 +1,8 @@
+/**
+ * jsx compatible element function.
+ * @typedef {function} element
+ * @see http://dekujs.github.io/deku/docs/api/element.html
+ */
 import { element } from 'deku';
 
 import decorators from './decorators';
@@ -32,22 +37,11 @@ import cycle from './utils/cycle';
  * @property {Array<vnode>} vnode.children
  */
 
-const helper = {
-  cycle
-};
-
-
-/**
- * jsx compatible element function.
- * @external {h} http://dekujs.github.io/deku/docs/api/element.html
- */
-
-const h = element;
 
 export {
   scopes,
   views,
   decorators,
-  helper,
-  h
+  cycle,
+  element
 };

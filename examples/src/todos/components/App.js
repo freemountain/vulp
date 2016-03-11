@@ -1,6 +1,6 @@
 import t from 'tcomb';
 
-import { h, decorators } from './../../fux';
+import { element, decorators } from './../../fux';
 
 import List from './List';
 import Header from './Header';

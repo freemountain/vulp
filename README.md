@@ -19,7 +19,7 @@ npm install --save-dev fux
 
 ## Usage
 ```javascript
-import { h, views, scopes, decorators, helper } from 'fux';
+import { element, cycle, views, scopes, decorators,  } from 'fux';
 
 const { component, controller, dispatchChangeSets } = decorators;
 const App = component(
@@ -39,13 +39,13 @@ const App = component(
 const view = views.dom(document.body, App);
 const scope = scopes.value({ count: 0 });
 
-helper.cycle(view, scope);
+cycle(view, scope);
 ```
 
 ## Architecture
 ![overview](manual/asset/architecture.png)
 
-- Context
+- [Context](http://freemountain.github.io/fux/class/src/Context.js~Context.html)
   - immutable data structure (struct)
   - holds application context
   - emitted from scopes, when they have new data
@@ -63,13 +63,37 @@ helper.cycle(view, scope);
   - passes context to [deku component](http://dekujs.github.io/deku/)
   - render component to DOM
   - component may dispatch PatchSet on user interaction
-- Component
+  - available views
+  - [fux.views.dom](http://freemountain.github.io/fux/function/index.html#static-function-combiner)
+
+- [Component](http://freemountain.github.io/fux/typedef/index.html#static-typedef-Component)
   - stateless
   - dispatches side effects to scopes
   - additional functionality added through decorators
 
 ## Api
-Visit [freemountain.github.io/fux](http://freemountain.github.io/fux/)
+### fux
+- [cycle](http://freemountain.github.io/fux/function/index.html#static-function-cycle)
+- [element](http://freemountain.github.io/fux/function/index.html#static-function-element)
+
+#### fux.scopes
+- [combiner](http://freemountain.github.io/fux/function/index.html#static-function-combiner)
+- [fragment](http://freemountain.github.io/fux/function/index.html#static-function-fragment)
+- [value](http://freemountain.github.io/fux/function/index.html#static-function-value)
+
+#### fux.views
+- [dom](http://freemountain.github.io/fux/function/index.html#static-function-dom)
+
+#### fux.decorators
+- [checkContextType](http://freemountain.github.io/fux/function/index.html#static-function-checkContextType)
+- [component](http://freemountain.github.io/fux/function/index.html#static-function-component)
+- [controller](http://freemountain.github.io/fux/function/index.html#static-function-controller)
+- [dispatchChangeSets](http://freemountain.github.io/fux/function/index.html#static-function-dispatchChangeSets)
+- [log](http://freemountain.github.io/fux/function/index.html#static-function-log)
+- [memoize](http://freemountain.github.io/fux/function/index.html#static-function-memoize)
+- [mount](http://freemountain.github.io/fux/function/index.html#static-function-mount)
+- [name](http://freemountain.github.io/fux/function/index.html#static-function-name)
+- [styler](http://freemountain.github.io/fux/function/index.html#static-function-styler)
 
 ## Hack
 ```shell

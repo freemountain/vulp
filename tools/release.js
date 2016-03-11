@@ -7,8 +7,10 @@ const fs = require('fs');
 const os = require('os');
 const path = require('path');
 
-function getPkgJson() {
-  const data = cat('./package.json');
+function getPkgJson(x) {
+  const target = x ? x : './package.json';
+  const data = cat(target);
+
   return JSON.parse(data);
 }
 
@@ -68,6 +70,12 @@ function bumbVersionAndTag(delta) {
   return newVersion;
 }
 
+function bumpExamples(fuxVersion) {
+  const pkgJson = getPkgJson('./examples/package.json');
+  pkgJson.dependencies.fux = fuxVersion;
+  JSON.stringify(pkgJson, null, '  ').to('./examples/package.json');
+}
+
 function uploadDocs() {
   const cwd = process.cwd();
   const tmpDir = path.join('/tmp', 'docs-' + Date.now());
@@ -95,6 +103,8 @@ if(['patch', 'minor', 'major'].indexOf(delta) === -1)
 assertCleanWorkingDir();
 asserMasterBranch();
 const version = bumbVersionAndTag(delta);
+
+bumpExamples(version);
 
 run('git add package.json');
 run('git commit -m "Bump version to ' + version + '"');

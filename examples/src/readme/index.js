@@ -1,4 +1,4 @@
-import { h, views, scopes, decorators, helper } from './../fux';
+import { element, cycle, views, scopes, decorators } from './../fux';
 
 const { component, controller, dispatchChangeSets } = decorators;
 const App = component(
@@ -16,4 +16,4 @@ const App = component(
 const view = views.dom(document.body, App);
 const scope = scopes.value({ count: 0 });
 
-export default () => helper.cycle(view, scope);
+export default () => cycle(view, scope);

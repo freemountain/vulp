@@ -1,5 +1,5 @@
 import App from './components/App';
-import { views, scopes, decorators, helper } from './../fux';
+import { views, scopes, decorators, cycle } from './../fux';
 
 const initialValue = {
   todos: [
@@ -23,4 +23,4 @@ const fragment = scopes.fragment();
 
 const rootSscope = scopes.combiner({ state, fragment });
 
-export default () => helper.cycle(view, rootSscope);
+export default () => cycle(view, rootSscope);

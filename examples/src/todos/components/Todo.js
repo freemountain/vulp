@@ -1,4 +1,4 @@
-import { h, decorators } from './../../fux';
+import { element, decorators } from './../../fux';
 import _Checkbox from './Checkbox';
 
 const { memoize, component, name } = decorators;

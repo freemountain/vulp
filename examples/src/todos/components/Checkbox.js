@@ -1,4 +1,4 @@
-import { h, decorators } from './../../fux';
+import { element, decorators } from './../../fux';
 
 const { memoize, controller, component, dispatchChangeSets, name } = decorators;
 
