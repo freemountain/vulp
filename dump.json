@@ -3771,7 +3771,7 @@
     "access": null,
     "description": null,
     "lineNumber": 1,
-    "content": "import flyd from 'flyd';\n\nimport { createApp as createDekuApp, element } from 'deku';\nimport debug from './../decorators/debug';\n\n/**\n * This function is used to create the render part of your app.\n * If the view receives a context object, it will pass the context through your component.\n * All actions dispatched inside component, will be emitted from the view.\n * @param  {DOMElement} container - container dom element\n * @param  {Component} component - deku component\n * @return {BoundViewFactory}\n */\n\nexport default function dom(container, rawComponent) {\n  return input => {\n    const dispatchStream = flyd.stream();\n    const dispatch = val => dispatchStream(val);\n    const render = createDekuApp(container, dispatch);\n    const component = debug()(rawComponent);\n\n    flyd.on(function(ctx) {\n      const el = element(component);\n\n      return render(el, ctx);\n    }, input);\n\n    return dispatchStream;\n  };\n}\n"
+    "content": "import flyd from 'flyd';\n\nimport { createApp as createDekuApp, element } from 'deku';\nimport debug from './../decorators/debug';\n\n/**\n * This function is used to create the render part of your app.\n * If the view receives a context object, it will pass the context through your component.\n * All actions dispatched inside component, will be emitted from the view.\n * @param  {DOMElement} container - container dom element\n * @param  {Component} rawComponent - deku component\n * @return {BoundViewFactory}\n */\n\nexport default function dom(container, rawComponent) {\n  return input => {\n    const dispatchStream = flyd.stream();\n    const dispatch = val => dispatchStream(val);\n    const render = createDekuApp(container, dispatch);\n    const component = debug()(rawComponent);\n\n    flyd.on(function(ctx) {\n      const el = element(component);\n\n      return render(el, ctx);\n    }, input);\n\n    return dispatchStream;\n  };\n}\n"
   },
   {
     "__docId__": 149,
@@ -3805,7 +3805,7 @@
         ],
         "spread": false,
         "optional": false,
-        "name": "component",
+        "name": "rawComponent",
         "description": "deku component"
       }
     ],

@@ -293,10 +293,10 @@
       "trailingComments": [
         {
           "type": "Block",
-          "value": "*\n * This function is used to create the render part of your app.\n * If the view receives a context object, it will pass the context through your component.\n * All actions dispatched inside component, will be emitted from the view.\n * @param  {DOMElement} container - container dom element\n * @param  {Component} component - deku component\n * @return {BoundViewFactory}\n ",
+          "value": "*\n * This function is used to create the render part of your app.\n * If the view receives a context object, it will pass the context through your component.\n * All actions dispatched inside component, will be emitted from the view.\n * @param  {DOMElement} container - container dom element\n * @param  {Component} rawComponent - deku component\n * @return {BoundViewFactory}\n ",
           "range": [
             130,
-            505
+            508
           ],
           "loc": {
             "start": {
@@ -319,8 +319,8 @@
           "type": "Identifier",
           "name": "dom",
           "range": [
-            531,
-            534
+            534,
+            537
           ],
           "loc": {
             "start": {
@@ -338,8 +338,8 @@
             "type": "Identifier",
             "name": "container",
             "range": [
-              535,
-              544
+              538,
+              547
             ],
             "loc": {
               "start": {
@@ -356,8 +356,8 @@
             "type": "Identifier",
             "name": "rawComponent",
             "range": [
-              546,
-              558
+              549,
+              561
             ],
             "loc": {
               "start": {
@@ -384,8 +384,8 @@
                     "type": "Identifier",
                     "name": "input",
                     "range": [
-                      571,
-                      576
+                      574,
+                      579
                     ],
                     "loc": {
                       "start": {
@@ -411,8 +411,8 @@
                             "type": "Identifier",
                             "name": "dispatchStream",
                             "range": [
-                              592,
-                              606
+                              595,
+                              609
                             ],
                             "loc": {
                               "start": {
@@ -434,8 +434,8 @@
                                 "type": "Identifier",
                                 "name": "flyd",
                                 "range": [
-                                  609,
-                                  613
+                                  612,
+                                  616
                                 ],
                                 "loc": {
                                   "start": {
@@ -452,8 +452,8 @@
                                 "type": "Identifier",
                                 "name": "stream",
                                 "range": [
-                                  614,
-                                  620
+                                  617,
+                                  623
                                 ],
                                 "loc": {
                                   "start": {
@@ -467,8 +467,8 @@
                                 }
                               },
                               "range": [
-                                609,
-                                620
+                                612,
+                                623
                               ],
                               "loc": {
                                 "start": {
@@ -483,8 +483,8 @@
                             },
                             "arguments": [],
                             "range": [
-                              609,
-                              622
+                              612,
+                              625
                             ],
                             "loc": {
                               "start": {
@@ -498,8 +498,8 @@
                             }
                           },
                           "range": [
-                            592,
-                            622
+                            595,
+                            625
                           ],
                           "loc": {
                             "start": {
@@ -515,8 +515,8 @@
                       ],
                       "kind": "const",
                       "range": [
-                        586,
-                        623
+                        589,
+                        626
                       ],
                       "loc": {
                         "start": {
@@ -538,8 +538,8 @@
                             "type": "Identifier",
                             "name": "dispatch",
                             "range": [
-                              634,
-                              642
+                              637,
+                              645
                             ],
                             "loc": {
                               "start": {
@@ -560,8 +560,8 @@
                                 "type": "Identifier",
                                 "name": "val",
                                 "range": [
-                                  645,
-                                  648
+                                  648,
+                                  651
                                 ],
                                 "loc": {
                                   "start": {
@@ -581,8 +581,8 @@
                                 "type": "Identifier",
                                 "name": "dispatchStream",
                                 "range": [
-                                  652,
-                                  666
+                                  655,
+                                  669
                                 ],
                                 "loc": {
                                   "start": {
@@ -600,8 +600,8 @@
                                   "type": "Identifier",
                                   "name": "val",
                                   "range": [
-                                    667,
-                                    670
+                                    670,
+                                    673
                                   ],
                                   "loc": {
                                     "start": {
@@ -616,8 +616,8 @@
                                 }
                               ],
                               "range": [
-                                652,
-                                671
+                                655,
+                                674
                               ],
                               "loc": {
                                 "start": {
@@ -633,8 +633,8 @@
                             "generator": false,
                             "expression": true,
                             "range": [
-                              645,
-                              671
+                              648,
+                              674
                             ],
                             "loc": {
                               "start": {
@@ -648,8 +648,8 @@
                             }
                           },
                           "range": [
-                            634,
-                            671
+                            637,
+                            674
                           ],
                           "loc": {
                             "start": {
@@ -665,8 +665,8 @@
                       ],
                       "kind": "const",
                       "range": [
-                        628,
-                        672
+                        631,
+                        675
                       ],
                       "loc": {
                         "start": {
@@ -688,8 +688,8 @@
                             "type": "Identifier",
                             "name": "render",
                             "range": [
-                              683,
-                              689
+                              686,
+                              692
                             ],
                             "loc": {
                               "start": {
@@ -708,8 +708,8 @@
                               "type": "Identifier",
                               "name": "createDekuApp",
                               "range": [
-                                692,
-                                705
+                                695,
+                                708
                               ],
                               "loc": {
                                 "start": {
@@ -727,8 +727,8 @@
                                 "type": "Identifier",
                                 "name": "container",
                                 "range": [
-                                  706,
-                                  715
+                                  709,
+                                  718
                                 ],
                                 "loc": {
                                   "start": {
@@ -745,8 +745,8 @@
                                 "type": "Identifier",
                                 "name": "dispatch",
                                 "range": [
-                                  717,
-                                  725
+                                  720,
+                                  728
                                 ],
                                 "loc": {
                                   "start": {
@@ -761,8 +761,8 @@
                               }
                             ],
                             "range": [
-                              692,
-                              726
+                              695,
+                              729
                             ],
                             "loc": {
                               "start": {
@@ -776,8 +776,8 @@
                             }
                           },
                           "range": [
-                            683,
-                            726
+                            686,
+                            729
                           ],
                           "loc": {
                             "start": {
@@ -793,8 +793,8 @@
                       ],
                       "kind": "const",
                       "range": [
-                        677,
-                        727
+                        680,
+                        730
                       ],
                       "loc": {
                         "start": {
@@ -816,8 +816,8 @@
                             "type": "Identifier",
                             "name": "component",
                             "range": [
-                              738,
-                              747
+                              741,
+                              750
                             ],
                             "loc": {
                               "start": {
@@ -838,8 +838,8 @@
                                 "type": "Identifier",
                                 "name": "debug",
                                 "range": [
-                                  750,
-                                  755
+                                  753,
+                                  758
                                 ],
                                 "loc": {
                                   "start": {
@@ -854,8 +854,8 @@
                               },
                               "arguments": [],
                               "range": [
-                                750,
-                                757
+                                753,
+                                760
                               ],
                               "loc": {
                                 "start": {
@@ -873,8 +873,8 @@
                                 "type": "Identifier",
                                 "name": "rawComponent",
                                 "range": [
-                                  758,
-                                  770
+                                  761,
+                                  773
                                 ],
                                 "loc": {
                                   "start": {
@@ -889,8 +889,8 @@
                               }
                             ],
                             "range": [
-                              750,
-                              771
+                              753,
+                              774
                             ],
                             "loc": {
                               "start": {
@@ -904,8 +904,8 @@
                             }
                           },
                           "range": [
-                            738,
-                            771
+                            741,
+                            774
                           ],
                           "loc": {
                             "start": {
@@ -921,8 +921,8 @@
                       ],
                       "kind": "const",
                       "range": [
-                        732,
-                        772
+                        735,
+                        775
                       ],
                       "loc": {
                         "start": {
@@ -946,8 +946,8 @@
                             "type": "Identifier",
                             "name": "flyd",
                             "range": [
-                              778,
-                              782
+                              781,
+                              785
                             ],
                             "loc": {
                               "start": {
@@ -964,8 +964,8 @@
                             "type": "Identifier",
                             "name": "on",
                             "range": [
-                              783,
-                              785
+                              786,
+                              788
                             ],
                             "loc": {
                               "start": {
@@ -979,8 +979,8 @@
                             }
                           },
                           "range": [
-                            778,
-                            785
+                            781,
+                            788
                           ],
                           "loc": {
                             "start": {
@@ -1002,8 +1002,8 @@
                                 "type": "Identifier",
                                 "name": "ctx",
                                 "range": [
-                                  795,
-                                  798
+                                  798,
+                                  801
                                 ],
                                 "loc": {
                                   "start": {
@@ -1029,8 +1029,8 @@
                                         "type": "Identifier",
                                         "name": "el",
                                         "range": [
-                                          814,
-                                          816
+                                          817,
+                                          819
                                         ],
                                         "loc": {
                                           "start": {
@@ -1049,8 +1049,8 @@
                                           "type": "Identifier",
                                           "name": "element",
                                           "range": [
-                                            819,
-                                            826
+                                            822,
+                                            829
                                           ],
                                           "loc": {
                                             "start": {
@@ -1068,8 +1068,8 @@
                                             "type": "Identifier",
                                             "name": "component",
                                             "range": [
-                                              827,
-                                              836
+                                              830,
+                                              839
                                             ],
                                             "loc": {
                                               "start": {
@@ -1084,8 +1084,8 @@
                                           }
                                         ],
                                         "range": [
-                                          819,
-                                          837
+                                          822,
+                                          840
                                         ],
                                         "loc": {
                                           "start": {
@@ -1099,8 +1099,8 @@
                                         }
                                       },
                                       "range": [
-                                        814,
-                                        837
+                                        817,
+                                        840
                                       ],
                                       "loc": {
                                         "start": {
@@ -1116,8 +1116,8 @@
                                   ],
                                   "kind": "const",
                                   "range": [
-                                    808,
-                                    838
+                                    811,
+                                    841
                                   ],
                                   "loc": {
                                     "start": {
@@ -1138,8 +1138,8 @@
                                       "type": "Identifier",
                                       "name": "render",
                                       "range": [
-                                        853,
-                                        859
+                                        856,
+                                        862
                                       ],
                                       "loc": {
                                         "start": {
@@ -1157,8 +1157,8 @@
                                         "type": "Identifier",
                                         "name": "el",
                                         "range": [
-                                          860,
-                                          862
+                                          863,
+                                          865
                                         ],
                                         "loc": {
                                           "start": {
@@ -1175,8 +1175,8 @@
                                         "type": "Identifier",
                                         "name": "ctx",
                                         "range": [
-                                          864,
-                                          867
+                                          867,
+                                          870
                                         ],
                                         "loc": {
                                           "start": {
@@ -1191,8 +1191,8 @@
                                       }
                                     ],
                                     "range": [
-                                      853,
-                                      868
+                                      856,
+                                      871
                                     ],
                                     "loc": {
                                       "start": {
@@ -1206,8 +1206,8 @@
                                     }
                                   },
                                   "range": [
-                                    846,
-                                    869
+                                    849,
+                                    872
                                   ],
                                   "loc": {
                                     "start": {
@@ -1222,8 +1222,8 @@
                                 }
                               ],
                               "range": [
-                                800,
-                                875
+                                803,
+                                878
                               ],
                               "loc": {
                                 "start": {
@@ -1239,8 +1239,8 @@
                             "generator": false,
                             "expression": false,
                             "range": [
-                              786,
-                              875
+                              789,
+                              878
                             ],
                             "loc": {
                               "start": {
@@ -1257,8 +1257,8 @@
                             "type": "Identifier",
                             "name": "input",
                             "range": [
-                              877,
-                              882
+                              880,
+                              885
                             ],
                             "loc": {
                               "start": {
@@ -1273,8 +1273,8 @@
                           }
                         ],
                         "range": [
-                          778,
-                          883
+                          781,
+                          886
                         ],
                         "loc": {
                           "start": {
@@ -1288,8 +1288,8 @@
                         }
                       },
                       "range": [
-                        778,
-                        884
+                        781,
+                        887
                       ],
                       "loc": {
                         "start": {
@@ -1308,8 +1308,8 @@
                         "type": "Identifier",
                         "name": "dispatchStream",
                         "range": [
-                          897,
-                          911
+                          900,
+                          914
                         ],
                         "loc": {
                           "start": {
@@ -1323,8 +1323,8 @@
                         }
                       },
                       "range": [
-                        890,
-                        912
+                        893,
+                        915
                       ],
                       "loc": {
                         "start": {
@@ -1339,8 +1339,8 @@
                     }
                   ],
                   "range": [
-                    580,
-                    916
+                    583,
+                    919
                   ],
                   "loc": {
                     "start": {
@@ -1356,8 +1356,8 @@
                 "generator": false,
                 "expression": false,
                 "range": [
-                  571,
-                  916
+                  574,
+                  919
                 ],
                 "loc": {
                   "start": {
@@ -1371,8 +1371,8 @@
                 }
               },
               "range": [
-                564,
-                917
+                567,
+                920
               ],
               "loc": {
                 "start": {
@@ -1387,8 +1387,8 @@
             }
           ],
           "range": [
-            560,
-            919
+            563,
+            922
           ],
           "loc": {
             "start": {
@@ -1404,8 +1404,8 @@
         "generator": false,
         "expression": false,
         "range": [
-          522,
-          919
+          525,
+          922
         ],
         "loc": {
           "start": {
@@ -1420,10 +1420,10 @@
         "leadingComments": [
           {
             "type": "Block",
-            "value": "*\n * This function is used to create the render part of your app.\n * If the view receives a context object, it will pass the context through your component.\n * All actions dispatched inside component, will be emitted from the view.\n * @param  {DOMElement} container - container dom element\n * @param  {Component} component - deku component\n * @return {BoundViewFactory}\n ",
+            "value": "*\n * This function is used to create the render part of your app.\n * If the view receives a context object, it will pass the context through your component.\n * All actions dispatched inside component, will be emitted from the view.\n * @param  {DOMElement} container - container dom element\n * @param  {Component} rawComponent - deku component\n * @return {BoundViewFactory}\n ",
             "range": [
               130,
-              505
+              508
             ],
             "loc": {
               "start": {
@@ -1440,8 +1440,8 @@
         "trailingComments": []
       },
       "range": [
-        507,
-        919
+        510,
+        922
       ],
       "loc": {
         "start": {
@@ -1456,10 +1456,10 @@
       "leadingComments": [
         {
           "type": "Block",
-          "value": "*\n * This function is used to create the render part of your app.\n * If the view receives a context object, it will pass the context through your component.\n * All actions dispatched inside component, will be emitted from the view.\n * @param  {DOMElement} container - container dom element\n * @param  {Component} component - deku component\n * @return {BoundViewFactory}\n ",
+          "value": "*\n * This function is used to create the render part of your app.\n * If the view receives a context object, it will pass the context through your component.\n * All actions dispatched inside component, will be emitted from the view.\n * @param  {DOMElement} container - container dom element\n * @param  {Component} rawComponent - deku component\n * @return {BoundViewFactory}\n ",
           "range": [
             130,
-            505
+            508
           ],
           "loc": {
             "start": {
@@ -1478,7 +1478,7 @@
   "sourceType": "module",
   "range": [
     0,
-    919
+    922
   ],
   "loc": {
     "start": {
@@ -1493,10 +1493,10 @@
   "comments": [
     {
       "type": "Block",
-      "value": "*\n * This function is used to create the render part of your app.\n * If the view receives a context object, it will pass the context through your component.\n * All actions dispatched inside component, will be emitted from the view.\n * @param  {DOMElement} container - container dom element\n * @param  {Component} component - deku component\n * @return {BoundViewFactory}\n ",
+      "value": "*\n * This function is used to create the render part of your app.\n * If the view receives a context object, it will pass the context through your component.\n * All actions dispatched inside component, will be emitted from the view.\n * @param  {DOMElement} container - container dom element\n * @param  {Component} rawComponent - deku component\n * @return {BoundViewFactory}\n ",
       "range": [
         130,
-        505
+        508
       ],
       "loc": {
         "start": {
