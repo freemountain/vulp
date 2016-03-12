@@ -46,6 +46,7 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-log">log</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-memoize">memoize</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-mount">mount</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-name">name</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-styler">styler</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-mapAttributes">mapAttributes</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-normalize">normalize</a></span></span></li>
@@ -131,11 +132,47 @@ const decorator = specDecorator(spec);
 /**
  * dispatch change sets
  *
+ * Usage:
  * ```javascript
  * dispatchChangeSets()(function({ dispatch }) {
  * 		// some code...
  * 		dispatch([&apos;/count&apos;, v =&gt; v + 1])
  * })
+ * ```
+ *
+ * A change set is an array of strings on even positions and some values on odd positions.
+ * The strings acts as path selector on the context object and the next element as value for the previous path.
+ * If the value element is a function, this function will be called with the value in the given path as argument.
+ * If the path string ends with &apos;-&apos; the operator in the resulting patch will be &apos;add&apos; ([info](http://jsonpatch.com/#json-pointer)).
+ *
+ * Example:
+ * ```javascript
+ * const changeSet = [
+ * 	&apos;/foo/bar&apos; : 42,
+ * 	&apos;/someNumber&apos; : n =&gt; n + 3,
+ * 	&apos;/someList/-&apos; : {name: &apos;baz&apos;}
+ * ];
+ * ```
+ * The function will be called with `n = model.context.get(&apos;/someNumber&apos;)`.
+ * The resulting patch set with `n = 4`:
+ * ```javascript
+ * const patchSet = [
+ * 	{
+ * 		op: &apos;replace&apos;,
+ * 		path: &apos;/foo/bar&apos;,
+ * 		value: 42
+ * 	},
+ * 	{
+ * 		op: &apos;replace&apos;,
+ * 		path: &apos;/someNumber&apos;,
+ * 		value: 7
+ * 	},
+ * 	{
+ * 		op: &apos;add&apos;,
+ * 		path: &apos;/someList/-&apos;,
+ * 		value: { name: &apos;baz&apos; }
+ * 	}
+ * ];
  * ```
  *
  * @return {HOC}

@@ -1,7 +1,7 @@
 {
-  "coverage": "71.69%",
-  "expectCount": 53,
-  "actualCount": 38,
+  "coverage": "72.22%",
+  "expectCount": 54,
+  "actualCount": 39,
   "files": {
     "src/Context.js": {
       "expectCount": 6,
@@ -121,6 +121,11 @@
       "undocumentLines": []
     },
     "src/decorators/mount.js": {
+      "expectCount": 1,
+      "actualCount": 1,
+      "undocumentLines": []
+    },
+    "src/decorators/name.js": {
       "expectCount": 1,
       "actualCount": 1,
       "undocumentLines": []

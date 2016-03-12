@@ -4165,10 +4165,10 @@
       "trailingComments": [
         {
           "type": "Block",
-          "value": "*\n * dispatch change sets\n *\n * ```javascript\n * dispatchChangeSets()(function({ dispatch }) {\n * \t\t// some code...\n * \t\tdispatch(['/count', v => v + 1])\n * })\n * ```\n *\n * @return {HOC}\n ",
+          "value": "*\n * dispatch change sets\n *\n * Usage:\n * ```javascript\n * dispatchChangeSets()(function({ dispatch }) {\n * \t\t// some code...\n * \t\tdispatch(['/count', v => v + 1])\n * })\n * ```\n *\n * A change set is an array of strings on even positions and some values on odd positions.\n * The strings acts as path selector on the context object and the next element as value for the previous path.\n * If the value element is a function, this function will be called with the value in the given path as argument.\n * If the path string ends with '-' the operator in the resulting patch will be 'add' ([info](http://jsonpatch.com/#json-pointer)).\n *\n * Example:\n * ```javascript\n * const changeSet = [\n * \t'/foo/bar' : 42,\n * \t'/someNumber' : n => n + 3,\n * \t'/someList/-' : {name: 'baz'}\n * ];\n * ```\n * The function will be called with `n = model.context.get('/someNumber')`.\n * The resulting patch set with `n = 4`:\n * ```javascript\n * const patchSet = [\n * \t{\n * \t\top: 'replace',\n * \t\tpath: '/foo/bar',\n * \t\tvalue: 42\n * \t},\n * \t{\n * \t\top: 'replace',\n * \t\tpath: '/someNumber',\n * \t\tvalue: 7\n * \t},\n * \t{\n * \t\top: 'add',\n * \t\tpath: '/someList/-',\n * \t\tvalue: { name: 'baz' }\n * \t}\n * ];\n * ```\n *\n * @return {HOC}\n ",
           "range": [
             1122,
-            1314
+            2326
           ],
           "loc": {
             "start": {
@@ -4176,7 +4176,7 @@
               "column": 0
             },
             "end": {
-              "line": 63,
+              "line": 99,
               "column": 3
             }
           }
@@ -4191,16 +4191,16 @@
           "type": "Identifier",
           "name": "dispatchChangeSets",
           "range": [
-            1339,
-            1357
+            2351,
+            2369
           ],
           "loc": {
             "start": {
-              "line": 64,
+              "line": 100,
               "column": 24
             },
             "end": {
-              "line": 64,
+              "line": 100,
               "column": 42
             }
           }
@@ -4215,47 +4215,47 @@
                 "type": "Identifier",
                 "name": "decorator",
                 "range": [
-                  1371,
-                  1380
+                  2383,
+                  2392
                 ],
                 "loc": {
                   "start": {
-                    "line": 65,
+                    "line": 101,
                     "column": 9
                   },
                   "end": {
-                    "line": 65,
+                    "line": 101,
                     "column": 18
                   }
                 }
               },
               "range": [
-                1364,
-                1381
+                2376,
+                2393
               ],
               "loc": {
                 "start": {
-                  "line": 65,
+                  "line": 101,
                   "column": 2
                 },
                 "end": {
-                  "line": 65,
+                  "line": 101,
                   "column": 19
                 }
               }
             }
           ],
           "range": [
-            1360,
-            1383
+            2372,
+            2395
           ],
           "loc": {
             "start": {
-              "line": 64,
+              "line": 100,
               "column": 45
             },
             "end": {
-              "line": 66,
+              "line": 102,
               "column": 1
             }
           }
@@ -4263,26 +4263,26 @@
         "generator": false,
         "expression": false,
         "range": [
-          1330,
-          1383
+          2342,
+          2395
         ],
         "loc": {
           "start": {
-            "line": 64,
+            "line": 100,
             "column": 15
           },
           "end": {
-            "line": 66,
+            "line": 102,
             "column": 1
           }
         },
         "leadingComments": [
           {
             "type": "Block",
-            "value": "*\n * dispatch change sets\n *\n * ```javascript\n * dispatchChangeSets()(function({ dispatch }) {\n * \t\t// some code...\n * \t\tdispatch(['/count', v => v + 1])\n * })\n * ```\n *\n * @return {HOC}\n ",
+            "value": "*\n * dispatch change sets\n *\n * Usage:\n * ```javascript\n * dispatchChangeSets()(function({ dispatch }) {\n * \t\t// some code...\n * \t\tdispatch(['/count', v => v + 1])\n * })\n * ```\n *\n * A change set is an array of strings on even positions and some values on odd positions.\n * The strings acts as path selector on the context object and the next element as value for the previous path.\n * If the value element is a function, this function will be called with the value in the given path as argument.\n * If the path string ends with '-' the operator in the resulting patch will be 'add' ([info](http://jsonpatch.com/#json-pointer)).\n *\n * Example:\n * ```javascript\n * const changeSet = [\n * \t'/foo/bar' : 42,\n * \t'/someNumber' : n => n + 3,\n * \t'/someList/-' : {name: 'baz'}\n * ];\n * ```\n * The function will be called with `n = model.context.get('/someNumber')`.\n * The resulting patch set with `n = 4`:\n * ```javascript\n * const patchSet = [\n * \t{\n * \t\top: 'replace',\n * \t\tpath: '/foo/bar',\n * \t\tvalue: 42\n * \t},\n * \t{\n * \t\top: 'replace',\n * \t\tpath: '/someNumber',\n * \t\tvalue: 7\n * \t},\n * \t{\n * \t\top: 'add',\n * \t\tpath: '/someList/-',\n * \t\tvalue: { name: 'baz' }\n * \t}\n * ];\n * ```\n *\n * @return {HOC}\n ",
             "range": [
               1122,
-              1314
+              2326
             ],
             "loc": {
               "start": {
@@ -4290,7 +4290,7 @@
                 "column": 0
               },
               "end": {
-                "line": 63,
+                "line": 99,
                 "column": 3
               }
             }
@@ -4299,26 +4299,26 @@
         "trailingComments": []
       },
       "range": [
-        1315,
-        1383
+        2327,
+        2395
       ],
       "loc": {
         "start": {
-          "line": 64,
+          "line": 100,
           "column": 0
         },
         "end": {
-          "line": 66,
+          "line": 102,
           "column": 1
         }
       },
       "leadingComments": [
         {
           "type": "Block",
-          "value": "*\n * dispatch change sets\n *\n * ```javascript\n * dispatchChangeSets()(function({ dispatch }) {\n * \t\t// some code...\n * \t\tdispatch(['/count', v => v + 1])\n * })\n * ```\n *\n * @return {HOC}\n ",
+          "value": "*\n * dispatch change sets\n *\n * Usage:\n * ```javascript\n * dispatchChangeSets()(function({ dispatch }) {\n * \t\t// some code...\n * \t\tdispatch(['/count', v => v + 1])\n * })\n * ```\n *\n * A change set is an array of strings on even positions and some values on odd positions.\n * The strings acts as path selector on the context object and the next element as value for the previous path.\n * If the value element is a function, this function will be called with the value in the given path as argument.\n * If the path string ends with '-' the operator in the resulting patch will be 'add' ([info](http://jsonpatch.com/#json-pointer)).\n *\n * Example:\n * ```javascript\n * const changeSet = [\n * \t'/foo/bar' : 42,\n * \t'/someNumber' : n => n + 3,\n * \t'/someList/-' : {name: 'baz'}\n * ];\n * ```\n * The function will be called with `n = model.context.get('/someNumber')`.\n * The resulting patch set with `n = 4`:\n * ```javascript\n * const patchSet = [\n * \t{\n * \t\top: 'replace',\n * \t\tpath: '/foo/bar',\n * \t\tvalue: 42\n * \t},\n * \t{\n * \t\top: 'replace',\n * \t\tpath: '/someNumber',\n * \t\tvalue: 7\n * \t},\n * \t{\n * \t\top: 'add',\n * \t\tpath: '/someList/-',\n * \t\tvalue: { name: 'baz' }\n * \t}\n * ];\n * ```\n *\n * @return {HOC}\n ",
           "range": [
             1122,
-            1314
+            2326
           ],
           "loc": {
             "start": {
@@ -4326,7 +4326,7 @@
               "column": 0
             },
             "end": {
-              "line": 63,
+              "line": 99,
               "column": 3
             }
           }
@@ -4337,7 +4337,7 @@
   "sourceType": "module",
   "range": [
     0,
-    1383
+    2395
   ],
   "loc": {
     "start": {
@@ -4345,17 +4345,17 @@
       "column": 0
     },
     "end": {
-      "line": 66,
+      "line": 102,
       "column": 1
     }
   },
   "comments": [
     {
       "type": "Block",
-      "value": "*\n * dispatch change sets\n *\n * ```javascript\n * dispatchChangeSets()(function({ dispatch }) {\n * \t\t// some code...\n * \t\tdispatch(['/count', v => v + 1])\n * })\n * ```\n *\n * @return {HOC}\n ",
+      "value": "*\n * dispatch change sets\n *\n * Usage:\n * ```javascript\n * dispatchChangeSets()(function({ dispatch }) {\n * \t\t// some code...\n * \t\tdispatch(['/count', v => v + 1])\n * })\n * ```\n *\n * A change set is an array of strings on even positions and some values on odd positions.\n * The strings acts as path selector on the context object and the next element as value for the previous path.\n * If the value element is a function, this function will be called with the value in the given path as argument.\n * If the path string ends with '-' the operator in the resulting patch will be 'add' ([info](http://jsonpatch.com/#json-pointer)).\n *\n * Example:\n * ```javascript\n * const changeSet = [\n * \t'/foo/bar' : 42,\n * \t'/someNumber' : n => n + 3,\n * \t'/someList/-' : {name: 'baz'}\n * ];\n * ```\n * The function will be called with `n = model.context.get('/someNumber')`.\n * The resulting patch set with `n = 4`:\n * ```javascript\n * const patchSet = [\n * \t{\n * \t\top: 'replace',\n * \t\tpath: '/foo/bar',\n * \t\tvalue: 42\n * \t},\n * \t{\n * \t\top: 'replace',\n * \t\tpath: '/someNumber',\n * \t\tvalue: 7\n * \t},\n * \t{\n * \t\top: 'add',\n * \t\tpath: '/someList/-',\n * \t\tvalue: { name: 'baz' }\n * \t}\n * ];\n * ```\n *\n * @return {HOC}\n ",
       "range": [
         1122,
-        1314
+        2326
       ],
       "loc": {
         "start": {
@@ -4363,7 +4363,7 @@
           "column": 0
         },
         "end": {
-          "line": 63,
+          "line": 99,
           "column": 3
         }
       }

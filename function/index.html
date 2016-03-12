@@ -46,6 +46,7 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-log">log</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-memoize">memoize</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-mount">mount</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-name">name</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-styler">styler</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-mapAttributes">mapAttributes</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-normalize">normalize</a></span></span></li>
@@ -512,6 +513,32 @@ represents value of fragment identifier.</p>
         
         
         <div data-ice="description"><p>transform ctx of component</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+           <span data-ice="name"><span><a href="function/index.html#static-function-name">name</a></span></span><span data-ice="signature">(name: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>): <span><a href="typedef/index.html#static-typedef-HOC">HOC</a></span></span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>add name to component - for debug messages</p>
 </div>
       </div>
     </td>
@@ -1252,18 +1279,50 @@ Otherwise the property will just be dispatched.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/decorators/dispatchChangeSets.js.html#lineNumber64">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/decorators/dispatchChangeSets.js.html#lineNumber100">source</a></span></span>
     </span>
   </h3>
 
-  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import dispatchChangeSets from &apos;<span><a href="file/src/decorators/dispatchChangeSets.js.html#lineNumber64">vulp/src/decorators/dispatchChangeSets.js</a></span>&apos;</code></pre></div>
+  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import dispatchChangeSets from &apos;<span><a href="file/src/decorators/dispatchChangeSets.js.html#lineNumber100">vulp/src/decorators/dispatchChangeSets.js</a></span>&apos;</code></pre></div>
   
   
   <div data-ice="description"><p>dispatch change sets</p>
+<p>Usage:</p>
 <pre><code class="lang-javascript"><code class="source-code prettyprint">dispatchChangeSets()(function({ dispatch }) {
         // some code...
         dispatch([&apos;/count&apos;, v =&gt; v + 1])
 })</code>
+</code></pre>
+<p>A change set is an array of strings on even positions and some values on odd positions.
+The strings acts as path selector on the context object and the next element as value for the previous path.
+If the value element is a function, this function will be called with the value in the given path as argument.
+If the path string ends with &apos;-&apos; the operator in the resulting patch will be &apos;add&apos; (<a href="http://jsonpatch.com/#json-pointer">info</a>).</p>
+<p>Example:</p>
+<pre><code class="lang-javascript"><code class="source-code prettyprint">const changeSet = [
+    &apos;/foo/bar&apos; : 42,
+    &apos;/someNumber&apos; : n =&gt; n + 3,
+    &apos;/someList/-&apos; : {name: &apos;baz&apos;}
+];</code>
+</code></pre>
+<p>The function will be called with <code>n = model.context.get(&apos;/someNumber&apos;)</code>.
+The resulting patch set with <code>n = 4</code>:</p>
+<pre><code class="lang-javascript"><code class="source-code prettyprint">const patchSet = [
+    {
+        op: &apos;replace&apos;,
+        path: &apos;/foo/bar&apos;,
+        value: 42
+    },
+    {
+        op: &apos;replace&apos;,
+        path: &apos;/someNumber&apos;,
+        value: 7
+    },
+    {
+        op: &apos;add&apos;,
+        path: &apos;/someList/-&apos;,
+        value: { name: &apos;baz&apos; }
+    }
+];</code>
 </code></pre>
 </div>
 
@@ -1861,6 +1920,74 @@ Json structure:
       <td data-ice="type"><span><a href="typedef/index.html#static-typedef-Map">Map</a></span>&lt;<span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>, <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>&gt;</td>
       <td data-ice="appendix"></td>
       <td data-ice="description"><p>transform description</p>
+</td>
+    </tr>
+</tbody>
+  </table>
+</div>
+</div>
+
+  <div class="return-params" data-ice="returnParams">
+    <h4>Return:</h4>
+    <table>
+      <tr>
+        <td class="return-type" data-ice="returnType"><span><a href="typedef/index.html#static-typedef-HOC">HOC</a></span></td>
+        
+      </tr>
+    </table>
+    <div data-ice="returnProperties">
+</div>
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+</div>
+<div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="static-function-name">
+    <span class="access" data-ice="access">public</span>
+    
+    
+    
+    
+    <span data-ice="name">name</span><span data-ice="signature">(name: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>): <span><a href="typedef/index.html#static-typedef-HOC">HOC</a></span></span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/src/decorators/name.js.html#lineNumber9">source</a></span></span>
+    </span>
+  </h3>
+
+  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import name from &apos;<span><a href="file/src/decorators/name.js.html#lineNumber9">vulp/src/decorators/name.js</a></span>&apos;</code></pre></div>
+  
+  
+  <div data-ice="description"><p>add name to component - for debug messages</p>
+</div>
+
+  
+
+  <div data-ice="properties"><div data-ice="properties">
+  <h4 data-ice="title">Params:</h4>
+  <table class="params">
+    <thead>
+    <tr><td>Name</td><td>Type</td><td>Attribute</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+    
+    <tr data-ice="property" data-depth="0">
+      <td data-ice="name" data-depth="0">name</td>
+      <td data-ice="type"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></td>
+      <td data-ice="appendix"></td>
+      <td data-ice="description"><p>component name</p>
 </td>
     </tr>
 </tbody>

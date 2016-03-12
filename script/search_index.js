@@ -138,6 +138,12 @@ window.esdocSearchIndex = [
     "function"
   ],
   [
+    "vulp/src/decorators/name.js~name",
+    "function/index.html#static-function-name",
+    "<span>name</span> <span class=\"search-result-import-path\">vulp/src/decorators/name.js</span>",
+    "function"
+  ],
+  [
     "vulp/src/decorators/utils.js~normalize",
     "function/index.html#static-function-normalize",
     "<span>normalize</span> <span class=\"search-result-import-path\">vulp/src/decorators/utils.js</span>",
