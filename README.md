@@ -63,9 +63,6 @@ cycle(view, scope);
   - passes context to [deku component](http://dekujs.github.io/deku/)
   - render component to DOM
   - component may dispatch PatchSet on user interaction
-  - available views
-  - [vulp.views.dom](http://freemountain.github.io/vulp/function/index.html#static-function-combiner)
-
 - [Component](http://freemountain.github.io/vulp/typedef/index.html#static-typedef-Component)
   - stateless
   - dispatches side effects to scopes
