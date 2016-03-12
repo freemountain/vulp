@@ -52,11 +52,47 @@ const decorator = specDecorator(spec);
 /**
  * dispatch change sets
  *
+ * Usage:
  * ```javascript
  * dispatchChangeSets()(function({ dispatch }) {
  * 		// some code...
  * 		dispatch(['/count', v => v + 1])
  * })
+ * ```
+ *
+ * A change set is an array of strings on even positions and some values on odd positions.
+ * The strings acts as path selector on the context object and the next element as value for the previous path.
+ * If the value element is a function, this function will be called with the value in the given path as argument.
+ * If the path string ends with '-' the operator in the resulting patch will be 'add' ([info](http://jsonpatch.com/#json-pointer)).
+ *
+ * Example:
+ * ```javascript
+ * const changeSet = [
+ * 	'/foo/bar' : 42,
+ * 	'/someNumber' : n => n + 3,
+ * 	'/someList/-' : {name: 'baz'}
+ * ];
+ * ```
+ * The function will be called with `n = model.context.get('/someNumber')`.
+ * The resulting patch set with `n = 4`:
+ * ```javascript
+ * const patchSet = [
+ * 	{
+ * 		op: 'replace',
+ * 		path: '/foo/bar',
+ * 		value: 42
+ * 	},
+ * 	{
+ * 		op: 'replace',
+ * 		path: '/someNumber',
+ * 		value: 7
+ * 	},
+ * 	{
+ * 		op: 'add',
+ * 		path: '/someList/-',
+ * 		value: { name: 'baz' }
+ * 	}
+ * ];
  * ```
  *
  * @return {HOC}
