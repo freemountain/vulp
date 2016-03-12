@@ -6,8 +6,6 @@ import { normalize } from './utils';
  * @param  {string} name - component name
  * @return {HOC}
  */
-export default name => function(rawComponent) {
-  const component = normalize(rawComponent);
-
-  return Object.assign({}, component, { name });
-};
+export default function(name) {
+  return rawComponent => Object.assign({}, normalize(rawComponent), { name });
+}
