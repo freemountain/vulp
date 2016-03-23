@@ -23,6 +23,7 @@
     "clean": "rm -rf dist && rm -rf .gobble*"
   },
   "devDependencies": {
+    "@f/event-handler": "^1.0.1",
     "babel-cli": "^6.5.1",
     "babel-eslint": "^5.0.0",
     "babel-plugin-transform-react-jsx": "^6.5.2",
@@ -56,6 +57,6 @@
     "immpatch": "^0.2.0",
     "immutable": "^3.7.6",
     "inflection": "^1.8.0",
-    "tcomb": "^2.6.0"
+    "tcomb": "^3.0.0"
   }
 }

@@ -1,12 +1,13 @@
-import mount from './mount';
+import lens from './lens';
 import controller from './controller';
 import memoize from './memoize';
 import styler from './styler';
-import checkContextType from './checkContextType';
+import contextType from './contextType';
 import component from './component';
 import name from './name';
 import dispatchChangeSets from './dispatchChangeSets';
 import logLifecycle from './log';
+import listOf from './listOf';
 
 /**
  * Higher Order Component
@@ -14,13 +15,14 @@ import logLifecycle from './log';
  */
 
 export default {
+  listOf,
   name,
   component,
-  mount,
+  lens,
   controller,
   memoize,
   styler,
-  checkContextType,
+  contextType,
   dispatchChangeSets,
   logLifecycle
 };

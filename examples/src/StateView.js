@@ -1,4 +1,4 @@
-import { element, decorators } from './../../vulp';
+import { element, decorators } from './vulp';
 
 const { component, memoize, styler } = decorators;
 

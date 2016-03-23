@@ -2,52 +2,49 @@ import t from 'tcomb';
 
 import { element, decorators } from './../../vulp';
 
-import List from './List';
+import Todo from './Todo';
 import Header from './Header';
-import Footer from './Footer';
-import StateView from './StateView';
+import StateView from './../../StateView';
 
-const { component, checkContextType, styler, name } = decorators;
+const { component, contextType, styler, name, listOf, lens } = decorators;
 
-const contextType = t.struct({
+const ContextType = t.struct({
   todos: t.list(t.struct({
     completed: t.Boolean,
     title:     t.String
   })),
-  draft: t.String,
-  filter:  t.String
+  draft:  t.String,
+  filter: t.String
 });
 
+const filter = {
+  all:       () => true,
+  completed: todo => todo.completed,
+  active:    todo => !todo.completed
+};
 
-function render({ context }) {
-  const containerStyle = {
-    display: 'flex'
-  };
+const List = listOf()(Todo);
+const MountedList = lens('/todos')(List);
 
-  const leftStyle = {
-    flexBasis: '70%'
-  };
-
-  const rightStyle = {
-    flexBasis: '30%'
-  };
+export default component(
+  contextType(ContextType),
+  styler(),
+  name('App')
+)(function render({ context }) {
+  const currentFilter = filter[ context.get('/filter') ];
 
   return (
-    <div style={containerStyle}>
-      <div style={leftStyle}>
+    <div style={{ display: 'flex' }}>
+      <div style={{ flexBasis: '70%' }}>
         <Header />
-        <List />
-        <Footer />
+        <MountedList filter={currentFilter}/>
+        <div><a href='#all'>all</a></div>
+        <div><a href='#active'>active</a></div>
+        <div><a href='#completed'>completed</a></div>
       </div>
-      <div style={rightStyle}>
+      <div style={{ flexBasis: '30%' }}>
         <StateView />
       </div>
     </div>
   );
-}
-
-export default component(
-  checkContextType(contextType),
-  styler(),
-  name('App')
-)(render);
+});

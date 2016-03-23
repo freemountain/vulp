@@ -10,7 +10,7 @@ const initialValue = {
 };
 
 
-const MountedApp = decorators.mount({
+const MountedApp = decorators.lens({
   todos:  '/state/todos',
   draft:  '/state/draft',
   filter: '/fragment/value'
