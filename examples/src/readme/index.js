@@ -1,4 +1,4 @@
-import { element, cycle, views, scopes, decorators } from './../vulp';
+import { element, cycle, decorators, fragments } from './../vulp';
 
 const { component, controller, dispatchChangeSets } = decorators;
 const App = component(
@@ -13,7 +13,7 @@ const App = component(
   </div>);
 });
 
-const view = views.dom(document.body, App);
-const scope = scopes.value({ count: 0 });
+const view = fragments.render(document.body, App);
+const scope = fragments.value();
 
-export default () => cycle(view, scope);
+export default () => cycle(scope, view, { count: 0 });

@@ -1,6 +1,5 @@
-import flyd from 'flyd';
+// import flyd from 'flyd';
 
-import Context from './../Context';
 
 /**
  * value scope factory
@@ -8,10 +7,14 @@ import Context from './../Context';
  * @param {Object} init - init value as plain object
  * @param {stream} input - input flyd stream
  * @return {Scope}
- */
-function value(init, input) {
-  let current = Context.ofState(init);
-  const output = flyd.stream(current);
+
+
+function value(T, input) {
+  const output = flyd.stream([{
+    path: '/',
+    value: init,
+    op: 'add'
+  }]);
 
   flyd.on(function(patchSet) {
     if(patchSet.length === 0) return;
@@ -22,3 +25,6 @@ function value(init, input) {
   return output;
 }
 export default value;
+*/
+
+export default () => input => input;

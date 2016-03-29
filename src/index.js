@@ -6,9 +6,7 @@
 import { element } from 'deku';
 
 import decorators from './decorators';
-import scopes from './scopes';
-import views from './views';
-
+import fragments from './fragments';
 import cycle from './utils/cycle';
 
 /**
@@ -39,9 +37,8 @@ import cycle from './utils/cycle';
 
 
 export {
-  scopes,
-  views,
   decorators,
+  fragments,
   cycle,
   element
 };

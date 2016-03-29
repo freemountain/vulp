@@ -42,6 +42,8 @@ const scope = scopes.value({ count: 0 });
 cycle(view, scope);
 ```
 
+## Architecture 2
+
 ## Architecture
 ![overview](manual/asset/architecture.png)
 

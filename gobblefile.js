@@ -10,6 +10,7 @@ const pkg = gobble([
   gobble('README.md'),
   gobble('package.json').transform(function(input) {
     const json = JSON.parse(input);
+
     delete json.scripts;
     delete json.devDependencies;
 
@@ -33,7 +34,7 @@ const starter = gobble('examples')
   });
 
 const doc = gobble([
-  gobble('src').transform(esdoc, require('./esdoc.json')),
+  gobble('src').transform(esdoc, require('./esdoc.json'))
 ]).moveTo('docs');
 
 const examples = gobble([

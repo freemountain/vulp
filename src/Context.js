@@ -49,7 +49,10 @@ class Context {
   get(path = '', toJS = false) {
     if(t.Boolean.is(path)) return this.get('', path);
 
-    const result = get(this.state, JSONPointer.ofString(path));
+    t.String(path);
+
+    const normalized = path.length > 0 && path.charAt(0) !== '/' ? `/${path}` : path;
+    const result = get(this.state, JSONPointer.ofString(normalized));
 
     return toJS ? unbox(result) : result;
   }
@@ -68,7 +71,8 @@ class Context {
   update(patchSet) {
     if(patchSet.length === 0) return this;
 
-    const newState = applyPatch(this.state, patchSet);
+    const boxedPatchSet = patchSet.map(patch => Object.assign({}, patch, { value: box(patch.value) }));
+    const newState = applyPatch(this.state, boxedPatchSet);
     // assert type
 
     const rawState = newState.toJS();

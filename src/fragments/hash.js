@@ -1,12 +1,21 @@
 import flyd from 'flyd';
 import filter from 'flyd/module/filter';
-import Context from './../Context';
-import value from './value';
 
 const getFragment = () => location.hash.slice(1);
 
+function skip(n, input) {
+  let count = -1;
+
+  return flyd.combine((i, out) => {
+    count = count + 1;
+    if(count < n) return;
+    out(i());
+  }, [input]);
+}
+
 function fragmentValue(input) {
-  const output = flyd.stream(getFragment());
+  const inital = getFragment();
+  const output = flyd.stream(inital);
 
   window.addEventListener('hashchange', function() {
     const current = getFragment();
@@ -21,11 +30,12 @@ function fragmentValue(input) {
     output(fragmentStr);
   }, input);
 
+  setTimeout(() => output(inital), 1);
+
   return output;
 }
 
-const createCtx = val => Context.ofState({ value: val });
-
+const last = list => list[ list.length - 1 ];
 
 /**
  * fragment scope factory
@@ -39,14 +49,13 @@ const createCtx = val => Context.ofState({ value: val });
  * @return {Scope}
  */
 
-function fragment(opts, input) {
-  const filteredInput = filter(patchSet => patchSet.length !== 0, input);
-  const valueStream = value({ value: getFragment() }, filteredInput);
-  const fragmentInput = flyd.map(ctx => ctx.get('/value'), valueStream);
-  const fragmentStream = fragmentValue(fragmentInput);
-  const output = flyd.map(fragmentStr => createCtx(fragmentStr), fragmentStream);
+const fragment = () => function(input) {
+  const filteredInput = filter(patchSet => patchSet.length !== 0, skip(1, input));
+  const mappedInput = flyd.map(ps => last(ps).value, filteredInput);
+  const fragmentStream = fragmentValue(mappedInput);
+  const output = flyd.map(fragmentStr => [{ op: 'add', path: '', value: fragmentStr }], fragmentStream);
 
   return output;
-}
+};
 
 export default fragment;

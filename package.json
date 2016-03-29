@@ -18,12 +18,13 @@
     "build": "rm -rf ./dist && ./node_modules/.bin/gobble build dist",
     "dev": "./node_modules/.bin/gobble",
     "doc": "./node_modules/.bin/esdoc -c esdoc.json",
-    "test": "./node_modules/.bin/_mocha --compilers js:babel-register src/tests",
+    "test": "./node_modules/.bin/_mocha --compilers js:babel-register src/*/tests/*.js",
     "lint": "./node_modules/.bin/eslint -c ./.eslintrc src/ examples/",
     "clean": "rm -rf dist && rm -rf .gobble*"
   },
   "devDependencies": {
     "@f/event-handler": "^1.0.1",
+    "ava": "^0.13.0",
     "babel-cli": "^6.5.1",
     "babel-eslint": "^5.0.0",
     "babel-plugin-transform-react-jsx": "^6.5.2",
@@ -33,6 +34,8 @@
     "babelify": "^7.2.0",
     "browserify": "^13.0.0",
     "chai": "^3.4.1",
+    "chai-things": "^0.2.0",
+    "decache": "^3.0.5",
     "esdoc": "^0.4.3",
     "eslint": "2.2.0",
     "eslint-plugin-react": "^4.0.0",

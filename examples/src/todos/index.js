@@ -1,5 +1,6 @@
+import { decorators, cycle, fragments } from './../vulp';
+
 import App from './components/App';
-import { views, scopes, decorators, cycle } from './../vulp';
 
 const initialValue = {
   todos: [
@@ -13,14 +14,17 @@ const initialValue = {
 const MountedApp = decorators.lens({
   todos:  '/state/todos',
   draft:  '/state/draft',
-  filter: '/fragment/value'
+  filter: '/hash'
 })(App);
 
-const view = views.dom(document.body, MountedApp);
+const view = fragments.render(document.body, MountedApp);
 
-const state = scopes.value(initialValue);
-const fragment = scopes.fragment();
+const state = fragments.value();
+const hash = fragments.hash();
 
-const rootSscope = scopes.combiner({ state, fragment });
+const rootScope = fragments.combiner({ state, hash });
 
-export default () => cycle(view, rootSscope);
+export default () => cycle(rootScope, view, {
+  state: initialValue,
+  hash:  'all'
+});

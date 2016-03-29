@@ -1,5 +1,9 @@
 import t from 'tcomb';
 
+
+const unescape = str => str.replace(/~1/g, '/').replace(/~0/g, '~');
+const escape = str => str.toString().replace(/~/g, '~0').replace(/\//g, '~1');
+
 /**
  * An array of Strings
  * TokenList holds JSONPath tokens.
@@ -46,24 +50,22 @@ class JSONPointer {
    * @returns {JSONPointer}
    */
   static ofString(str) {
-    if(!t.String.is(str))
-      throw new Error('JSONPointer::ofString - expected string');
+    if(!t.String.is(str)) throw new Error('JSONPointer::ofString - expected string');
 
+    // empty string is root poiner
     if(str === '') return new JSONPointer({
       tokens: []
     });
 
-    // pointer to key "" (rfc)
+    if(str.charAt(0) !== '/') throw new TypeError(`Invalid JSONPointer '${str}'`);
+
+    // pointer to key ""
     if(str === '/') return new JSONPointer({
       tokens: ['']
     });
 
-    if(str.startsWith('/')) return new JSONPointer({
-      tokens: str.split('/').slice(1)
-    });
-
     return new JSONPointer({
-      tokens: str.split('.')
+      tokens: str.slice(1).split('/').map(unescape)
     });
   }
 
@@ -73,7 +75,7 @@ class JSONPointer {
    * @returns {string}
    */
   toRFC() {
-    return '/'.concat(this.tokens.join('/'));
+    return this.tokens.map(token => `/${escape(token)}`).join('');
   }
 
   /**
