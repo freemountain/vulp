@@ -1,7 +1,7 @@
 import inflection from 'inflection';
 import { vnode as element } from 'deku';
 
-import { specDecorator } from './utils';
+import createDecorator from './../utils/createDecorator';
 
 const { isText, isEmpty }  = element;
 const toDash = x => inflection.underscore(x).split('_').join('-');
@@ -41,14 +41,13 @@ const spec = {
   }
 };
 
-const decorator = specDecorator(spec);
+const decorator = createDecorator(spec);
 
 /**
  * add css styles as Object
  *
- * ```javascript
+ * @example
  * styler()(() => (<div style={{ color: 'green'}}>))
- * ```
  *
  * @return {HOC}
  */

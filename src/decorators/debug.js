@@ -1,4 +1,4 @@
-import { specDecorator } from './utils';
+import createDecorator from './../utils/createDecorator';
 
 const warn = msg => console.warn ? console.warn(msg) : console.log(`Waring:\n${msg}`);
 const dir = obj => console.dir ? console.dir(obj) : console.log(obj);
@@ -25,4 +25,12 @@ const spec = {
   onRemove: createHandler('onRemove')
 };
 
-export default () => specDecorator(spec, false);
+/**
+ * debug decorator
+ *
+ * This decorator will be automatically applied on each component in debug mode.
+ * @return {HOC}
+ */
+export default function debug() {
+  return createDecorator(spec, false);
+}

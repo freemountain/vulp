@@ -1,30 +1,27 @@
-// import flyd from 'flyd';
-
 
 /**
- * value scope factory
- * Scope will update and emit value on every patch action.
- * @param {Object} init - init value as plain object
- * @param {stream} input - input flyd stream
- * @return {Scope}
-
-
-function value(T, input) {
-  const output = flyd.stream([{
-    path: '/',
-    value: init,
-    op: 'add'
-  }]);
-
-  flyd.on(function(patchSet) {
-    if(patchSet.length === 0) return;
-    current = current.update(patchSet);
-    output(current);
-  }, input);
-
-  return output;
+ * value fragment factory
+ *
+ * created fragment returns every input.
+ *
+ * @example
+ * import flyd from 'flyd';
+ * import vulp from 'vulp';
+ *
+ * const patch = { op: 'add', path: '', value: 0};
+ * const input = flyd.stream();
+ * const val = vulp.fragments.value()(input);
+ *
+ * flyd.on(x => console.log(x), val);
+ *
+ * input([patch]);
+ * // console -> [{ op: 'add', path: '', value: 0}]
+ *
+ * input([Object.assign(patch, { value: 1 })]);
+ * // console -> [{ op: 'add', path: '', value: 0}]
+ *
+ * @return {BoundFragmentFactory}
+ */
+export default function value() {
+  return input => input;
 }
-export default value;
-*/
-
-export default () => input => input;

@@ -1,16 +1,19 @@
-import { specDecorator } from './utils';
-import check from './../utils/checkType';
+import createDecorator from './../utils/createDecorator';
+import check from './../utils/check';
 
 /**
  * assert context type
  *
- * ```javascript
+ * @example
  * import t from 'tcomb'
  *
- * checkContextType(t.struct({
- * 	someProp: t.String
- * }))(model => { ... })
- * ```
+ * const T = t.struct({
+ *   name: t.String
+ * });
+ *
+ * const component = checkContextType(T)(function({context}) {
+ *   return <h1>{context.get('/name')}</h1>;
+ * });
  *
  * @param  {Type} T - type to check context again (tcomb type)
  * @return {HOC}
@@ -34,7 +37,7 @@ export default function checkContextType(T) {
       return model;
     }
   };
-  const decorator = specDecorator(spec);
+  const decorator = createDecorator(spec);
 
   return comp => {
     return decorator(comp);

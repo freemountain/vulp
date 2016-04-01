@@ -3,35 +3,9 @@ import mapObj from '@f/map-obj';
 import t from 'tcomb';
 import { vnode as element } from 'deku';
 
-const { isThunk, isText, isEmpty }  = element;
+import normalize from './normalizeComponent';
 
-
-export function normalize(comp) {
-  const component = t.Function.is(comp) ? { render: comp } : comp;
-
-  if(!t.Object.is(component) && !t.Function.is(component.render))
-    throw new TypeError('component must be function or object with render function');
-
-  if(!component.name && component.render.name !== '') component.name = component.render.name;
-  return component;
-}
-
-export function mapAttributes(node, f, deep = false) {
-  if(isText(node) || isEmpty(node)) return node;
-  const name = isThunk(node) ? 'props' : 'attributes';
-  const spec = {};
-
-  spec[ name ] = mapObj(f, node[ name ]);
-  if(deep) spec.children = node.children.map(child => mapAttributes(child, f, deep));
-
-  return Object.assign({}, node, spec);
-}
-
-export const isHandler = name => (
-  name.length > 2 &&
-  name.slice(0, 2) === 'on' &&
-  name[ 2 ] === name[ 2 ].toUpperCase()
-);
+const { isThunk }  = element;
 
 const defaultOpts = {
   deep:     false,
@@ -73,7 +47,13 @@ function decorateNode(spec, node) {
   return Object.assign({}, node, nodeSpec);
 }
 
-export function specDecorator(options) {
+/**
+ * create decorator function from decorator spec
+ *
+ * @param {Object} options - options
+ * @return {boolean}
+ */
+export default function createDecorator(options) {
   const cache = options.deep && !options.cache ? new WeakMap() : options.cache;
   const spec = Object.assign({}, defaultOpts, options, { cache });
 

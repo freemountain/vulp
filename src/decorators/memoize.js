@@ -1,6 +1,6 @@
 import dekuMemoize from 'deku-memoize';
 
-import { normalize } from './utils';
+import normalize from './../utils/normalizeComponent';
 
 function defaultShouldUpdate(prev, next) {
   return next.context.changed(prev.context);
@@ -9,11 +9,12 @@ function defaultShouldUpdate(prev, next) {
 /**
  * memoize component
  *
- * @param  {function(nextModel: Model, prevModel: Model): boolean} shouldUpdate - list of component decorators (hocs)
+ * this decorator is a small wrapper around [deku-memoize](https://github.com/rstacruz/deku-memoize)
+ *
+ * @param  {function(Context: prev, Context: next): boolean} shouldUpdate - called before update
  * @return {HOC}
  */
-
-export default function(shouldUpdate = defaultShouldUpdate) {
+export default function memoize(shouldUpdate = defaultShouldUpdate) {
   return rawComponent => {
     const component = normalize(rawComponent);
     const decoratedComponent = Object.assign({}, component, { shouldUpdate });

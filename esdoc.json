@@ -1,5 +1,17 @@
 {
   "title": "vulp",
+  "plugins": [
+    {
+      "name": "esdoc-importpath-plugin",
+      "option": {
+        "replaces": [
+          {"from": "^src/", "to": ""},
+          {"from": ".js$", "to": ""}
+
+        ]
+      }
+    }
+  ],
   "manual": {
     "asset": "./manual/asset",
     "overview": ["./manual/overview.md"]

@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 
+import JSONPointer from './../../JSONPointer';
 import { box, unbox, get } from './../state';
-import JSONPointer from './../JSONPointer';
 
 describe('state', function() {
   describe('box', function() {

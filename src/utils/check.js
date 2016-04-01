@@ -1,10 +1,5 @@
 import t from 'tcomb';
 
-/**
- * tcomb type
- * @external {Type} https://github.com/gcanti/tcomb/blob/master/docs/API.md
- */
-
 const Type = t.irreducible('Type', t.isType);
 
 /**
@@ -15,8 +10,10 @@ const Type = t.irreducible('Type', t.isType);
  * @return {Boolean}
  */
 
-const check = t.func([Type, t.Any], t.Bool).of(function(T, x) {
+export default function check(T, x) {
   let result = null;
+
+  Type(T);
 
   /* eslint space-after-keywords: 0 */
   try {
@@ -26,6 +23,4 @@ const check = t.func([Type, t.Any], t.Bool).of(function(T, x) {
     result = false;
   }
   return result;
-});
-
-export default check;
+}

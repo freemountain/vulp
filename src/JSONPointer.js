@@ -7,6 +7,7 @@ const escape = str => str.toString().replace(/~/g, '~0').replace(/\//g, '~1');
 /**
  * An array of Strings
  * TokenList holds JSONPath tokens.
+ * @private
  * @typedef {Array<string>} TokenList
  */
 const TokenList = t.list(t.String);
@@ -94,7 +95,7 @@ class JSONPointer {
    * @returns {string}
    */
   first() {
-    return this.tokens[ 0 ] || null;
+    return escape(this.tokens[ 0 ] || '');
   }
 
   /**
@@ -104,7 +105,7 @@ class JSONPointer {
    * @returns {string}
    */
   last() {
-    return this.tokens[ this.tokens.length - 1 ] || null;
+    return escape(this.tokens[ this.tokens.length - 1 ] || '');
   }
 
   /**

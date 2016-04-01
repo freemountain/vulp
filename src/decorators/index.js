@@ -9,11 +9,6 @@ import dispatchChangeSets from './dispatchChangeSets';
 import logLifecycle from './log';
 import listOf from './listOf';
 
-/**
- * Higher Order Component
- * @typedef {function(component: Component): Component} HOC
- */
-
 export default {
   listOf,
   name,

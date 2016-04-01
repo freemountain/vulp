@@ -7,6 +7,8 @@ module.exports = function esdocShell(inputdir, outputdir, options, cb) {
   const destination = path.resolve(outputdir, options.source || '');
   const esdocOptions = Object.assign({}, options, { source, destination });
 
+  console.log(inputdir);
+
   esdoc.generate(Object.assign({}, esdocOptions), publisher);
   cb();
 };

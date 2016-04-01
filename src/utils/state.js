@@ -1,7 +1,7 @@
 import t from 'tcomb';
 import Immutable from 'immutable';
 
-export const is = {
+const is = {
   Irreducible: x => t.String.is(x) || t.Number.is(x) || t.Boolean.is(x) || t.Nil.is(x),
   Object:      x => t.Object.is(x),
   Array:       x => t.Array.is(x),

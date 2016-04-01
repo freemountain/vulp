@@ -38,24 +38,23 @@ function fragmentValue(input) {
 const last = list => list[ list.length - 1 ];
 
 /**
- * fragment scope factory
- * represents value of fragment identifier.
+ * `location.hash` scope factory
+ *
+ * represents value of url hash.
  * Json structure:
  * 	{
  * 		value: String
  *  }
- * @param {Object} opts - not used
- * @param {Scope} input - input stream
- * @return {Scope}
+ * @return {BoundFragmentFactory}
  */
 
-const fragment = () => function(input) {
-  const filteredInput = filter(patchSet => patchSet.length !== 0, skip(1, input));
-  const mappedInput = flyd.map(ps => last(ps).value, filteredInput);
-  const fragmentStream = fragmentValue(mappedInput);
-  const output = flyd.map(fragmentStr => [{ op: 'add', path: '', value: fragmentStr }], fragmentStream);
+export default function hash() {
+  return input => {
+    const filteredInput = filter(patchSet => patchSet.length !== 0, skip(1, input));
+    const mappedInput = flyd.map(ps => last(ps).value, filteredInput);
+    const fragmentStream = fragmentValue(mappedInput);
+    const output = flyd.map(fragmentStr => [{ op: 'add', path: '', value: fragmentStr }], fragmentStream);
 
-  return output;
-};
-
-export default fragment;
+    return output;
+  };
+}

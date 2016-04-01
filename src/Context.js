@@ -2,7 +2,7 @@ import t from 'tcomb';
 import applyPatch from 'immpatch';
 
 import JSONPointer from './JSONPointer';
-import { get, unbox, box } from './state';
+import { get, unbox, box } from './utils/state';
 
 const emptyInstance = {
   type:  t.Any,
@@ -81,7 +81,6 @@ class Context {
 
     return new Context({
       type:  this.type,
-      // transform: this.transform,
       state: newState
     });
   }

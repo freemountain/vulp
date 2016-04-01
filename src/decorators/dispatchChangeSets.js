@@ -1,8 +1,8 @@
 import t from 'tcomb';
 
-import patchUtil from './../utils/patch';
-
-import { specDecorator } from './utils';
+import JSONPointer from './../JSONPointer';
+import { box } from './../utils/state';
+import createDecorator from './../utils/createDecorator';
 
 const ChangeSet = t.irreducible('ChangeSet', function(x) {
   if(!t.Array.is(x) || x.length % 2 !== 0) return false;
@@ -17,6 +17,24 @@ const ChangeSet = t.irreducible('ChangeSet', function(x) {
   return t.list(t.tuple([t.String, t.Any])).is(pairs);
 });
 
+function toPatch(path, rawValue) {
+  const op = JSONPointer.ofString(path).last() === '-' ? 'add' : 'replace';
+  const value = box(rawValue);
+
+  return { op, path, value };
+}
+
+function toPatchSet(context, pairs) {
+  return pairs.map(function([path, value]) {
+    if(!t.Function.is(value)) return toPatch(path, value);
+
+    const currentValue = context.get(path, true);
+    const nextValue = value(currentValue);
+
+    return toPatch(path, nextValue);
+  });
+}
+
 function toPairs(changeSet) {
   return changeSet.reduce(function(current, e, i) {
     if(i % 2 === 0) current.push([]);
@@ -27,7 +45,7 @@ function toPairs(changeSet) {
 }
 const dispatch = model => payload => {
   model.dispatch(t.match(payload,
-    ChangeSet, changeSet => patchUtil(model.context, toPairs(changeSet)),
+    ChangeSet, changeSet => toPatchSet(model.context, toPairs(changeSet)),
     t.Any, x => x
   ));
 };
@@ -47,7 +65,7 @@ const spec = {
   }
 };
 
-const decorator = specDecorator(spec);
+const decorator = createDecorator(spec);
 
 /**
  * dispatch change sets

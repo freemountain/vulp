@@ -42,27 +42,28 @@ function createCtxStream(input) {
 }
 
 /**
+ * render fragment factory
  * This function is used to create the render part of your app.
  * If the view receives a context object, it will pass the context through your component.
  * All actions dispatched inside component, will be emitted from the view.
+ *
  * @param  {DOMElement} container - container dom element
- * @param  {Component} rawComponent - deku component
- * @return {BoundViewFactory}
+ * @param  {Component} component - component to render in container
+ * @returns {BoundFragmentFactory}
  */
-
-export default function dom(container, rawComponent) {
+export default function render(container, component) {
   return input => {
     const dispatchStream = flyd.stream();
     const dispatch = val => dispatchStream(val);
-    const render = createDekuApp(container, dispatch);
-    const component = debug()(rawComponent);
+    const renderDom = createDekuApp(container, dispatch);
+    const wrappedComponent = debug()(component);
     const ctxStream = createCtxStream(input);
 
     flyd.on(function(ctx) {
-      const el = element(component);
+      const el = element(wrappedComponent);
 
       console.log('render', ctx.get(true));
-      return render(el, ctx);
+      return renderDom(el, ctx);
     }, ctxStream);
 
     return dispatchStream;

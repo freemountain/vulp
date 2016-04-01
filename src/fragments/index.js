@@ -1,10 +1,10 @@
-import combiner from './combiner';
+import combine from './combine';
 import render from './render';
 import value from './value';
 import hash from './hash';
 
 export default {
-  combiner,
+  combine,
   render,
   value,
   hash

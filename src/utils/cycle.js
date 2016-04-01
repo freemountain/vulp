@@ -29,8 +29,8 @@ function start(store, view) {
 
 /**
  * pipes a to b and b to a -> cycle a and b
- * @param  {BoundViewFactory} viewF - view factory
- * @param  {BoundScopeFactory} scopeF - scope factory
+ * @param  {HOF} viewF - view factory
+ * @param  {HOF} scopeF - scope factory
  * @return {Stream} empty stream, use to end
  */
 

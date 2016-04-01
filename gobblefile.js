@@ -5,6 +5,8 @@ const esdoc = require('./tools/gobble-esdoc-shell');
 const eslint = require('./tools/gobble-eslint');
 const replace = require('./tools/gobble-replace');
 
+const ava = require('./tools/gobble-ava');
+
 const pkg = gobble([
   gobble('LICENSE'),
   gobble('README.md'),

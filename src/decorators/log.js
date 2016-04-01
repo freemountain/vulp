@@ -1,6 +1,8 @@
+/** @module decorators */
+
 import pick from '@f/pick';
 
-import { specDecorator } from './utils';
+import createDecorator from './../utils/createDecorator';
 
 const nameCache = new WeakMap();
 
@@ -35,15 +37,12 @@ const targetHandler = {
   onRemove: createHandler('onRemove')
 };
 
-const defaultTargets = ['render', 'onUpdate', 'onCreate', 'onRemove'];
-
 /**
  * log component lifecycle
  *
  * @return {HOC}
  */
-
-export default function log(targets = defaultTargets) {
+export default function log(targets = ['render', 'onUpdate', 'onCreate', 'onRemove']) {
   const opts = {
     deep:  false,
     name:  'log',
@@ -51,5 +50,5 @@ export default function log(targets = defaultTargets) {
   };
   const spec = Object.assign({}, pick(targets, targetHandler), opts);
 
-  return specDecorator(spec);
+  return createDecorator(spec);
 }

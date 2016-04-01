@@ -22,7 +22,7 @@ const view = fragments.render(document.body, MountedApp);
 const state = fragments.value();
 const hash = fragments.hash();
 
-const rootScope = fragments.combiner({ state, hash });
+const rootScope = fragments.combine({ state, hash });
 
 export default () => cycle(rootScope, view, {
   state: initialValue,

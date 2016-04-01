@@ -21,10 +21,15 @@ const ReplacePatch = BasePatch.extend({
 }, 'ReplacePatch');
 
 /**
+ * json patch set
+ * - only add, remove and replace patches are supported
+ * - http://jsonpatch.com
+ * @typedef {Array<Patch>} PatchSet
+ */
+/**
  * json patch type.
  * - only add, remove and replace patches are supported
  * - http://jsonpatch.com
  * @typedef {object} Patch
  */
-
 export const Patch = t.union([AddPatch, RemovePatch, ReplacePatch], 'Patch');

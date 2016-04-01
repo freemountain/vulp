@@ -3,8 +3,8 @@ import JSONPointer from './../JSONPointer';
 import Context from './../Context';
 import Immutable from 'immutable';
 
-import { specDecorator } from './utils';
-import { get } from './../state';
+import createDecorator from './../utils/createDecorator';
+import { get } from './../utils/state';
 
 const assign = (target, spec) => Object.assign({}, target, spec);
 
@@ -46,17 +46,16 @@ const transformPatchSet = (transform, patchSet) => patchSet
 /**
  * transform ctx of component
  *
- * ```javascript
+ * @example
  * mount({
- * 	foo: '/some/value'
- * 	bar: '/here/is/another/val'
+ *   foo: '/some/value'
+ *   bar: '/here/is/another/val'
  * })(component)
- * ```
  *
  * @param  {Map<string, string>} transform - transform description
  * @return {HOC}
  */
-export default function(transform) {
+export default function lens(transform) {
   Transform(transform);
 
   const spec = {
@@ -71,5 +70,5 @@ export default function(transform) {
     }
   };
 
-  return specDecorator(spec);
+  return createDecorator(spec);
 }
